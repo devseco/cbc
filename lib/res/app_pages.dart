@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ui_ecommerce/CBC/views/Cities.dart';
 import 'package:ui_ecommerce/CBC/views/Home.dart';
 import 'package:ui_ecommerce/Installments/Bindings/Billing_bindings.dart';
 import 'package:ui_ecommerce/Installments/Bindings/Checkout_bindings.dart';
@@ -40,4 +41,5 @@ final List<GetPage> appPages = [
   GetPage(name: '/favorites', page: ()=>Favorites() , binding: Checkout_bindings()),
   GetPage(name: '/billing', page: ()=>Billing() , binding: Billing_bindings()),
   GetPage(name: '/Item_Billing', page: ()=>Item_Billing() , binding: ItemBilling_bindings()),
+  GetPage(name: '/cities', page: ()=>Cities_view()),
 ];

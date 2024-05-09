@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Landing_controller.dart';
+import 'package:ui_ecommerce/CBC/views/Cities.dart';
 import 'package:ui_ecommerce/CBC/views/First_cbc.dart';
 import 'package:ui_ecommerce/CBC/views/Home.dart';
 import 'package:ui_ecommerce/res/colors.dart';
@@ -10,6 +11,7 @@ class Landing_cbc extends StatelessWidget {
   static  final List<Widget> _pages = <Widget>[
     First_cbc(),
     Home_cbc(),
+    Cities_view(),
   ];
 
   @override

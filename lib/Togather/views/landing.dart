@@ -78,7 +78,7 @@ class Landing_togather extends StatelessWidget {
                               '80'.tr,
                               style: TextStyle(
                                 fontSize: Get.height * 0.016,
-                                color: Colors.white,
+                                color: AppColors.cbcGreen,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

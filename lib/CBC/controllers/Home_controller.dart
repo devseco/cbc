@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
 import '../../Installments/Services/RemoteServices.dart';
 import '../../Installments/models/Product.dart';
 import '../../Installments/models/Slider.dart';
+import '../views/HomeView.dart';
 
 class Chome_controller extends GetxController {
   final fixedItem = City(
@@ -12,6 +14,8 @@ class Chome_controller extends GetxController {
     image: 'https://static.vecteezy.com/system/resources/previews/019/633/209/original/doodle-freehand-drawing-of-iraq-map-free-png.png',
     active: 1,
   );
+
+  int selectedIndex = 0;
   int index = 0;
   var isLoadingRecently= true.obs;
   var isLoadingHighest= true.obs;
@@ -24,7 +28,11 @@ class Chome_controller extends GetxController {
   var filterProducts = <Product>[].obs;
   var citiesList = <City>[].obs;
 
-
+  void onItemTapped(int index) {
+    selectedIndex = index;
+    print('tap: ${index}');
+    update();
+  }
   //fetch RecentlyDiscount
   void fetchRecently() async{
     isLoadingRecently(true);
@@ -68,17 +76,16 @@ class Chome_controller extends GetxController {
     }
   }
   //fetch Categories
-  void fetchCities() async{
+  void fetchCities() async {
     isLoadingCities(true);
     try {
       var cities = await RemoteServices.fetchCities();
-      if(cities != null){
-        isLoadingCities(true);
-         citiesList.value = cities;
-        citiesList.add(fixedItem);
+      if (cities != null) {
+        citiesList.value = cities;
+        citiesList.insert(5, fixedItem); // إضافة المحافظة ذات الـ ID -1 في الموقع السادس
       }
-    }finally{
-    isLoadingCities(false);
+    } finally {
+      isLoadingCities(false);
     }
   }
   void searchProducts(title) async{
