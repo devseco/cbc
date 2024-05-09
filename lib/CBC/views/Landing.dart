@@ -4,10 +4,9 @@ import 'package:ui_ecommerce/CBC/controllers/Landing_controller.dart';
 import 'package:ui_ecommerce/CBC/views/Cities.dart';
 import 'package:ui_ecommerce/CBC/views/First_cbc.dart';
 import 'package:ui_ecommerce/CBC/views/Home.dart';
-import 'package:ui_ecommerce/res/colors.dart';
 class Landing_cbc extends StatelessWidget {
    Landing_cbc({super.key});
-   Clanding_controller controller = Get.put(Clanding_controller());
+   final Clanding_controller controller = Get.put(Clanding_controller());
   static  final List<Widget> _pages = <Widget>[
     First_cbc(),
     Home_cbc(),

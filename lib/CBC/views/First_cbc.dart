@@ -133,8 +133,7 @@ class First_cbc extends StatelessWidget {
                   },
                   child: Center(
                     child:  Container(
-                      height: Get.height * 0.03,
-                      width: Get.height ,
+                      height: Get.height * 0.05,
                       decoration: BoxDecoration(
                           border: Border.all(
                             color: AppColors.cbcColor,
@@ -150,12 +149,11 @@ class First_cbc extends StatelessWidget {
                             Text(
                               '87'.tr,
                               style: TextStyle(
-                                fontSize: Get.height * 0.012,
+                                fontSize: Get.width * 0.028,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
                           ],
                         ),
                       ),

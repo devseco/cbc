@@ -12,7 +12,7 @@ class Landing_togather extends StatelessWidget {
       length: 2, // Define the number of tabs
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(Get.height * 0.06), // Set preferred size for the app bar
+          preferredSize: Size.fromHeight(Get.width * 0.19), // Set preferred size for the app bar
           child: AppBar(
             flexibleSpace: TabBar(
               onTap: (index) {
@@ -43,7 +43,7 @@ class Landing_togather extends StatelessWidget {
                             child: Text(
                               '0'.tr,
                               style: TextStyle(
-                                fontSize: Get.height * 0.016,
+                                fontSize: Get.width * 0.035,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -77,7 +77,7 @@ class Landing_togather extends StatelessWidget {
                             child: Text(
                               '80'.tr,
                               style: TextStyle(
-                                fontSize: Get.height * 0.016,
+                                fontSize: Get.width * 0.035,
                                 color: AppColors.cbcGreen,
                                 fontWeight: FontWeight.bold,
                               ),

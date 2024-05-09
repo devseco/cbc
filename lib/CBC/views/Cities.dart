@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/res/colors.dart';
+
 class Cities_view extends StatelessWidget {
    Cities_view({super.key});
-   Chome_controller controller = Get.find();
+  final Chome_controller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

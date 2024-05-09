@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
-import '../../Installments/Services/RemoteServices.dart';
-import '../../Installments/models/Product.dart';
-import '../../Installments/models/Slider.dart';
-import '../views/HomeView.dart';
+import '../Services/RemoteServices.dart';
+import '../models/Slider.dart';
 
 class Chome_controller extends GetxController {
   final fixedItem = City(
@@ -25,7 +22,6 @@ class Chome_controller extends GetxController {
   var recentlyList = <Discount>[].obs;
   var highestList = <Discount>[].obs;
   var slidersList = <SliderBar>[].obs;
-  var filterProducts = <Product>[].obs;
   var citiesList = <City>[].obs;
 
   void onItemTapped(int index) {
@@ -88,20 +84,7 @@ class Chome_controller extends GetxController {
       isLoadingCities(false);
     }
   }
-  void searchProducts(title) async{
-    try {
-      var filters = await RemoteServices.filterProducts(title);
-      if(filters != null){
-        filterProducts.value = filters;
-        productNames = filterProducts.map((product) => product.title).toList();
-        print(productNames);
-        update();
-      }
-    }finally{
 
-    }
-    update();
-  }
   @override
   void onInit() {
     // TODO: implement onInit

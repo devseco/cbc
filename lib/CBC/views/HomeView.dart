@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/res/colors.dart';
-
 import '../controllers/Home_controller.dart';
 class HomeView extends StatelessWidget {
    HomeView({super.key});
@@ -362,7 +359,8 @@ class HomeView extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(15))
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Center(
                 child:  CachedNetworkImage(
