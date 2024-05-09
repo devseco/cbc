@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/views/Cities.dart';
 import 'package:ui_ecommerce/CBC/views/Home.dart';
+import 'package:ui_ecommerce/CBC/views/Categories.dart';
 import 'package:ui_ecommerce/AQS//Bindings/Billing_bindings.dart';
 import 'package:ui_ecommerce/AQS/Bindings/Checkout_bindings.dart';
 import 'package:ui_ecommerce/AQS/Bindings/ItemBilling_bindings.dart';
@@ -42,4 +43,5 @@ final List<GetPage> appPages = [
   GetPage(name: '/billing', page: ()=>Billing() , binding: Billing_bindings()),
   GetPage(name: '/Item_Billing', page: ()=>Item_Billing() , binding: ItemBilling_bindings()),
   GetPage(name: '/cities', page: ()=>Cities_view()),
+  GetPage(name: '/categories_cbc', page: ()=>CategoriesView()),
 ];

@@ -53,6 +53,7 @@ class Cities_view extends StatelessWidget {
      if (id != -1) { // تحقق من أن الـ ID ليس يساوي -1 قبل عرض المحافظة
        return GestureDetector(
          onTap: () {
+           Get.toNamed('categories_cbc' , arguments: [{'id': id , 'city' : title}]);
 
          },
          child: Container(

@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:ui_ecommerce/CBC/models/Category.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
 import '../models/Slider.dart';
@@ -16,6 +17,22 @@ class RemoteServices {
         var jsonData = response.body;
         List<Discount> stories = discountFromJson(jsonData);
         return stories;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  //fetch categories
+  static Future<List<Category>?> fetchCategories(id) async {
+    var endpoint = 'getCategory/${id}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<Category> list = categoryFromJson(jsonData);
+        return list;
       } else {
         return null;
       }

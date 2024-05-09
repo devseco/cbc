@@ -1,34 +1,118 @@
-import 'dart:convert';
-List<Categories> categoriesFromJson(String str) => List<Categories>.from(json.decode(str).map((x) => Categories.fromJson(x)));
-String categoriesToJson(List<Categories> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-class Categories {
-  int id;
-  String title;
-  String image;
-  int active;
-  int city;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ui_ecommerce/CBC/controllers/CategoriesController.dart';
 
-  Categories({
-    required this.id,
-    required this.title,
-    required this.image,
-    required this.active,
-    required this.city,
-  });
+import '../../res/colors.dart';
+class CategoriesView extends StatelessWidget {
+   CategoriesView({super.key});
+   final CategoriesController controller = Get.put(CategoriesController());
 
-  factory Categories.fromJson(Map<String, dynamic> json) => Categories(
-    id: json["id"],
-    title: json["title"],
-    image: json["image"],
-    active: json["active"],
-    city: json["city"],
-  );
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.cbcColor,
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
+        title: Text('${'93'.tr}  ${controller.city}' ,style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold
+        ),),
+      ),
+      backgroundColor: Colors.white,
+      body: Container(
+        height: Get.height,
+        margin: EdgeInsets.only(bottom: Get.height * 0.02),
+        color: Colors.white,
+        child: GetBuilder<CategoriesController>(builder: (builder){
+          if(!builder.isLoadingCategories.value){
+            if(builder.categoriesList.isNotEmpty){
+              return Cats();
+            }else{
+              return Center(
+                child: Text(
+                  '${'20'.tr}'
+                ),
+              );
+            }
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "image": image,
-    "active": active,
-    "city": city,
-  };
+          }else{
+            return Center(child: CircularProgressIndicator(),);
+          }
+        },)
+      ),
+
+    );
+  }
+   Cats(){
+    return GridView.builder(
+      padding: EdgeInsets.only(left: Get.height * 0.01, right: Get.height * 0.01, top: Get.height * 0.01 ),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 5.0,
+        mainAxisSpacing: 5.0,
+        childAspectRatio: 1,
+      ),
+      itemCount: controller.categoriesList.length,
+      itemBuilder: (BuildContext context, int index) {
+        final cate = controller.categoriesList[index];
+        return CatItem(cate.image, cate.title, cate.id, cate.active);
+      },
+    );
+  }
+   CatItem(String url , String title , int id , int active) {
+       return GestureDetector(
+         onTap: () {
+
+         },
+         child: Container(
+           height: Get.height,
+           padding: EdgeInsets.all(Get.height * 0.01),
+           width: Get.height * 0.25,
+           decoration: BoxDecoration(
+               color: (active == 0) ? AppColors.cbcRed : Colors.white,
+               border: Border.all(color: Colors.black12),
+               borderRadius: const BorderRadius.all(Radius.circular(15))
+           ),
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.center,
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: <Widget>[
+               (active == 1) ? Center(
+                 child:  CachedNetworkImage(
+                   height: Get.height * 0.08,
+                   width: Get.height * 0.2,
+                   imageUrl: url,
+                   imageBuilder: (context, imageProvider) => Container(
+                     decoration: BoxDecoration(
+                       image: DecorationImage(
+                         image: imageProvider,
+                         fit: BoxFit.contain,
+                       ),
+                     ),
+                   ),
+                   placeholder: (context, url) => const CircularProgressIndicator(),
+                   errorWidget: (context, url, error) => const Icon(Icons.error),
+                 ),
+               ) : const SizedBox(),
+               SizedBox(height: Get.height * 0.01,),
+               Center(
+                 child: Text(title , textAlign: TextAlign.center,
+                   overflow: TextOverflow.ellipsis,
+                   style: const TextStyle(
+                       fontWeight: FontWeight.bold,
+                       color: Colors.black
+                   ),
+                 ),
+               )
+             ],
+           ),
+         ),
+       );
+
+   }
 }

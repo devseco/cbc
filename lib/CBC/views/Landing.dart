@@ -8,9 +8,10 @@ class Landing_cbc extends StatelessWidget {
    Landing_cbc({super.key});
    final Clanding_controller controller = Get.put(Clanding_controller());
   static  final List<Widget> _pages = <Widget>[
-    First_cbc(),
+    const First_cbc(),
     Home_cbc(),
     Cities_view(),
+
   ];
 
   @override
