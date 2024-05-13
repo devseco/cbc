@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/CategoriesController.dart';
+import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
+import 'package:ui_ecommerce/CBC/views/Stories.dart';
 
+import '../../Togather/views/landing.dart';
 import '../../res/colors.dart';
 class CategoriesView extends StatelessWidget {
    CategoriesView({super.key});
@@ -12,6 +15,19 @@ class CategoriesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        actions: [
+         Padding(padding: EdgeInsetsDirectional.only(end: 20),
+         child:  GetBuilder<Chome_controller>(builder: (builder){
+           return GestureDetector(
+             onTap: (){
+               builder.onItemTapped(0);
+               Get.off(()=>Landing_togather());
+             },
+             child: Icon(Icons.home),
+           );
+         },),
+         )
+        ],
         backgroundColor: AppColors.cbcColor,
         centerTitle: true,
         iconTheme: IconThemeData(
@@ -67,6 +83,8 @@ class CategoriesView extends StatelessWidget {
    CatItem(String url , String title , int id , int active) {
        return GestureDetector(
          onTap: () {
+           Get.to(()=>Stories() , arguments: [{'cate' : id , 'city' : controller.id ,
+             'id' : 0 ,'city_name' : controller.city ,  'cate_name' : title }]);
 
          },
          child: Container(

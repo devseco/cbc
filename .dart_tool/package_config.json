@@ -476,6 +476,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "photo_view",
+      "rootUri": "file:///Users/m1/.pub-cache/hosted/pub.dev/photo_view-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/m1/.pub-cache/hosted/pub.dev/platform-3.1.4",
       "packageUri": "lib/",
@@ -728,7 +734,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-05-06T18:49:27.581714Z",
+  "generated": "2024-05-13T01:11:59.167222Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-190.1.beta"
 }

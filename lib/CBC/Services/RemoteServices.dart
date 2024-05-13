@@ -2,6 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/CBC/models/Category.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
+import 'package:ui_ecommerce/CBC/models/Store.dart';
+import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
 import '../models/Slider.dart';
 
 class RemoteServices {
@@ -90,6 +92,40 @@ class RemoteServices {
     }
   }
 
+
+  //Fetch Stories From Endpoint (getStories)
+  static Future<List<Store>?> fetchStories(cate , city) async {
+    var endpoint = 'getStories/${cate}/${city}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<Store> sliders = storeFromJson(jsonData);
+        return sliders;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+//Fetch Stories From Endpoint (getStories)
+  static Future<StoreModel?> fetchStore(id) async {
+    var endpoint = 'getStore/${id}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        StoreModel store = storeModelFromJson(jsonData);
+        return store;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 
 
 
