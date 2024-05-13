@@ -5,7 +5,7 @@ import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
 import '../Services/RemoteServices.dart';
 
 class StorePageController extends GetxController with SingleGetTickerProviderMixin{
-  late StoreModel store;
+  StoreModel? store ;
   var isLoadingItem= true.obs;
   int indexSlider = 0;
    TabController? tabController;

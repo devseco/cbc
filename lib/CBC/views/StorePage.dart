@@ -32,23 +32,26 @@ class StorePage extends StatelessWidget {
       ),
       body: Obx(() {
         if(!controller.isLoadingItem.value){
-          return Column(
-            children: [
-              Obx(() {
-                if(!controller.isLoadingItem.value){
-                  return (controller.store.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
-                }else{
-                  return placholderSlider();
-                }
-              }),
-              StoreLogo(),
-              StoreInfo(),
-              TabsPages(),
-              SizedBox(
-                height: Get.width * 0.03,
-              ),
-              PagesTabs(),
-            ],
+          return Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Obx(() {
+                  if(!controller.isLoadingItem.value){
+                    return (controller.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
+                  }else{
+                    return placholderSlider();
+                  }
+                }),
+                StoreLogo(),
+                StoreInfo(),
+                TabsPages(),
+                SizedBox(
+                  height: Get.width * 0.03,
+                ),
+                PagesTabs(),
+              ],
+            ),
           );
         }else{
           return Container(child: const Center(child: CircularProgressIndicator(),),);
@@ -99,10 +102,10 @@ class StorePage extends StatelessWidget {
     );
   }
    branches(){
-     if(controller.store.storeinfo.branches.isNotEmpty){
+     if(controller.store!.storeinfo.branches.isNotEmpty){
        return ListView.builder(
          padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
-         itemCount: controller.store.storeinfo.branches.length, // عدد العناصر في القائمة
+         itemCount: controller.store!.storeinfo.branches.length, // عدد العناصر في القائمة
          itemBuilder: (BuildContext context, int index) {
            return  ListTile(
              title: Container(
@@ -118,7 +121,7 @@ class StorePage extends StatelessWidget {
                  ],
                ),
                child: Text(
-                 controller.store.storeinfo.branches[index].title,
+                 controller.store!.storeinfo.branches[index].title,
                  style: TextStyle(
                      fontSize: Get.width * 0.028,
                      fontWeight: FontWeight.bold
@@ -241,7 +244,7 @@ class StorePage extends StatelessWidget {
 
               },
               child: Container(
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.all(2),
                 child: CachedNetworkImage(
                   imageUrl: list[index],
                   imageBuilder: (context, imageProvider) => Container(
@@ -276,10 +279,10 @@ class StorePage extends StatelessWidget {
     }
    }
   discounts(){
-    if(controller.store.storeinfo.discounts.isNotEmpty){
+    if(controller.store!.storeinfo.discounts.isNotEmpty){
       return  ListView.builder(
         padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
-        itemCount: controller.store.storeinfo.discounts.length, // عدد العناصر في القائمة
+        itemCount: controller.store!.storeinfo.discounts.length, // عدد العناصر في القائمة
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             title: Container(
@@ -295,7 +298,7 @@ class StorePage extends StatelessWidget {
                 ],
               ),
               child: Text(
-                controller.store.storeinfo.discounts[index].title,
+                controller.store!.storeinfo.discounts[index].title,
                 style: TextStyle(
                     fontSize: Get.width * 0.033
                 ),
@@ -313,7 +316,7 @@ class StorePage extends StatelessWidget {
               width: Get.width * 0.20,
               height: Get.width * 0.06,
               child: Center(
-                child: Text('${controller.store.storeinfo.discounts[index].discount}%' , style: TextStyle(
+                child: Text('${controller.store!.storeinfo.discounts[index].discount}%' , style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: Get.width * 0.03
@@ -342,8 +345,8 @@ class StorePage extends StatelessWidget {
         children: [
           discounts(),
           branches(),
-          imagesStore(controller.store.storeinfo.images,'104'.tr),
-          imagesStore(controller.store.storeinfo.offers,'105'.tr),
+          imagesStore(controller.store!.storeinfo.images,'104'.tr),
+          imagesStore(controller.store!.storeinfo.offers,'105'.tr),
         ],
       ),
     );
@@ -362,7 +365,7 @@ class StorePage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(45.0),
             child: CachedNetworkImage(
-              imageUrl: controller.store.storeinfo.logo,
+              imageUrl: controller.store!.storeinfo.logo,
               imageBuilder: (context, imageProvider) => Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -381,10 +384,10 @@ class StorePage extends StatelessWidget {
         ),
         Column(
           children: [
-            Text(controller.store.storeinfo.name , style: const TextStyle(
+            Text(controller.store!.storeinfo.name , style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),),
-            Text(controller.store.storeinfo.name),
+            Text(controller.store!.storeinfo.name),
           ],
         )
 
@@ -411,10 +414,10 @@ class StorePage extends StatelessWidget {
              SizedBox(
                height: Get.width * 0.02,
              ),
-             Text(controller.store.storeinfo.description,style: TextStyle(
+             Text(controller.store!.storeinfo.description,style: TextStyle(
                  color: Colors.black,
                  fontWeight: FontWeight.w600,
-                 fontSize: Get.width * 0.02
+                 fontSize: Get.width * 0.025
              ),),
 
            ],
@@ -439,7 +442,7 @@ class StorePage extends StatelessWidget {
                height: Get.width * 0.08,
                child: Center(
                  child: Text(
-                   '${controller.store.storeinfo.categoryName}',
+                   '${controller.store!.storeinfo.categoryName}',
                    style:  TextStyle(
                        color: Colors.white,
                        fontWeight: FontWeight.bold,
@@ -551,10 +554,10 @@ class StorePage extends StatelessWidget {
                 ,viewportFraction: 1,
                 height: Get.height * 0.18,
                 onPageChanged: (index, reason) {
-                  controller.store.storeinfo.sliders;
+                  controller.store!.storeinfo.sliders;
                 },
               ),
-              items: controller.store.storeinfo.sliders
+              items: controller.store!.storeinfo.sliders
                   .map((item) => Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
@@ -583,7 +586,7 @@ class StorePage extends StatelessWidget {
             ),
             GetBuilder<StorePageController>(builder: (c){
               return DotsIndicator(
-                dotsCount: controller.store.storeinfo.sliders.length,
+                dotsCount: controller.store!.storeinfo.sliders.length,
                 position: c.indexSlider,
                 decorator: DotsDecorator(
                   color: Colors.grey,
