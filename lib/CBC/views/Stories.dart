@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/controllers/StoreController.dart';
@@ -39,105 +40,122 @@ class Stories extends StatelessWidget {
             fontWeight: FontWeight.bold
         ),),
       ),
-      body: Container(
-          height: Get.height,
-          width: Get.width,
-          margin: EdgeInsets.only(bottom: Get.height * 0.02),
-          color: Colors.white,
-          child: Column(
-            children: [
-              Center(
-                child: Container(
-                  height: Get.width * 0.13,
-                  width: Get.width ,
-                  child: Row(
-                    children: [
-                      //---------
-                      Container(
-                        child: Center(child: Text(
-                          'الاحدث',
-                          style: TextStyle(
-                              color: AppColors.cbcColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Get.width * 0.03
-                          ),
-                        ),),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent),
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(top: 20 , right: 20),
-                        width: Get.width * 0.23,
-                      ),
-                      //---------
-                      Container(
-                        child: Center(child: Text(
-                          'ترتيب',
-                          style: TextStyle(
-                              color: AppColors.cbcColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Get.width * 0.035
-                          ),
-                        ),),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent),
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(top: 20 , right: 20),
-                        width: Get.width * 0.23,
-                      ),
-                      // ----------
-                      Container(
-                        child: Center(child: Text(
-                          'من  - الى',
-                          style:  TextStyle(
-                              color: AppColors.cbcColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Get.width * 0.03
-                          ),
-                        ),),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blueAccent),
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(top: 20 , right: 20),
-                        width: Get.width * 0.23,
-                      ),
-                      Container(
-                        child: Center(child: Icon(Icons.tune , color: AppColors.cbcColor,),),
+      body: GetBuilder<StoreController>(builder: (builder){
+        if(!builder.isLoadingStories.value){
+          if(builder.storiesList.isNotEmpty){
+            return Container(
+                height: Get.height,
+                width: Get.width,
+                margin: EdgeInsets.only(bottom: Get.height * 0.02),
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: Get.width * 0.13,
+                        width: Get.width ,
+                        child: Row(
+                          children: [
+                            //---------
+                            Container(
+                              child: Center(child: Text(
+                                'الاحدث',
+                                style: TextStyle(
+                                    color: AppColors.cbcColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Get.width * 0.03
+                                ),
+                              ),),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.blueAccent),
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.only(top: 20 , right: 20),
+                              width: Get.width * 0.23,
+                            ),
+                            //---------
+                            Container(
+                              child: Center(child: Text(
+                                'ترتيب',
+                                style: TextStyle(
+                                    color: AppColors.cbcColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Get.width * 0.035
+                                ),
+                              ),),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.blueAccent),
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.only(top: 20 , right: 20),
+                              width: Get.width * 0.23,
+                            ),
+                            // ----------
+                            Container(
+                              child: Center(child: Text(
+                                'من  - الى',
+                                style:  TextStyle(
+                                    color: AppColors.cbcColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Get.width * 0.03
+                                ),
+                              ),),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.blueAccent),
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.only(top: 20 , right: 20),
+                              width: Get.width * 0.23,
+                            ),
+                            Container(
+                              child: Center(child: Icon(Icons.tune , color: AppColors.cbcColor,),),
 
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(top: 20 , right: 20),
+                              padding: EdgeInsets.all(5),
+                              margin: EdgeInsets.only(top: 20 , right: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                    stories(),
+                  ],
+                )
+            );
+          }else{
+            return Center(
+              child: Text(
+                  '${'20'.tr}'
               ),
-              GetBuilder<StoreController>(builder: (builder){
-                if(!builder.isLoadingStories.value){
-                  if(builder.storiesList.isNotEmpty){
-                    return stories();
-                  }else{
-                    return Center(
-                      child: Text(
-                          '${'20'.tr}'
-                      ),
-                    );
-                  }
+            );
+          }
 
-                }else{
-                  return Center(child: CircularProgressIndicator(),);
-                }
-              }
-                ,)
-            ],
-          )
-      ),
+        }else{
+          return Center(child: SpinKitWave(
+            color: AppColors.cbcColor,
+            size: Get.width * 0.1,
+          ),);
+        }
+      }),
+
+
+
+
     );
   }
+
+
+
+
+
+
+
+
+
+
+
    stories(){
      return GridView.builder(
        padding: EdgeInsets.only(left: Get.height * 0.01, right: Get.height * 0.01, top: Get.height * 0.01 ),

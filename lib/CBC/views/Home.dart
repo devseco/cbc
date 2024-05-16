@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
+import 'package:ui_ecommerce/CBC/views/Card.dart';
 import 'package:ui_ecommerce/CBC/views/Cities.dart';
 import 'package:ui_ecommerce/CBC/views/HomeView.dart';
 import 'package:ui_ecommerce/res/colors.dart';
@@ -14,6 +15,7 @@ class Home_cbc extends StatelessWidget {
    final List<Widget> pages = <Widget>[
      HomeView(),
      Cities_view(),
+     CardView(),
    ];
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,20 @@ class Home_cbc extends StatelessWidget {
        ],
        index: 2,
        onTap: (index) {
+
+        switch (index) {
+          case 0:
+            chome_controller.onItemTapped(1);
+            break;
+          case 1:
+            chome_controller.onItemTapped(2);
+          case 2:
+            chome_controller.onItemTapped(0);
+            break;
+        }
+
+         print(index);
+
          // Handle button tap
        },
      );

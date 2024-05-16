@@ -4,6 +4,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
@@ -54,7 +55,10 @@ class StorePage extends StatelessWidget {
             ),
           );
         }else{
-          return Container(child: const Center(child: CircularProgressIndicator(),),);
+          return Center(child: SpinKitWave(
+            color: AppColors.cbcColor,
+            size: Get.width * 0.1,
+          ),);
         }
       }),
     );

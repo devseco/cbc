@@ -145,7 +145,6 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(height: Get.height * 0.003,),
             Flexible(
-
               child: Text(label.length > 15 ? '${label.substring(0, 20)}...' : label,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

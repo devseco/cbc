@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/controllers/Landing_controller.dart';
 
 import '../../res/colors.dart';
 class First_cbc extends StatelessWidget {
-  const First_cbc({super.key});
+   First_cbc({super.key});
+   final Chome_controller controller = Get.put(Chome_controller());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -125,12 +128,48 @@ class First_cbc extends StatelessWidget {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.only(top: Get.height * 0.06 , left:  Get.height * 0.15 , right:  Get.height * 0.15),
-              child: GetBuilder<Clanding_controller>(builder: (c){
-                return GestureDetector(
-                  onTap: (){
-                    c.onItemTapped(1);
-                  },
+
+          GetBuilder<Chome_controller>(builder: (builder){
+            if(!builder.isLoadingSliders.value){
+              return Padding(padding: EdgeInsets.only(top: Get.height * 0.06 , left:  Get.height * 0.15 , right:  Get.height * 0.15),
+                  child: GetBuilder<Clanding_controller>(builder: (c){
+                    return GestureDetector(
+                      onTap: (){
+                        c.onItemTapped(1);
+                      },
+                      child: Center(
+                        child:  Container(
+                          height: Get.height * 0.05,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.cbcColor,
+                              ),
+                              borderRadius: BorderRadius.all( Radius.circular(10)),
+                              color: AppColors.cbcColor
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.arrow_back_ios , color: Colors.white,size: Get.height * 0.018,),
+                                Text(
+                                  '87'.tr,
+                                  style: TextStyle(
+                                    fontSize: Get.width * 0.028,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },)
+              );
+            }else{
+              return Padding(padding: EdgeInsets.only(top: Get.height * 0.06 , left:  Get.height * 0.15 , right:  Get.height * 0.15),
                   child: Center(
                     child:  Container(
                       height: Get.height * 0.05,
@@ -142,26 +181,22 @@ class First_cbc extends StatelessWidget {
                           color: AppColors.cbcColor
                       ),
                       child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_back_ios , color: Colors.white,size: Get.height * 0.018,),
-                            Text(
-                              '87'.tr,
-                              style: TextStyle(
-                                fontSize: Get.width * 0.028,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        child: SpinKitWave(
+                          color: Colors.white,
+                          size: Get.width * 0.05,
                         ),
                       ),
                     ),
                   ),
-                );
-              },)
-          ),
+
+              );
+            }
+
+          }),
+
+
+
+
           SizedBox(
             height: Get.height * 0.01,
           ),
@@ -177,9 +212,6 @@ class First_cbc extends StatelessWidget {
               ),
             ),
           )
-
-
-
         ],
       ),
     );

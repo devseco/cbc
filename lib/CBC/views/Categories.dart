@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/CategoriesController.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
@@ -54,11 +55,14 @@ class CategoriesView extends StatelessWidget {
                 ),
               );
             }
-
           }else{
-            return Center(child: CircularProgressIndicator(),);
+            return Center(child: SpinKitWave(
+              color: AppColors.cbcColor,
+              size: Get.width * 0.1,
+            ),);
           }
-        },)
+        }
+        ,)
       ),
 
     );
