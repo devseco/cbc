@@ -1,5 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/CBC/models/CardAbout.dart';
+import 'package:ui_ecommerce/CBC/models/CardSales.dart';
+import 'package:ui_ecommerce/CBC/models/CardType.dart';
 import 'package:ui_ecommerce/CBC/models/Category.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
@@ -144,6 +146,39 @@ class RemoteServices {
       return null;
     }
   }
+  //Fetch Card Types From Endpoint (getCardType)
+  static Future<CardType?> fetchCardTypes() async {
+    var endpoint = 'getCardType';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        CardType cardType = cardTypeFromJson(jsonData);
+        return cardType;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  //Fetch Card Sales From Endpoint (getCardSales)
+  static Future<CardSale?> fetchCardSales() async {
+    var endpoint = 'getCardSales';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        CardSale cardSale = cardSaleFromJson(jsonData);
+        return cardSale;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
 
 
 
