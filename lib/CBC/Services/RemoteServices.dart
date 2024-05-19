@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:ui_ecommerce/CBC/models/Account.dart';
 import 'package:ui_ecommerce/CBC/models/CardAbout.dart';
 import 'package:ui_ecommerce/CBC/models/CardSales.dart';
 import 'package:ui_ecommerce/CBC/models/CardType.dart';
@@ -178,7 +179,22 @@ class RemoteServices {
       return null;
     }
   }
-
+  //Fetch Account From Endpoint (getAccount)
+  static Future<List<AccountModel>?> fetchAccount(id) async {
+    var endpoint = 'getAccount/${id}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<AccountModel> account = accountModelFromJson(jsonData);
+        return account;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 
 
 

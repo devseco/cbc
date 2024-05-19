@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/CardAbout.dart';
 import 'package:ui_ecommerce/CBC/models/CardSales.dart';
 import 'package:ui_ecommerce/CBC/models/CardType.dart';
-
 import '../Services/RemoteServices.dart';
-
 class CardController extends GetxController with SingleGetTickerProviderMixin{
   TabController? tabController;
   var isLoadingAbout= true.obs;
