@@ -7,6 +7,7 @@ import 'package:ui_ecommerce/CBC/models/CardType.dart';
 import 'package:ui_ecommerce/CBC/models/Category.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
+import 'package:ui_ecommerce/CBC/models/Qr.dart';
 import 'package:ui_ecommerce/CBC/models/Store.dart';
 import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
 import '../models/Slider.dart';
@@ -212,7 +213,22 @@ class RemoteServices {
       return null;
     }
   }
-
+  //Fetch Qr From Endpoint (getQr)
+  static Future<List<QrModel>?> fetchQr() async {
+    var endpoint = 'getQr';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<QrModel> qr = qrModelFromJson(jsonData);
+        return qr;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 
 
 

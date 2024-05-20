@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Help.dart';
+import 'package:ui_ecommerce/CBC/views/InstructionsView.dart';
+import 'package:ui_ecommerce/CBC/views/ShareView.dart';
 
 import '../../res/colors.dart';
 import 'CallCenterView.dart';
@@ -63,8 +66,8 @@ class Help extends StatelessWidget {
            controller: controller.tabController,
            children: [
              CallCenterView(),
-             CallCenterView(),
-             CallCenterView(),
+             InstructionsView(),
+             ShareView(),
 
            ],
          );

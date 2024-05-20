@@ -11,8 +11,7 @@ class CallCenterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           Center(
             child: SizedBox(
