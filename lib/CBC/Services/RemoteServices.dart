@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/CBC/models/Account.dart';
+import 'package:ui_ecommerce/CBC/models/CallCenter.dart';
 import 'package:ui_ecommerce/CBC/models/CardAbout.dart';
 import 'package:ui_ecommerce/CBC/models/CardSales.dart';
 import 'package:ui_ecommerce/CBC/models/CardType.dart';
@@ -195,6 +196,23 @@ class RemoteServices {
       return null;
     }
   }
+  //Fetch CallCenter From Endpoint (getCallCenter)
+  static Future<List<CallCenterModel>?> fetchCallCenter() async {
+    var endpoint = 'getCallCenter';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<CallCenterModel> callCenter = callCenterModelFromJson(jsonData);
+        return callCenter;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
 
 
 

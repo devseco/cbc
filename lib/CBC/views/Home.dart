@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/views/Card.dart';
 import 'package:ui_ecommerce/CBC/views/Cities.dart';
+import 'package:ui_ecommerce/CBC/views/Help.dart';
 import 'package:ui_ecommerce/CBC/views/HomeView.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 
@@ -19,6 +20,7 @@ class Home_cbc extends StatelessWidget {
      Cities_view(),
      CardView(),
      Account(),
+     Help(),
    ];
   @override
   Widget build(BuildContext context) {
@@ -88,6 +90,9 @@ class Home_cbc extends StatelessWidget {
             chome_controller.onItemTapped(2);
           case 2:
             chome_controller.onItemTapped(0);
+            break;
+          case 3:
+            chome_controller.onItemTapped(4);
             break;
           case 4:
             chome_controller.onItemTapped(3);

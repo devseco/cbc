@@ -9,7 +9,6 @@ class cardAbout extends StatelessWidget {
   final CardController controller = Get.put(CardController());
   @override
   Widget build(BuildContext context) {
-    if(controller.cardAbout!.about.isNotEmpty){
       return  Padding(padding: EdgeInsetsDirectional.only(start: Get.width * 0.05 , end: Get.width * 0.05 , top: Get.width * 0.05),
         child: ListView(
             shrinkWrap: true,
@@ -199,16 +198,6 @@ class cardAbout extends StatelessWidget {
 
 
       );
-    }else{
-      return Center(child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('102'.tr),
-          SizedBox(width: Get.width * 0.02,),
-          FaIcon(FontAwesomeIcons.faceSadTear)
-        ],
-      ),);
-    }
+
   }
 }
