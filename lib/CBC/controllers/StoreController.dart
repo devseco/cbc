@@ -17,7 +17,8 @@ class StoreController extends GetxController {
     try {
       var list = await RemoteServices.fetchStories(cate,city);
       if(list != null){
-        storiesList.value = list;
+        storiesList.value = [list];
+        print(storiesList[0].stories[1].name);
       }else{
         isLoadingStories(false);
       }

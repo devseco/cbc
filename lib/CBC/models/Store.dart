@@ -4,11 +4,31 @@
 
 import 'dart:convert';
 
-List<Store> storeFromJson(String str) => List<Store>.from(json.decode(str).map((x) => Store.fromJson(x)));
+Store storeFromJson(String str) => Store.fromJson(json.decode(str));
 
-String storeToJson(List<Store> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String storeToJson(Store data) => json.encode(data.toJson());
 
 class Store {
+  List<Story> stories;
+  List<dynamic> ads;
+
+  Store({
+    required this.stories,
+    required this.ads,
+  });
+
+  factory Store.fromJson(Map<String, dynamic> json) => Store(
+    stories: List<Story>.from(json["stories"].map((x) => Story.fromJson(x))),
+    ads: List<dynamic>.from(json["Ads"].map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "stories": List<dynamic>.from(stories.map((x) => x.toJson())),
+    "Ads": List<dynamic>.from(ads.map((x) => x)),
+  };
+}
+
+class Story {
   int id;
   String name;
   String logo;
@@ -17,9 +37,13 @@ class Store {
   int category;
   int city;
   int active;
+  String facebook;
+  String instagram;
+  String telegram;
+  String whatsapp;
   int discountCount;
 
-  Store({
+  Story({
     required this.id,
     required this.name,
     required this.logo,
@@ -28,10 +52,14 @@ class Store {
     required this.category,
     required this.city,
     required this.active,
+    required this.facebook,
+    required this.instagram,
+    required this.telegram,
+    required this.whatsapp,
     required this.discountCount,
   });
 
-  factory Store.fromJson(Map<String, dynamic> json) => Store(
+  factory Story.fromJson(Map<String, dynamic> json) => Story(
     id: json["id"],
     name: json["name"],
     logo: json["logo"],
@@ -40,6 +68,10 @@ class Store {
     category: json["category"],
     city: json["city"],
     active: json["active"],
+    facebook: json["facebook"],
+    instagram: json["instagram"],
+    telegram: json["telegram"],
+    whatsapp: json["whatsapp"],
     discountCount: json["discountCount"],
   );
 
@@ -52,6 +84,10 @@ class Store {
     "category": category,
     "city": city,
     "active": active,
+    "facebook": facebook,
+    "instagram": instagram,
+    "telegram": telegram,
+    "whatsapp": whatsapp,
     "discountCount": discountCount,
   };
 }

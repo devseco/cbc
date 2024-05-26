@@ -101,13 +101,13 @@ class RemoteServices {
 
 
   //Fetch Stories From Endpoint (getStories)
-  static Future<List<Store>?> fetchStories(cate , city) async {
+  static Future<Store?> fetchStories(cate , city) async {
     var endpoint = 'getStories/${cate}/${city}';
     try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
       if (response.statusCode == 200) {
         var jsonData = response.body;
-        List<Store> sliders = storeFromJson(jsonData);
+        Store? sliders = storeFromJson(jsonData);
         return sliders;
       } else {
         return null;

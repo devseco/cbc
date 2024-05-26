@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
@@ -50,6 +52,13 @@ class Stories extends StatelessWidget {
                 color: Colors.white,
                 child: Column(
                   children: [
+                    Obx(() {
+                      if(!controller.isLoadingStories.value){
+                        return (controller.storiesList[0].ads.length > 0)? StoreSliders() : placholder404();
+                      }else{
+                        return placholderSlider();
+                      }
+                    }),
                     Center(
                       child: Container(
                         height: Get.width * 0.13,
@@ -120,7 +129,8 @@ class Stories extends StatelessWidget {
                         ),
                       ),
                     ),
-                    stories(),
+
+                    Expanded(child: stories()),
                   ],
                 )
             );
@@ -139,14 +149,89 @@ class Stories extends StatelessWidget {
           ),);
         }
       }),
-
-
-
-
     );
   }
-
-
+   placholderSlider(){
+     return Container(
+       height: Get.height * 0.3,
+       width: Get.width * 0.97,
+       decoration: BoxDecoration(
+           borderRadius: BorderRadius.circular(30),
+           border: Border.all(color: Colors.white60)
+       ),
+       margin: EdgeInsets.all(Get.height * 0.004),
+       child: Center(
+           child: ClipRRect(
+             borderRadius: BorderRadius.circular(10.0),
+             child: const CircularProgressIndicator(),
+           )
+       ),
+     );
+   }
+   placholder404(){
+     return Container(
+       height: Get.height * 0.3,
+       width: Get.width * 0.97,
+       decoration: BoxDecoration(
+           borderRadius: BorderRadius.circular(30),
+           border: Border.all(color: Colors.white60)
+       ),
+       margin: EdgeInsets.all(Get.height * 0.004),
+       child: Center(
+           child: ClipRRect(
+             borderRadius: BorderRadius.circular(10.0),
+             child: Image.asset('assets/images/comingsoon.jpg' , fit: BoxFit.fill,),
+           )
+       ),
+     );
+   }
+   StoreSliders(){
+     return Padding(padding: EdgeInsetsDirectional.only(top: Get.height * 0.02 ),
+       child: SizedBox(
+         height:  Get.height * 0.2,
+         child: Column(
+           children: [
+             CarouselSlider(
+               options: CarouselOptions(
+                 autoPlay: true
+                 ,viewportFraction: 1,
+                 height: Get.height * 0.18,
+                 onPageChanged: (index, reason) {
+                   controller.storiesList[0].ads;
+                 },
+               ),
+               items: controller.storiesList[0].ads
+                   .map((item) => Container(
+                   decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(30),
+                       border: Border.all(color: Colors.white60)
+                   ),
+                   margin: EdgeInsets.all(Get.height * 0.002),
+                   padding: EdgeInsetsDirectional.only(start: Get.height * 0.02,end: Get.height * 0.02,top: Get.height * 0.004,bottom: Get.height * 0.004),
+                   child: ClipRRect(
+                     borderRadius: BorderRadius.circular(10.0),
+                     child: CachedNetworkImage(
+                       imageUrl: item,
+                       imageBuilder: (context, imageProvider) => Container(
+                         decoration: BoxDecoration(
+                           image: DecorationImage(
+                             image: imageProvider,
+                             fit: BoxFit.fill,
+                           ),
+                         ),
+                       ),
+                       placeholder: (context, url) => const Center(child: CircularProgressIndicator(),),
+                       errorWidget: (context, url, error) => const Icon(Icons.error),
+                     ),
+                   )
+               ))
+                   .toList(),
+             ),
+           ],
+         ),
+       ),
+     );
+   }
 
 
 
@@ -166,9 +251,9 @@ class Stories extends StatelessWidget {
          mainAxisSpacing: 5.0,
          childAspectRatio: 0.8,
        ),
-       itemCount: controller.storiesList.length,
+       itemCount: controller.storiesList[0].stories.length,
        itemBuilder: (BuildContext context, int index) {
-         final Item = controller.storiesList[index];
+         final Item = controller.storiesList[0].stories[index];
          return StoreItem(Item.logo, Item.name, Item.id, Item.active , Item.discountCount);
        },
      );
