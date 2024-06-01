@@ -668,6 +668,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "textfield_search",
+      "rootUri": "file:///Users/m1/.pub-cache/hosted/pub.dev/textfield_search-0.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "timing",
       "rootUri": "file:///Users/m1/.pub-cache/hosted/pub.dev/timing-1.0.1",
       "packageUri": "lib/",
@@ -740,7 +746,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-05-26T16:07:14.731667Z",
+  "generated": "2024-06-01T21:48:41.308737Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-190.1.beta"
 }

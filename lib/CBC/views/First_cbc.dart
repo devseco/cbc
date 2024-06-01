@@ -12,7 +12,7 @@ class First_cbc extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Column(
+      child: ListView(
         children: [
           Image.asset(
             'assets/images/panel_cbc.png',
@@ -194,9 +194,6 @@ class First_cbc extends StatelessWidget {
 
           }),
 
-
-
-
           SizedBox(
             height: Get.height * 0.01,
           ),
@@ -206,7 +203,7 @@ class First_cbc extends StatelessWidget {
             child: Text(
               'الاصدار : 1.0.0',
               style: TextStyle(
-                fontSize: Get.height * 0.012,
+                fontSize: Get.height * 0.013,
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
               ),

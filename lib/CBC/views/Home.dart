@@ -33,7 +33,7 @@ class Home_cbc extends StatelessWidget {
   }
    menuBottom(){
      return CurvedNavigationBar(
-       height: Get.height * 0.1,
+       height: Get.height * 0.12,
        color: AppColors.cbcColor,
        buttonBackgroundColor: Colors.red,
        backgroundColor: Colors.white,

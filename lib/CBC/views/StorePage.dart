@@ -8,13 +8,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:ui_ecommerce/CBC/controllers/StoreController.dart';
 import 'package:ui_ecommerce/CBC/controllers/StorePageController.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 class StorePage extends StatelessWidget {
    StorePage({super.key});
    final StorePageController controller = Get.put(StorePageController());
-   final StoreController storeController = Get.put(StoreController());
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -369,7 +367,7 @@ class StorePage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(45.0),
             child: CachedNetworkImage(
-              imageUrl: controller.store!.storeinfo.logo,
+              imageUrl: controller.store!.storeinfo.logo ,
               imageBuilder: (context, imageProvider) => Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(

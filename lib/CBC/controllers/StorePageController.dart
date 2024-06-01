@@ -9,11 +9,14 @@ class StorePageController extends GetxController with SingleGetTickerProviderMix
   var isLoadingItem= true.obs;
   int indexSlider = 0;
    TabController? tabController;
+   int id = 0;
+  dynamic argumentData = Get.arguments;
   void fetchStore() async {
     try {
-      var fetchedStore = await RemoteServices.fetchStore(1);
+      var fetchedStore = await RemoteServices.fetchStore(id);
       if (fetchedStore != null) {
         store = fetchedStore;
+        print('Branches : ${store!.storeinfo.logo}');
         isLoadingItem(false);
       } else {
         isLoadingItem(false);
@@ -29,6 +32,7 @@ class StorePageController extends GetxController with SingleGetTickerProviderMix
   @override
   void onInit() {
     tabController = TabController(length: 4, vsync: this);
+    id = argumentData[0]['id'];
     fetchStore();
     // TODO: implement onInit
     super.onInit();

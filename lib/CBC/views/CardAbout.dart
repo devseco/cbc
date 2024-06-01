@@ -129,8 +129,8 @@ class cardAbout extends StatelessWidget {
               SizedBox(
                 height: Get.width * 0.35,
                 child: ListView.builder(
-                  shrinkWrap: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  physics: PageScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
                   itemCount: controller.cardAbout!.features.length, // عدد العناصر في القائمة
                   itemBuilder: (BuildContext context, int index) {
@@ -145,7 +145,7 @@ class cardAbout extends StatelessWidget {
                           SizedBox(
                             width: Get.height * 0.01,
                           ),
-                          Text(controller.cardAbout!.features[0].title , style: TextStyle(
+                          Text(controller.cardAbout!.features[index].title , style: TextStyle(
                               fontSize: Get.height * 0.0115,
                               fontWeight: FontWeight.bold
                           ),)
@@ -167,8 +167,8 @@ class cardAbout extends StatelessWidget {
               SizedBox(
                 height: Get.width * 0.35,
                 child: ListView.builder(
-                  shrinkWrap: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  physics: PageScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
                   itemCount: controller.cardAbout!.doing.length, // عدد العناصر في القائمة
                   itemBuilder: (BuildContext context, int index) {
@@ -183,7 +183,7 @@ class cardAbout extends StatelessWidget {
                           SizedBox(
                             width: Get.height * 0.01,
                           ),
-                          Text(controller.cardAbout!.doing[0].title , style: TextStyle(
+                          Text(controller.cardAbout!.doing[index].title , style: TextStyle(
                               fontSize: Get.height * 0.0115,
                               fontWeight: FontWeight.bold
                           ),)

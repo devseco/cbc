@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
 import '../Services/RemoteServices.dart';
 import '../models/Slider.dart';
+import '../models/TestItem.dart';
 
 class Chome_controller extends GetxController {
   final fixedItem = City(
@@ -11,7 +13,7 @@ class Chome_controller extends GetxController {
     image: 'https://static.vecteezy.com/system/resources/previews/019/633/209/original/doodle-freehand-drawing-of-iraq-map-free-png.png',
     active: 1,
   );
-
+  late TextEditingController myController = TextEditingController();
   int selectedIndex = 0;
   int index = 0;
   var isLoadingRecently= true.obs;
@@ -23,7 +25,22 @@ class Chome_controller extends GetxController {
   var highestList = <Discount>[].obs;
   var slidersList = <SliderBar>[].obs;
   var citiesList = <City>[].obs;
+  Future<List<TestItem>> fetchData() async {
+    await Future.delayed(Duration(milliseconds: 2000));
+    List<TestItem> _list = [];
+    String _inputText = myController.text;
+    List<dynamic> filters = await RemoteServices.filterStories(_inputText);
+    for (var jsonItem in filters) {
+      _list.add(TestItem.fromJson(jsonItem));
+    }
+    return _list;
+  }
 
+  _printLatestValue() {
+    print("Textfield value: ${myController.text}");
+
+    //print("Textfield value: ${myController.text}");
+  }
   void onItemTapped(int index) {
     selectedIndex = index;
     print('tap: ${index}');

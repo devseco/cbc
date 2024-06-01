@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/views/Cities.dart';
+import 'package:ui_ecommerce/CBC/views/HighestStories.dart';
 import 'package:ui_ecommerce/CBC/views/Home.dart';
 import 'package:ui_ecommerce/CBC/views/Categories.dart';
 import 'package:ui_ecommerce/AQS//Bindings/Billing_bindings.dart';
@@ -25,6 +26,7 @@ import 'package:ui_ecommerce/AQS/views/Landing.dart';
 import 'package:ui_ecommerce/AQS/views/Login.dart';
 import 'package:ui_ecommerce/AQS/views/ProductPage.dart';
 import 'package:ui_ecommerce/AQS/views/Products.dart';
+import 'package:ui_ecommerce/CBC/views/RecentlyStories.dart';
 import 'package:ui_ecommerce/Togather/Bindings/appBindings.dart';
 import 'package:ui_ecommerce/Togather/views/landing.dart';
 final List<GetPage> appPages = [
@@ -43,5 +45,8 @@ final List<GetPage> appPages = [
   GetPage(name: '/billing', page: ()=>Billing() , binding: Billing_bindings()),
   GetPage(name: '/Item_Billing', page: ()=>Item_Billing() , binding: ItemBilling_bindings()),
   GetPage(name: '/cities', page: ()=>Cities_view()),
+  //cbc
   GetPage(name: '/categories_cbc', page: ()=>CategoriesView()),
+  GetPage(name: '/recentlyStories', page: ()=>RecentlyStories()),
+  GetPage(name: '/HighestStories', page: ()=>HighestStories()),
 ];

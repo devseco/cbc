@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/CBC/models/Account.dart';
 import 'package:ui_ecommerce/CBC/models/CallCenter.dart';
@@ -103,36 +105,41 @@ class RemoteServices {
   //Fetch Stories From Endpoint (getStories)
   static Future<Store?> fetchStories(cate , city) async {
     var endpoint = 'getStories/${cate}/${city}';
-    try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
+      print(response.body);
       if (response.statusCode == 200) {
+        print(111);
         var jsonData = response.body;
-        Store? sliders = storeFromJson(jsonData);
+        Store sliders = storeFromJson(jsonData);
         return sliders;
       } else {
+        print(222);
         return null;
       }
-    } catch (e) {
-      return null;
-    }
+
   }
 
 //Fetch Stories From Endpoint (getStories)
   static Future<StoreModel?> fetchStore(id) async {
-    var endpoint = 'getStore/${id}';
+    var endpoint = 'getStore/$id';
     try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
       if (response.statusCode == 200) {
         var jsonData = response.body;
+        print('Raw JSON response: $jsonData'); // Log the raw JSON response
         StoreModel store = storeModelFromJson(jsonData);
+        print('Parsed StoreModel: $store'); // Log the parsed StoreModel
         return store;
       } else {
+        print('Failed to fetch store: ${response.statusCode}');
         return null;
       }
     } catch (e) {
+      print('Exception caught: $e');
       return null;
     }
   }
+
   //Fetch Card About From Endpoint (getCardAbout)
   static Future<CardAbout?> fetchCardAbout() async {
     var endpoint = 'getCardAbout';
@@ -227,6 +234,19 @@ class RemoteServices {
       }
     } catch (e) {
       return null;
+    }
+  }
+  //filter Stories
+  static Future filterStories(String title) async {
+    var endpoint = 'filterStories/${title}';
+    var response = await client.get(Uri.parse(baseUrl + endpoint));
+
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      var items = jsonData;
+      return items;
+    } else {
+      return [];
     }
   }
 

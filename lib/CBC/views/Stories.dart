@@ -45,6 +45,7 @@ class Stories extends StatelessWidget {
       body: GetBuilder<StoreController>(builder: (builder){
         if(!builder.isLoadingStories.value){
           if(builder.storiesList.isNotEmpty){
+
             return Container(
                 height: Get.height,
                 width: Get.width,
@@ -135,6 +136,7 @@ class Stories extends StatelessWidget {
                 )
             );
           }else{
+            print('not data');
             return Center(
               child: Text(
                   '${'20'.tr}'
@@ -262,7 +264,7 @@ class Stories extends StatelessWidget {
      if (id != -1) { // تحقق من أن الـ ID ليس يساوي -1 قبل عرض المحافظة
        return GestureDetector(
          onTap: () {
-           Get.to(()=>StorePage());
+           Get.to(()=>StorePage() , arguments: [{"id" : id}]);
 
 
          },

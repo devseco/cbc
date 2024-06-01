@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -43,10 +44,10 @@ class cardType extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: Get.width * 0.35,
+                height: Get.width * 0.4,
                 child: ListView.builder(
-                  shrinkWrap: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  physics: PageScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
                   itemCount: controller.cardType!.type.length, // عدد العناصر في القائمة
                   itemBuilder: (BuildContext context, int index) {
@@ -86,11 +87,10 @@ class cardType extends StatelessWidget {
                     fontSize: Get.width * 0.04
                 ),
               ),
-              SizedBox(
-                height: Get.width * 0.35,
+              Expanded(
                 child: ListView.builder(
-                  shrinkWrap: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  physics: PageScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
                   itemCount: controller.cardType!.offer.length, // عدد العناصر في القائمة
                   itemBuilder: (BuildContext context, int index) {

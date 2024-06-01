@@ -3,11 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:get/get.dart';
+import 'package:textfield_search/textfield_search.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 import '../controllers/Home_controller.dart';
+import '../models/TestItem.dart';
+import 'StorePage.dart';
 class HomeView extends StatelessWidget {
    HomeView({super.key});
   final Chome_controller  controller = Get.put(Chome_controller());
+
   @override
   Widget build(BuildContext context) {
     return content();
@@ -41,7 +45,7 @@ class HomeView extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              DiscountLabel('89'.tr),
+              DiscountLabel('89'.tr , 'recentlyStories'),
               SizedBox(
                 height: Get.height * 0.02,
               ),
@@ -49,7 +53,7 @@ class HomeView extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              DiscountLabel('91'.tr),
+              DiscountLabel('91'.tr , 'HighestStories'),
               SizedBox(
                 height: Get.height * 0.02,
               ),
@@ -91,7 +95,7 @@ class HomeView extends StatelessWidget {
       child: Center(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           )
       ),
     );
@@ -115,13 +119,14 @@ class HomeView extends StatelessWidget {
   DiscountItem(String url , String label  , int id , int discount) {
     return GestureDetector(
       onTap: (){
+        Get.to(()=>StorePage() , arguments: [{"id" : id}]);
         //Get.toNamed('/products' , arguments: [{'id':id}]);
       },
       child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.01,end: Get.height * 0.01),
         child: Column(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15))
               ),
               height: Get.height * 0.08,
@@ -138,7 +143,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -153,7 +158,7 @@ class HomeView extends StatelessWidget {
             SizedBox(height: Get.height * 0.003,),
             Row(
               children: [
-                Text('الخصم ' ,  overflow: TextOverflow.ellipsis,),
+                const Text('الخصم ' ,  overflow: TextOverflow.ellipsis,),
                 Text('${discount}%',  overflow: TextOverflow.ellipsis,style: TextStyle(
                     color: AppColors.cbcRed,
                     fontWeight: FontWeight.bold,
@@ -166,7 +171,7 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-  DiscountLabel(title) {
+  DiscountLabel(title , page) {
     return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.height * 0.02),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -189,7 +194,7 @@ class HomeView extends StatelessWidget {
           ),
           GestureDetector(
             onTap: (){
-              Get.toNamed('bestProducts');
+              Get.toNamed('${page}');
 
             },
             child: Row(
@@ -199,7 +204,7 @@ class HomeView extends StatelessWidget {
                     fontWeight: FontWeight.w600
                 ),),
                 SizedBox(width: Get.height * 0.007,),
-                Icon(Icons.arrow_circle_left_outlined , color: AppColors.cbcRed,),
+                const Icon(Icons.arrow_circle_left_outlined , color: AppColors.cbcRed,),
               ],
             ),
           )
@@ -224,7 +229,19 @@ class HomeView extends StatelessWidget {
         width: Get.width * 0.8,
         height: Get.height * 0.05,
         child: GetBuilder<Chome_controller>(builder: (c) {
-          return TextField(
+          return TextFieldSearch(
+            label: 'My Label',
+            controller: controller.myController,
+            future: () {
+              return controller.fetchData();
+            },
+            getSelectedValue: (value) {
+              if(value != null){
+                TestItem selectedItem = value as TestItem; // تأكد من أن القيمة هي من نوع TestItem
+                Get.to(()=>StorePage() , arguments: [{"id" : selectedItem.value}]);
+                controller.myController.clear();
+              }
+            },
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
@@ -232,18 +249,18 @@ class HomeView extends StatelessWidget {
               hintStyle: TextStyle(
                 fontSize: Get.height * 0.015,
               ),
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(10) , bottomLeft: Radius.circular(10)),
                 borderSide: BorderSide(
                   color: AppColors.cbcColor,
                 ),
               ),
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(10) , bottomLeft: Radius.circular(10)),
                 borderSide: BorderSide(color: AppColors.cbcColor,),
               ),
               suffixIcon: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.cbcColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10) , bottomLeft: Radius.circular(10)),
                 ),
@@ -252,9 +269,11 @@ class HomeView extends StatelessWidget {
                 child: Icon(Icons.search, color: Colors.white, size: Get.height * 0.03),
               ),
             ),
-            onChanged: (value) => null,
-            onSubmitted: (value) => print('onSubmitted value: $value'),
           );
+
+
+
+
         },),
       ),
     );
@@ -323,9 +342,9 @@ class HomeView extends StatelessWidget {
     return GridView.builder(
 
       padding: EdgeInsets.only(left: Get.height * 0.01,right: Get.height * 0.01),
-      physics: NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+      physics: const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
       shrinkWrap: true, // You won't see infinite size error
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
@@ -355,7 +374,7 @@ class HomeView extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.cbcColor,
               border: Border.all(color: Colors.black12),
-              borderRadius: BorderRadius.all(Radius.circular(15))
+              borderRadius: const BorderRadius.all(Radius.circular(15))
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -374,7 +393,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -382,7 +401,7 @@ class HomeView extends StatelessWidget {
               Center(
                 child: Text(title , textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white
                   ),
@@ -404,7 +423,7 @@ class HomeView extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.cbcRed,
               border: Border.all(color: Colors.black12),
-              borderRadius: BorderRadius.all(Radius.circular(15))
+              borderRadius: const BorderRadius.all(Radius.circular(15))
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,7 +441,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -430,7 +449,7 @@ class HomeView extends StatelessWidget {
               Center(
                 child: Text(title , textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white
                   ),

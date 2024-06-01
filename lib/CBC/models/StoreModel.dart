@@ -105,7 +105,7 @@ class Storeinfo {
 
 class Branch {
   String title;
-  int phone;
+  String phone;
   String location;
 
   Branch({

@@ -18,8 +18,9 @@ class StoreController extends GetxController {
       var list = await RemoteServices.fetchStories(cate,city);
       if(list != null){
         storiesList.value = [list];
-        print(storiesList[0].stories[1].name);
+        print('Data : ${storiesList[0].stories.length}');
       }else{
+        print('loading not');
         isLoadingStories(false);
       }
     }finally{
@@ -36,6 +37,7 @@ class StoreController extends GetxController {
     cate = argumentData[0]['cate'];
     cate_name = argumentData[0]['cate_name'];
     city_name = argumentData[0]['city_name'];
+    print('City : ${city} Cate : ${cate}');
     fetchStories();
     // TODO: implement onInit
     super.onInit();
