@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ui_ecommerce/CBC/views/AllCategories.dart';
 import 'package:ui_ecommerce/CBC/views/Cities.dart';
 import 'package:ui_ecommerce/CBC/views/HighestStories.dart';
 import 'package:ui_ecommerce/CBC/views/Home.dart';
@@ -49,4 +50,5 @@ final List<GetPage> appPages = [
   GetPage(name: '/categories_cbc', page: ()=>CategoriesView()),
   GetPage(name: '/recentlyStories', page: ()=>RecentlyStories()),
   GetPage(name: '/HighestStories', page: ()=>HighestStories()),
+  GetPage(name: '/AllCategories', page: ()=>AllCategories()),
 ];

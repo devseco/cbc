@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/CBC/models/Account.dart';
+import 'package:ui_ecommerce/CBC/models/AllStore.dart';
 import 'package:ui_ecommerce/CBC/models/CallCenter.dart';
 import 'package:ui_ecommerce/CBC/models/CardAbout.dart';
 import 'package:ui_ecommerce/CBC/models/CardSales.dart';
@@ -103,8 +104,8 @@ class RemoteServices {
 
 
   //Fetch Stories From Endpoint (getStories)
-  static Future<Store?> fetchStories(cate , city) async {
-    var endpoint = 'getStories/${cate}/${city}';
+  static Future<Store?> fetchStories(cate , city , orderby) async {
+    var endpoint = 'getStoriesBy/${cate}/${city}/${orderby}';
       var response = await client.get(Uri.parse(baseUrl + endpoint));
       print(response.body);
       if (response.statusCode == 200) {
@@ -116,6 +117,23 @@ class RemoteServices {
         print(222);
         return null;
       }
+  }
+  //Fetch Stories From Endpoint (getStories)
+  static Future<List<AllStore>?> fetchAllStories(orderby,city) async {
+    var endpoint = 'getAllStoriesBy/${orderby}/${city}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        print(jsonData);
+        List<AllStore> items = allStoreFromJson(jsonData);
+        return items;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
 
   }
 

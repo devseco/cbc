@@ -12,6 +12,7 @@ import 'package:ui_ecommerce/CBC/views/HomeView.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 
 import 'AccountView.dart';
+import 'AllCategories.dart';
 class Home_cbc extends StatelessWidget {
    Home_cbc({super.key});
   final Chome_controller chome_controller = Get.put(Chome_controller());
@@ -21,6 +22,7 @@ class Home_cbc extends StatelessWidget {
      CardView(),
      Account(),
      Help(),
+     AllCategories(),
    ];
   @override
   Widget build(BuildContext context) {
@@ -84,7 +86,8 @@ class Home_cbc extends StatelessWidget {
 
         switch (index) {
           case 0:
-            chome_controller.onItemTapped(1);
+            chome_controller.onItemTapped(5);
+            print('ok');
             break;
           case 1:
             chome_controller.onItemTapped(2);

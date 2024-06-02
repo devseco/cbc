@@ -422,6 +422,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "modal_bottom_sheet",
+      "rootUri": "file:///Users/m1/.pub-cache/hosted/pub.dev/modal_bottom_sheet-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "motion_tab_bar_v2",
       "rootUri": "file:///Users/m1/.pub-cache/hosted/pub.dev/motion_tab_bar_v2-0.3.0",
       "packageUri": "lib/",
@@ -746,7 +752,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-06-01T21:48:41.308737Z",
+  "generated": "2024-06-02T15:05:11.799223Z",
   "generator": "pub",
   "generatorVersion": "3.4.0-190.1.beta"
 }

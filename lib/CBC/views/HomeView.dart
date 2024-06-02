@@ -11,7 +11,6 @@ import 'StorePage.dart';
 class HomeView extends StatelessWidget {
    HomeView({super.key});
   final Chome_controller  controller = Get.put(Chome_controller());
-
   @override
   Widget build(BuildContext context) {
     return content();
@@ -115,7 +114,6 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-
   DiscountItem(String url , String label  , int id , int discount) {
     return GestureDetector(
       onTap: (){

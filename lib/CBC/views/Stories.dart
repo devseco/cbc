@@ -1,10 +1,14 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/controllers/StoreController.dart';
 import 'package:ui_ecommerce/CBC/views/StorePage.dart';
@@ -17,21 +21,22 @@ class Stories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         actions: [
-          Padding(padding: EdgeInsetsDirectional.only(end: 20),
+          Padding(padding: const EdgeInsetsDirectional.only(end: 20),
             child:  GetBuilder<Chome_controller>(builder: (builder){
               return GestureDetector(
                 onTap: (){
                   builder.onItemTapped(0);
-                  Get.off(()=>Landing_togather());
+                  Get.off(()=>const Landing_togather());
                 },
-                child: Icon(Icons.home),
+                child: const Icon(Icons.home),
               );
             },),
           )
         ],
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white
         ),
         backgroundColor: AppColors.cbcColor,
@@ -62,76 +67,90 @@ class Stories extends StatelessWidget {
                     }),
                     Center(
                       child: Container(
+                        margin: EdgeInsets.only(left: Get.width * 0.05 , right: Get.width * 0.05 ),
                         height: Get.width * 0.13,
                         width: Get.width ,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            //---------
-                            Container(
-                              child: Center(child: Text(
-                                'الاحدث',
+                            Center(
+                              child: Text('94'.tr ,
                                 style: TextStyle(
-                                    color: AppColors.cbcColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.width * 0.03
-                                ),
+                                  color: AppColors.cbcColor,
+                                  fontSize: Get.width * 0.05,
+                                  fontWeight: FontWeight.bold
                               ),),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blueAccent),
-                                color: Colors.white,
-                              ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.only(top: 20 , right: 20),
-                              width: Get.width * 0.23,
                             ),
-                            //---------
-                            Container(
-                              child: Center(child: Text(
-                                'ترتيب',
-                                style: TextStyle(
-                                    color: AppColors.cbcColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.width * 0.035
-                                ),
-                              ),),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blueAccent),
-                                color: Colors.white,
-                              ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.only(top: 20 , right: 20),
-                              width: Get.width * 0.23,
-                            ),
-                            // ----------
-                            Container(
-                              child: Center(child: Text(
-                                'من  - الى',
-                                style:  TextStyle(
-                                    color: AppColors.cbcColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.width * 0.03
-                                ),
-                              ),),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blueAccent),
-                                color: Colors.white,
-                              ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.only(top: 20 , right: 20),
-                              width: Get.width * 0.23,
-                            ),
-                            Container(
-                              child: Center(child: Icon(Icons.tune , color: AppColors.cbcColor,),),
+                           GetBuilder<StoreController>(builder: (builder){
+                             return  DropdownButtonHideUnderline(
 
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.only(top: 20 , right: 20),
-                            ),
+                               child: DropdownButton2<String>(
+                                 iconStyleData: IconStyleData(
+                                   icon: Icon(Icons.filter_alt_rounded)
+                                 ),
+
+                                 isExpanded: true,
+                                 hint: Center(
+                                   child: Text(
+                                     '76'.tr,
+                                     style: TextStyle(
+                                       fontSize: Get.width * 0.03,
+                                       color: Theme.of(context).hintColor,
+                                     ),
+                                   ),
+                                 ),
+                                 items: builder.items
+                                     .map((String item) => DropdownMenuItem<String>(
+                                   value: item,
+                                   child: Center(
+                                     child: Text(
+                                       item,
+                                       style:  TextStyle(
+                                           fontSize: Get.width * 0.03,
+                                           fontWeight: FontWeight.bold
+                                       ),
+                                     ),
+                                   ),
+                                 ))
+                                     .toList(),
+                                 value: builder.selectedValue,
+                                 onChanged: (String? value) {
+                                   builder.changeFilter(value);
+                                 },
+                                 buttonStyleData:  ButtonStyleData(
+                                   padding: EdgeInsets.symmetric(horizontal: 16),
+                                   height: Get.width * 0.3,
+                                   width: Get.width * 0.25,
+                                 ),
+                                 menuItemStyleData:  MenuItemStyleData(
+                                   height: Get.width * 0.08,
+
+                                 ),
+                               ),
+                             );
+                           }
+
+                           )
                           ],
                         ),
                       ),
                     ),
 
-                    Expanded(child: stories()),
+                    Obx(() {
+                      if(!controller.isFilter.value){
+                        return  Expanded(child: stories());
+                      }else{
+                        if(controller.isLoadingFilter.value){
+                          return  Center(child: SpinKitWave(
+                            color: AppColors.cbcColor,
+                            size: Get.width * 0.1,
+                          ),);
+                        }else{
+                          return  Expanded(child: stories());
+                        }
+                      }
+                    }),
+
                   ],
                 )
             );
@@ -151,6 +170,175 @@ class Stories extends StatelessWidget {
           ),);
         }
       }),
+    );
+  }
+  filterRecently(){
+    return Container(
+      height: Get.width * 0.8,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+         Padding(padding: EdgeInsets.only(top: Get.width * 0.04 , bottom: Get.width * 0.04),
+         child:  Text('143'.tr , style: TextStyle(
+           fontWeight: FontWeight.bold,
+           fontSize: Get.width * 0.04
+         ),),
+         ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                child: Container(
+                    width: Get.width * 0.3,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: Center(
+                      child: Text('145'.tr ,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Get.width * 0.03
+                        ),
+                      ),
+                    )
+                ),
+              ),
+              SizedBox(width: 10), // مسافة بين الزرين
+              GestureDetector(
+                child: Container(
+                    width: Get.width * 0.3,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: Center(
+                      child: Text('146'.tr ,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Get.width * 0.03
+                        ),
+                      ),
+                    )
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: Get.width * 0.05,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                child: Container(
+                  width: Get.width * 0.3,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5))
+                  ),
+                  child: Center(
+                    child: Text('77'.tr ,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: Get.width * 0.03
+                      ),
+                    ),
+                  )
+                ),
+              ),
+              SizedBox(width: 10), // مسافة بين الزرين
+              GestureDetector(
+                child: Container(
+                    width: Get.width * 0.3,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: Center(
+                      child: Text('78'.tr ,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          fontSize: Get.width * 0.03
+                        ),
+                      ),
+                    )
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: Get.width * 0.05),
+          Container(
+            height: 1,
+            width: Get.width * 0.8,
+            color: Colors.grey,
+          ),
+          SizedBox(height: Get.width * 0.05),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                child: Container(
+                    width: Get.width * 0.25,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.cbcColor,
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: Center(
+                      child: Text('147'.tr ,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Get.width * 0.03
+                        ),
+                      ),
+                    )
+                ),
+              ),
+              SizedBox(width: 10), // مسافة بين الزرين
+              GestureDetector(
+                onTap: (){
+                  Get.back();
+                },
+                child: Container(
+                    width: Get.width * 0.2,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                    ),
+                    child: Center(
+                      child: Text('53'.tr ,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Get.width * 0.03
+                        ),
+                      ),
+                    )
+                ),
+              ),
+            ],
+          ),
+
+        ],
+      ),
     );
   }
    placholderSlider(){
@@ -269,13 +457,13 @@ class Stories extends StatelessWidget {
 
          },
          child: Container(
-           margin: EdgeInsets.all(8),
+           margin: const EdgeInsets.all(8),
            padding: EdgeInsets.all(Get.height * 0.01),
            width: Get.height * 0.25,
            decoration: BoxDecoration(
                color: (active == 0) ? AppColors.cbcColor : Colors.white,
                border: Border.all(color: Colors.black12),
-               borderRadius: BorderRadius.all(Radius.circular(15))
+               borderRadius: const BorderRadius.all(Radius.circular(15))
            ),
            child: Column(
              crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,11 +483,11 @@ class Stories extends StatelessWidget {
                        ),
                      ),
                    ),
-                   placeholder: (context, url) => CircularProgressIndicator(),
-                   errorWidget: (context, url, error) => Icon(Icons.error),
+                   placeholder: (context, url) => const CircularProgressIndicator(),
+                   errorWidget: (context, url, error) => const Icon(Icons.error),
                  ),
 
-               ) : SizedBox(),
+               ) : const SizedBox(),
                SizedBox(height: Get.height * 0.01,),
                Center(
                  child: Text(title , textAlign: TextAlign.center,
@@ -328,7 +516,7 @@ class Stories extends StatelessWidget {
          ),
        );
      } else {
-       return SizedBox.shrink(); // إذا كان الـ ID يساوي -1، لا تعرض أي شيء باستخدام SizedBox.shrink()
+       return const SizedBox.shrink(); // إذا كان الـ ID يساوي -1، لا تعرض أي شيء باستخدام SizedBox.shrink()
      }
    }
 

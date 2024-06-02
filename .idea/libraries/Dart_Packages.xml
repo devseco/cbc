@@ -492,6 +492,13 @@
             </list>
           </value>
         </entry>
+        <entry key="modal_bottom_sheet">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/modal_bottom_sheet-3.0.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="motion_tab_bar_v2">
           <value>
             <list>
@@ -933,6 +940,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.8.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.12.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/mime-1.0.5/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/modal_bottom_sheet-3.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/motion_tab_bar_v2-0.3.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/octo_image-2.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/package_config-2.1.0/lib" />
