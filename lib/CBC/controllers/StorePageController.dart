@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../Services/RemoteServices.dart';
 
@@ -12,22 +13,44 @@ class StorePageController extends GetxController with SingleGetTickerProviderMix
    int id = 0;
   dynamic argumentData = Get.arguments;
   void fetchStore() async {
+    isLoadingItem(true);
+
     try {
       var fetchedStore = await RemoteServices.fetchStore(id);
       if (fetchedStore != null) {
-        store = fetchedStore;
-        print('Branches : ${store!.storeinfo.logo}');
-        isLoadingItem(false);
+        if(fetchedStore.storeinfo.name.isNotEmpty){
+          store = fetchedStore;
+          isLoadingItem(false);
+          print('loaaaaad');
+        }
+
       } else {
         isLoadingItem(false);
-        // يمكنك إضافة معالجة لحالة الفشل هنا إذا كنت بحاجة إليها
       }
+    }catch(e){
+      print(e.toString());
     } finally {
+      print('ok ok');
       isLoadingItem(false);
-      // أي شيء تحتاج إلى القيام به بغض النظر عن نجاح أو فشل الطلب يمكنك وضعه هنا
     }
     isLoadingItem(false);
     update();
+  }
+  Future<void> openurl(_url) async {
+    launchUrlString(_url);
+  }
+  void callPhone(phone){
+    launchUrlString("tel://${phone}");
+  }
+  launchWhatsAppUri(phone) async {
+    String infoText = '';
+    String whatsappUrl =
+        "whatsapp://send?phone=$phone" "&text=${Uri.encodeFull(infoText)}";
+    try {
+      launchUrlString(whatsappUrl);
+    } catch (e) {
+      //handle error properly
+    }
   }
   @override
   void onInit() {

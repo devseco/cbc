@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/AllStore.dart';
-import 'package:ui_ecommerce/CBC/models/Store.dart';
-
 import '../Services/RemoteServices.dart';
 import '../models/City.dart';
-
 class AllCategoriesController extends GetxController {
   var isLoadingStories= true.obs;
   var isLoadingFilter= true.obs;
@@ -13,8 +10,6 @@ class AllCategoriesController extends GetxController {
   int id_city = 0;
   var selectedFilter = RxString('');
   var citiesList = <City>[].obs;
-
-  RangeValues currentRangeValues = const RangeValues(0, 100);
   int cate = 0;
   int city_id = 0;
   int orderby = 0;

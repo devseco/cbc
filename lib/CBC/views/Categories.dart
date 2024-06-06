@@ -34,7 +34,7 @@ class CategoriesView extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white
         ),
-        title: Text('${'93'.tr}  ${controller.city}' ,style: const TextStyle(
+        title: Text('${controller.city}' ,style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
         ),),
@@ -75,7 +75,7 @@ class CategoriesView extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1,
+        childAspectRatio: 0.95,
       ),
       itemCount: controller.categoriesList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -89,7 +89,6 @@ class CategoriesView extends StatelessWidget {
          onTap: () {
            Get.to(()=>Stories() , arguments: [{'cate' : id , 'city' : controller.id ,
              'id' : 0 ,'city_name' : controller.city ,  'cate_name' : title }]);
-
          },
          child: Container(
            height: Get.height,
@@ -123,11 +122,17 @@ class CategoriesView extends StatelessWidget {
                ) : const SizedBox(),
                SizedBox(height: Get.height * 0.01,),
                Center(
-                 child: Text(title , textAlign: TextAlign.center,
-                   overflow: TextOverflow.ellipsis,
-                   style: const TextStyle(
+                 child: Container(
+                   width: Get.width,
+                   child: Text(
+                     title,
+                     textAlign: TextAlign.center,
+                     softWrap: true,
+                     style: TextStyle(
+                       fontSize: Get.width * 0.025,
                        fontWeight: FontWeight.bold,
-                       color: Colors.black
+                       color: Colors.black,
+                     ),
                    ),
                  ),
                )

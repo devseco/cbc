@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/controllers/Landing_controller.dart';
-
 import '../../res/colors.dart';
 class First_cbc extends StatelessWidget {
    First_cbc({super.key});
@@ -129,29 +128,40 @@ class First_cbc extends StatelessWidget {
             ),
           ),
 
-          GetBuilder<Chome_controller>(builder: (builder){
-            if(!builder.isLoadingSliders.value){
-              return Padding(padding: EdgeInsets.only(top: Get.height * 0.06 , left:  Get.height * 0.15 , right:  Get.height * 0.15),
-                  child: GetBuilder<Clanding_controller>(builder: (c){
+          Obx(() {
+            final isLoadingSliders = controller.isLoadingSliders.value;
+            if (!isLoadingSliders) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  top: Get.height * 0.06,
+                  left: Get.height * 0.15,
+                  right: Get.height * 0.15,
+                ),
+                child: GetBuilder<Clanding_controller>(
+                  builder: (c) {
                     return GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         c.onItemTapped(1);
                       },
                       child: Center(
-                        child:  Container(
+                        child: Container(
                           height: Get.height * 0.05,
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.cbcColor,
-                              ),
-                              borderRadius: BorderRadius.all( Radius.circular(10)),
-                              color: AppColors.cbcColor
+                            border: Border.all(
+                              color: AppColors.cbcColor,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: AppColors.cbcColor,
                           ),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.arrow_back_ios , color: Colors.white,size: Get.height * 0.018,),
+                                Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.white,
+                                  size: Get.height * 0.018,
+                                ),
                                 Text(
                                   '87'.tr,
                                   style: TextStyle(
@@ -166,33 +176,38 @@ class First_cbc extends StatelessWidget {
                         ),
                       ),
                     );
-                  },)
+                  },
+                ),
               );
-            }else{
-              return Padding(padding: EdgeInsets.only(top: Get.height * 0.06 , left:  Get.height * 0.15 , right:  Get.height * 0.15),
-                  child: Center(
-                    child:  Container(
-                      height: Get.height * 0.05,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.cbcColor,
-                          ),
-                          borderRadius: BorderRadius.all( Radius.circular(10)),
-                          color: AppColors.cbcColor
+            } else {
+              return Padding(
+                padding: EdgeInsets.only(
+                  top: Get.height * 0.06,
+                  left: Get.height * 0.15,
+                  right: Get.height * 0.15,
+                ),
+                child: Center(
+                  child: Container(
+                    height: Get.height * 0.05,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.cbcColor,
                       ),
-                      child: Center(
-                        child: SpinKitWave(
-                          color: Colors.white,
-                          size: Get.width * 0.05,
-                        ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: AppColors.cbcColor,
+                    ),
+                    child: Center(
+                      child: SpinKitWave(
+                        color: Colors.white,
+                        size: Get.width * 0.05,
                       ),
                     ),
                   ),
-
+                ),
               );
             }
-
           }),
+
 
           SizedBox(
             height: Get.height * 0.01,

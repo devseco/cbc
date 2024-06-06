@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/CallCenter.dart';
 import 'package:ui_ecommerce/CBC/models/Qr.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../Services/RemoteServices.dart';
 
 class HelpController extends GetxController  with SingleGetTickerProviderMixin{
@@ -51,6 +52,19 @@ class HelpController extends GetxController  with SingleGetTickerProviderMixin{
     }
     isLoadingQr(false);
     update();
+  }
+  void callPhone(phone){
+    launchUrlString("tel://${phone}");
+  }
+  launchWhatsAppUri(phone) async {
+    String infoText = '';
+    String whatsappUrl =
+        "whatsapp://send?phone=$phone" "&text=${Uri.encodeFull(infoText)}";
+    try {
+      launchUrlString(whatsappUrl);
+    } catch (e) {
+      //handle error properly
+    }
   }
   @override
   void onInit() {

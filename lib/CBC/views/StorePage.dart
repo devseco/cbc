@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -31,27 +29,43 @@ class StorePage extends StatelessWidget {
       ),
       body: Obx(() {
         if(!controller.isLoadingItem.value){
-          return Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                Obx(() {
-                  if(!controller.isLoadingItem.value){
-                    return (controller.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
-                  }else{
-                    return placholderSlider();
-                  }
-                }),
-                StoreLogo(),
-                StoreInfo(),
-                TabsPages(),
-                SizedBox(
-                  height: Get.width * 0.03,
-                ),
-                PagesTabs(),
-              ],
-            ),
-          );
+         if(controller.store != null){
+           return  Container(
+             color: Colors.white,
+             child: Column(
+               children: [
+                 Obx(() {
+                   if(!controller.isLoadingItem.value){
+                     return (controller.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
+                   }else{
+                     return placholderSlider();
+                   }
+                 }),
+                 StoreLogo(),
+                 StoreInfo(),
+                 TabsPages(),
+                 SizedBox(
+                   height: Get.width * 0.03,
+                 ),
+                 PagesTabs(),
+               ],
+             ),
+           );
+         }else{
+           return Center(
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children: [
+                 Text('20'.tr),
+                 SizedBox(
+                   width: Get.width * 0.02,
+                 ),
+                 FaIcon(FontAwesomeIcons.faceSadTear)
+               ],
+             ),
+           );
+         }
         }else{
           return Center(child: SpinKitWave(
             color: AppColors.cbcColor,
@@ -96,9 +110,6 @@ class StorePage extends StatelessWidget {
             Tab(text: '101'.tr),
           ],
         ),
-
-
-
       ],
     ),
     );
@@ -133,36 +144,46 @@ class StorePage extends StatelessWidget {
              trailing: Wrap(
                spacing: 12, // space between two icons
                children: <Widget>[
-                 Container(
-                   padding: EdgeInsets.all(Get.width * 0.01),
-                   decoration: BoxDecoration(
-                       color: AppColors.cbcColor,
-                       border: Border.all(
+                GestureDetector(
+                  onTap: (){
+                    controller.callPhone(controller.store!.storeinfo.branches[index].phone);
+                  },
+                  child:  Container(
+                    padding: EdgeInsets.all(Get.width * 0.01),
+                    decoration: BoxDecoration(
+                        color: AppColors.cbcColor,
+                        border: Border.all(
+                          color: AppColors.cbcColor,
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))
+                    ),
+                    width: Get.width * 0.08,
+                    height: Get.width * 0.06,
+                    child: Center(
+                      child: FaIcon(FontAwesomeIcons.phone , size: Get.width * 0.035, color: Colors.white,),
+                    ),
+                  ),
+                ),
+                 GestureDetector(
+                   onTap: (){
+                     controller.openurl(controller.store!.storeinfo.branches[index].location);
+                   },
+                   child: Container(
+                     padding: EdgeInsets.all(Get.width * 0.01),
+                     decoration: BoxDecoration(
                          color: AppColors.cbcColor,
-                       ),
-                       borderRadius: const BorderRadius.all(Radius.circular(10))
+                         border: Border.all(
+                           color: AppColors.cbcColor,
+                         ),
+                         borderRadius: const BorderRadius.all(Radius.circular(10))
+                     ),
+                     width: Get.width * 0.08,
+                     height: Get.width * 0.06,
+                     child: Center(
+                       child: FaIcon(FontAwesomeIcons.locationDot , size: Get.width * 0.035, color: Colors.white,),
+                     ),
                    ),
-                   width: Get.width * 0.08,
-                   height: Get.width * 0.06,
-                   child: Center(
-                     child: FaIcon(FontAwesomeIcons.phone , size: Get.width * 0.035, color: Colors.white,),
-                   ),
-                 ),
-                 Container(
-                   padding: EdgeInsets.all(Get.width * 0.01),
-                   decoration: BoxDecoration(
-                       color: AppColors.cbcColor,
-                       border: Border.all(
-                         color: AppColors.cbcColor,
-                       ),
-                       borderRadius: const BorderRadius.all(Radius.circular(10))
-                   ),
-                   width: Get.width * 0.08,
-                   height: Get.width * 0.06,
-                   child: Center(
-                     child: FaIcon(FontAwesomeIcons.locationDot , size: Get.width * 0.035, color: Colors.white,),
-                   ),
-                 ),
+                 )
                ],
              ),
            );
@@ -176,7 +197,7 @@ class StorePage extends StatelessWidget {
          children: [
            Text('103'.tr),
            SizedBox(width: Get.width * 0.02,),
-           FaIcon(FontAwesomeIcons.faceSadTear)
+           const FaIcon(FontAwesomeIcons.faceSadTear)
          ],
        ),);
      }
@@ -188,8 +209,8 @@ class StorePage extends StatelessWidget {
      List<Widget> placeholders = List.generate(
        placeholdersCount,
            (index) => Container(
-         margin: EdgeInsets.all(2),
-         decoration: BoxDecoration(
+         margin: const EdgeInsets.all(2),
+         decoration: const BoxDecoration(
            color: AppColors.cbcColor, // استخدم اللون المطلوب هنا
          ),
        ),
@@ -197,7 +218,7 @@ class StorePage extends StatelessWidget {
     if(list.isNotEmpty){
       return GridView.builder(
         padding: EdgeInsets.only(left: Get.width * 0.05 ,right: Get.width * 0.05),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
           crossAxisSpacing: 2.0,
           mainAxisSpacing: 1.0,
@@ -210,28 +231,28 @@ class StorePage extends StatelessWidget {
               onTap: () {
                 Get.dialog(
                   Dialog(
-                    insetPadding: EdgeInsets.all(10),
+                    insetPadding: const EdgeInsets.all(10),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Align(
                           alignment: Alignment.topRight,
                           child: IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: () {
                               Get.back();
                             },
                           ),
                         ),
                         ClipRect( // Wrap PhotoView with ClipRect
-                          child: Container(
+                          child: SizedBox(
                             width: Get.width ,
                             height: Get.height * 0.5,
                             child: PhotoView(
                               imageProvider: CachedNetworkImageProvider(
                                 list[index],
                               ),
-                              backgroundDecoration: BoxDecoration(
+                              backgroundDecoration: const BoxDecoration(
                                 color: Colors.transparent,
                               ),
                               initialScale: PhotoViewComputedScale.contained
@@ -246,7 +267,7 @@ class StorePage extends StatelessWidget {
 
               },
               child: Container(
-                margin: EdgeInsets.all(2),
+                margin: const EdgeInsets.all(2),
                 child: CachedNetworkImage(
                   imageUrl: list[index],
                   imageBuilder: (context, imageProvider) => Container(
@@ -257,7 +278,7 @@ class StorePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) => CircularProgressIndicator(),
+                  placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -275,7 +296,7 @@ class StorePage extends StatelessWidget {
         children: [
           Text(text),
           SizedBox(width: Get.width * 0.02,),
-          FaIcon(FontAwesomeIcons.faceSadTear)
+          const FaIcon(FontAwesomeIcons.faceSadTear)
         ],
       ),);
     }
@@ -335,7 +356,7 @@ class StorePage extends StatelessWidget {
         children: [
           Text('102'.tr),
           SizedBox(width: Get.width * 0.02,),
-          FaIcon(FontAwesomeIcons.faceSadTear)
+          const FaIcon(FontAwesomeIcons.faceSadTear)
         ],
       ),);
     }
@@ -461,34 +482,44 @@ class StorePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(Get.width * 0.01),
-                        decoration: BoxDecoration(
-                            color: AppColors.cbcColor,
-                            border: Border.all(
+                     GestureDetector(
+                       onTap: (){
+                         controller.openurl(controller.store!.storeinfo.instagram);
+                       },
+                       child:  Container(
+                         padding: EdgeInsets.all(Get.width * 0.01),
+                         decoration: BoxDecoration(
+                             color: AppColors.cbcColor,
+                             border: Border.all(
+                               color: AppColors.cbcColor,
+                             ),
+                             borderRadius: const BorderRadius.all(Radius.circular(10))
+                         ),
+                         width: Get.width * 0.145,
+                         height: Get.width * 0.06,
+                         child: Center(
+                           child: FaIcon(FontAwesomeIcons.instagram , size: Get.width * 0.035, color: Colors.white,),
+                         ),
+                       ),
+                     ),
+                      GestureDetector(
+                        onTap: (){
+                          controller.openurl(controller.store!.storeinfo.facebook);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(Get.width * 0.01),
+                          decoration: BoxDecoration(
                               color: AppColors.cbcColor,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10))
-                        ),
-                        width: Get.width * 0.145,
-                        height: Get.width * 0.06,
-                        child: Center(
-                          child: FaIcon(FontAwesomeIcons.instagram , size: Get.width * 0.035, color: Colors.white,),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(Get.width * 0.01),
-                        decoration: BoxDecoration(
-                            color: AppColors.cbcColor,
-                            border: Border.all(
-                              color: AppColors.cbcColor,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10))
-                        ),
-                        width: Get.width * 0.145,
-                        height: Get.width * 0.06,
-                        child: Center(
-                          child: FaIcon(FontAwesomeIcons.facebookF , size: Get.width * 0.035, color: Colors.white,),
+                              border: Border.all(
+                                color: AppColors.cbcColor,
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: Get.width * 0.145,
+                          height: Get.width * 0.06,
+                          child: Center(
+                            child: FaIcon(FontAwesomeIcons.facebookF , size: Get.width * 0.035, color: Colors.white,),
+                          ),
                         ),
                       ),
                     ],
@@ -499,44 +530,51 @@ class StorePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(Get.width * 0.01),
-                        decoration: BoxDecoration(
+                  GestureDetector(
+                    onTap: (){
+                      controller.launchWhatsAppUri(controller.store!.storeinfo.whatsapp);
+                    },
+                    child:Container(
+                      padding: EdgeInsets.all(Get.width * 0.01),
+                      decoration: BoxDecoration(
+                          color: AppColors.cbcColor,
+                          border: Border.all(
                             color: AppColors.cbcColor,
-                            border: Border.all(
-                              color: AppColors.cbcColor,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10))
-                        ),
-                        width: Get.width * 0.145,
-                        height: Get.width * 0.06,
-                        child: Center(
-                          child: FaIcon(FontAwesomeIcons.whatsapp , size: Get.width * 0.035, color: Colors.white,),
-                        ),
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(10))
                       ),
-
-                      Container(
-                        padding: EdgeInsets.all(Get.width * 0.01),
-                        decoration: BoxDecoration(
-                            color: AppColors.cbcColor,
-                            border: Border.all(
-                              color: AppColors.cbcColor,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(10))
-                        ),
-                        width: Get.width * 0.145,
-                        height: Get.width * 0.06,
-                        child: Center(
-                          child: FaIcon(FontAwesomeIcons.tiktok , size: Get.width * 0.035, color: Colors.white,),
-                        ),
+                      width: Get.width * 0.145,
+                      height: Get.width * 0.06,
+                      child: Center(
+                        child: FaIcon(FontAwesomeIcons.whatsapp , size: Get.width * 0.035, color: Colors.white,),
                       ),
+                    ),
+                  ),
+                      GestureDetector(
+                        onTap: (){
+                          controller.openurl(controller.store!.storeinfo.telegram);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(Get.width * 0.01),
+                          decoration: BoxDecoration(
+                              color: AppColors.cbcColor,
+                              border: Border.all(
+                                color: AppColors.cbcColor,
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: Get.width * 0.145,
+                          height: Get.width * 0.06,
+                          child: Center(
+                            child: FaIcon(FontAwesomeIcons.tiktok , size: Get.width * 0.035, color: Colors.white,),
+                          ),
+                        ),
+                      )
                     ],
                   ),
 
                 ],
               ),
-
-
             ],
           ),
         )

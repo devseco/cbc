@@ -83,36 +83,46 @@ class CallCenterView extends StatelessWidget {
                         trailing: Wrap(
                           spacing: 12, // space between two icons
                           children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(Get.width * 0.01),
-                              decoration: BoxDecoration(
-                                  color: AppColors.cbcColor,
-                                  border: Border.all(
+                            GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.all(Get.width * 0.01),
+                                decoration: BoxDecoration(
                                     color: AppColors.cbcColor,
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.circular(10))
+                                    border: Border.all(
+                                      color: AppColors.cbcColor,
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))
+                                ),
+                                width: Get.width * 0.08,
+                                height: Get.width * 0.06,
+                                child: Center(
+                                  child: FaIcon(FontAwesomeIcons.whatsapp , size: Get.width * 0.035, color: Colors.white,),
+                                ),
                               ),
-                              width: Get.width * 0.08,
-                              height: Get.width * 0.06,
-                              child: Center(
-                                child: FaIcon(FontAwesomeIcons.whatsapp , size: Get.width * 0.035, color: Colors.white,),
-                              ),
+                              onTap: (){
+                                controller.launchWhatsAppUri(builder.callCenterList[index].phone);
+                              },
                             ),
-                            Container(
-                              padding: EdgeInsets.all(Get.width * 0.01),
-                              decoration: BoxDecoration(
-                                  color: AppColors.cbcColor,
-                                  border: Border.all(
+                            GestureDetector(
+                              onTap: (){
+                                controller.callPhone(builder.callCenterList[index].phone);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(Get.width * 0.01),
+                                decoration: BoxDecoration(
                                     color: AppColors.cbcColor,
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.circular(10))
+                                    border: Border.all(
+                                      color: AppColors.cbcColor,
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))
+                                ),
+                                width: Get.width * 0.08,
+                                height: Get.width * 0.06,
+                                child: Center(
+                                  child: FaIcon(FontAwesomeIcons.phone , size: Get.width * 0.035, color: Colors.white,),
+                                ),
                               ),
-                              width: Get.width * 0.08,
-                              height: Get.width * 0.06,
-                              child: Center(
-                                child: FaIcon(FontAwesomeIcons.phone , size: Get.width * 0.035, color: Colors.white,),
-                              ),
-                            ),
+                            )
 
                           ],
                         ),
@@ -125,7 +135,7 @@ class CallCenterView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('103'.tr),
+                      Text('20'.tr),
                       SizedBox(width: Get.width * 0.02,),
                       FaIcon(FontAwesomeIcons.faceSadTear)
                     ],

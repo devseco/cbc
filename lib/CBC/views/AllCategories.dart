@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/AllCategoriesController.dart';
-import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/views/StorePage.dart';
 import '../../res/colors.dart';
 class AllCategories extends StatelessWidget {
@@ -147,7 +146,6 @@ class AllCategories extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         controller.filterBillsByStatus(index);
-        // تحديث القيمة المحددة
         controller.selectedFilter.value = filter;
       },
       child: Obx(() => Container(
@@ -177,9 +175,9 @@ class AllCategories extends StatelessWidget {
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 5.0,
+        crossAxisSpacing: 20.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 0.8,
+        childAspectRatio: 1.3,
       ),
       itemCount: controller.storiesList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -193,8 +191,6 @@ class AllCategories extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           Get.to(()=>StorePage() , arguments: [{"id" : id}]);
-
-
         },
         child: Container(
           margin: const EdgeInsets.all(8),
@@ -211,7 +207,7 @@ class AllCategories extends StatelessWidget {
             children: <Widget>[
               (active == 1) ? Center(
                 child:  CachedNetworkImage(
-                  height: Get.height * 0.15,
+                  height: Get.height * 0.07,
                   width: Get.height * 0.2,
                   imageUrl: url,
                   imageBuilder: (context, imageProvider) => Container(
@@ -233,7 +229,7 @@ class AllCategories extends StatelessWidget {
                 child: Text(title , textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontSize: Get.width * 0.04,
+                      fontSize: Get.width * 0.025,
                       fontWeight: FontWeight.bold,
                       color: AppColors.cbcColor
 
@@ -245,7 +241,7 @@ class AllCategories extends StatelessWidget {
                 child:  Text('${'95'.tr} ${count}٪' , textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontSize: Get.width * 0.04,
+                      fontSize: Get.width * 0.025,
                       fontWeight: FontWeight.w800,
                       color: AppColors.cbcRed
                   ),

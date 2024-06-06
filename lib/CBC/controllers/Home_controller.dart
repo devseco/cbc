@@ -95,7 +95,11 @@ class Chome_controller extends GetxController {
       var cities = await RemoteServices.fetchCities();
       if (cities != null) {
         citiesList.value = cities;
-        citiesList.insert(5, fixedItem); // إضافة المحافظة ذات الـ ID -1 في الموقع السادس
+        if (citiesList.length >= 5) {
+          citiesList.insert(5, fixedItem);
+        } else {
+          citiesList.add(fixedItem);
+        }
       }
     } finally {
       isLoadingCities(false);

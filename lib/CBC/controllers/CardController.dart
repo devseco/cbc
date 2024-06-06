@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/CardAbout.dart';
 import 'package:ui_ecommerce/CBC/models/CardSales.dart';
 import 'package:ui_ecommerce/CBC/models/CardType.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../Services/RemoteServices.dart';
 class CardController extends GetxController with SingleGetTickerProviderMixin{
   TabController? tabController;
@@ -58,6 +59,9 @@ class CardController extends GetxController with SingleGetTickerProviderMixin{
     }
     isLoadingSale(false);
     update();
+  }
+  void callPhone(phone){
+    launchUrlString("tel://${phone}");
   }
   @override
   void onInit() {

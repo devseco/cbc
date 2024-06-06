@@ -17,7 +17,7 @@ import '../models/Slider.dart';
 
 class RemoteServices {
   static var client = http.Client();
-  static var baseUrl = 'http://127.0.0.1:3000/cbc/api/v1/';
+  static var baseUrl = 'https://89.116.110.51:3000/cbc/api/v1/';
 //Login
 // fetch recently discounts
   static Future<List<Discount>?> fetchDiscountRecently() async {
@@ -62,9 +62,11 @@ class RemoteServices {
         print('loooad');
         return stories;
       } else {
+        print('errror');
         return null;
       }
     } catch (e) {
+      print(e.toString());
       return null;
     }
   }

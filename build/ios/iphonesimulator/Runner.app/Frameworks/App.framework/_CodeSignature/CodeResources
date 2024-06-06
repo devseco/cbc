@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		llCJtlR/hQk1kyu3louLamgq0E8=
+		slTcZgeIu1/BnquTch6Bn7LnH1w=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		YCJT43BudCvzGmIY8T/ev5jgNwI=
+		bcvTaxWLp9GnCIj9LorH7gS2djU=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		o+WRq3DORnY/yHivz7mUYPTkWtQ=
+		5bZp1ndBsrJHu6WKZJ3hMwRPf/U=
 		</data>
 		<key>flutter_assets/assets/fonts/Tajawal.ttf</key>
 		<data>
@@ -39,6 +39,10 @@
 		<key>flutter_assets/assets/images/account_unactive.png</key>
 		<data>
 		yFyfKMZzNj2rDFuHUqFHoCsg6qA=
+		</data>
+		<key>flutter_assets/assets/images/appcbc.jpg</key>
+		<data>
+		Fzeow3YM7mUnkmofrXJ6rW7zBW4=
 		</data>
 		<key>flutter_assets/assets/images/callcenter.png</key>
 		<data>
@@ -82,7 +86,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		VAqHckIgJCjvvvJ8NLoBunna6d8=
+		pyUceszHMiQOJe1ki4BP98XhjvQ=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -115,14 +119,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			63aClnAM2/EySMWUbpiYHWf8fmpv6DW50S891zcnJsg=
+			vB69fjOskrer6wlRFbPnQpX5j0idWFMoytIfqW4tiTg=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jp7Sa9O+bXrQGKl4bnR0G4yo5079Cu0cZjL66cvaUB0=
+			tFt6SPXGTA/9241aCdxtoLJhZH6gf1/Mbg+9J/7l19o=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -136,7 +140,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LbLWGAGIzhgfg5DSHj9iEIyBoCoiuLlHp5pnjkMxcEw=
+			DIb4QfvltGe3KmWBBgMHkZI2tJ5dTiXjFcdPu//8G5M=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/fonts/Tajawal.ttf</key>
@@ -165,6 +169,13 @@
 			<key>hash2</key>
 			<data>
 			SHNTktYdIPJtf8ND7yVq/OEl6/mZLBhyHuLodf5cJNU=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/images/appcbc.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			BU7fyaLNRk2k/e2y/H8fUd/Is5o1heZpDnXFkWa2A5Y=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/images/callcenter.png</key>
@@ -241,7 +252,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			5GW8swgz57GSgOzkDjjBECOOKD1Q4gCf0+fsNyW2cVY=
+			Sy3O+JLTwaYDJ1kOCjoIRZKzZrxQ/HRaTY/UTRAA1cQ=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

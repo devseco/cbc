@@ -363,8 +363,7 @@ class HomeView extends StatelessWidget {
     if(id != -1){
       return  GestureDetector(
         onTap: (){
-
-
+          Get.toNamed('categories_cbc' , arguments: [{'id': id , 'city' : title}]);
         },
         child: Container(
           padding: EdgeInsets.all(Get.height * 0.01),
@@ -413,7 +412,6 @@ class HomeView extends StatelessWidget {
       return  GestureDetector(
         onTap: (){
            controller.onItemTapped(1);
-
         },
         child: Container(
           padding: EdgeInsets.all(Get.height * 0.01),
