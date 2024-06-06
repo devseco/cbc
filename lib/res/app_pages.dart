@@ -28,10 +28,9 @@ import 'package:ui_ecommerce/AQS/views/Login.dart';
 import 'package:ui_ecommerce/AQS/views/ProductPage.dart';
 import 'package:ui_ecommerce/AQS/views/Products.dart';
 import 'package:ui_ecommerce/CBC/views/RecentlyStories.dart';
-import 'package:ui_ecommerce/Togather/Bindings/appBindings.dart';
 import 'package:ui_ecommerce/Togather/views/landing.dart';
 final List<GetPage> appPages = [
-  GetPage(name: '/togather', page: ()=>  Landing_togather()  , binding: appBindings()),
+  GetPage(name: '/togather', page: ()=>  Landing_togather() ),
   GetPage(name: '/home_cbc', page: ()=>  Home_cbc()),
   GetPage(name: '/', page: ()=>  Login() ,binding: Landing_bindings(),middlewares: [auth_middleware()]),
   GetPage(name: '/product', page: ()=>  ProductPage() ,binding: Product_bindings()),

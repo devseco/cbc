@@ -6,8 +6,7 @@ class Landing_togather extends StatelessWidget {
   const Landing_togather({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: DefaultTabController(
+    return  DefaultTabController(
         length: 2, // Define the number of tabs
         child: Scaffold(
           appBar: PreferredSize(
@@ -102,7 +101,6 @@ class Landing_togather extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

@@ -24,6 +24,7 @@ void main() async {
   BoxCart = await Hive.openBox<CartModel>('Cart');
   BoxFavorite = await Hive.openBox<FavoriteModel>('Favorite');
   HttpOverrides.global = MyHttpOverrides();
+  await Future.delayed(const Duration(milliseconds: 300));
   runApp(const MyApp());
 }
 Locale_controller locale_controller = Get.put(Locale_controller());
@@ -41,9 +42,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/togather',
       initialBinding: Landing_bindings(),
-      getPages: appPages,
+      initialRoute: '/togather',
+      getPages: appPages
     );
   }
 }

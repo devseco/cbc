@@ -128,8 +128,8 @@ class HighestStories extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('الخصم ' ,  overflow: TextOverflow.ellipsis,),
-                    Text('${discount}%',  overflow: TextOverflow.ellipsis,style: TextStyle(
+                     Text('95'.tr ,  overflow: TextOverflow.ellipsis,),
+                    Text(' ${discount}% ',  overflow: TextOverflow.ellipsis,style: TextStyle(
                         color: AppColors.cbcRed,
                         fontWeight: FontWeight.bold,
                         fontSize: Get.height * 0.018

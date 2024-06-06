@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/controllers/Landing_controller.dart';
+import '../../main.dart';
 import '../../res/colors.dart';
 class First_cbc extends StatelessWidget {
    First_cbc({super.key});
@@ -64,7 +65,7 @@ class First_cbc extends StatelessWidget {
                 border: Border.all(
                   color: AppColors.cbcColor,
                 ),
-                borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
+                borderRadius: BorderRadiusDirectional.horizontal(end: Radius.circular(20)),
                 color: AppColors.cbcColor
             ),
             child: Text(
@@ -81,48 +82,59 @@ class First_cbc extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: Get.height * 0.04,
-                    width: Get.height * 0.08,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.cbcColor,
-                        ),
-                        borderRadius: BorderRadius.all( Radius.circular(10)),
-                        color: AppColors.cbcColor
-                    ),
-                    child: Center(
-                      child: Text(
-                        '85'.tr,
-                        style: TextStyle(
-                          fontSize: Get.height * 0.012,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: Get.height * 0.04,
-                    width: Get.height * 0.08,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.cbcColor,
-                        ),
-                        borderRadius: BorderRadius.all( Radius.circular(10)),
-                        color: AppColors.cbcColor
-                    ),
-                    child: Center(
-                      child: Text(
-                        '86'.tr,
-                        style: TextStyle(
-                          fontSize: Get.height * 0.012,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+                 GestureDetector(
+                   onTap: (){
+                     locale_controller.changelocale('ar');
+                   },
+                   child: Container(
+                     height: Get.height * 0.04,
+                     width: Get.height * 0.08,
+                     decoration: BoxDecoration(
+                         border: Border.all(
+                           color: AppColors.cbcColor,
+                         ),
+                         borderRadius: BorderRadius.all( Radius.circular(10)),
+                         color: AppColors.cbcColor
+                     ),
+                     child: Center(
+                       child: Text(
+                         '85'.tr,
+                         style: TextStyle(
+                           fontSize: Get.height * 0.012,
+                           color: Colors.white,
+                           fontWeight: FontWeight.bold,
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+                  //
+                 GestureDetector(
+                   onTap: (){
+                     locale_controller.changelocale('ckb');
+                   },
+                   child:  Container(
+                     height: Get.height * 0.04,
+                     width: Get.height * 0.08,
+                     decoration: BoxDecoration(
+                         border: Border.all(
+                           color: AppColors.cbcColor,
+                         ),
+                         borderRadius: BorderRadius.all( Radius.circular(10)),
+                         color: AppColors.cbcColor
+                     ),
+                     child: Center(
+                       child: Text(
+                         '86'.tr,
+                         style: TextStyle(
+                           fontSize: Get.height * 0.012,
+                           color: Colors.white,
+                           fontWeight: FontWeight.bold,
+                         ),
+                       ),
+                     ),
+                   ),
+                 )
                 ],
               ),
             ),

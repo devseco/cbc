@@ -177,7 +177,7 @@ class AllCategories extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 20.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1.3,
+        childAspectRatio: 1.2,
       ),
       itemCount: controller.storiesList.length,
       itemBuilder: (BuildContext context, int index) {

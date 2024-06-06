@@ -42,7 +42,7 @@ class Home_cbc extends StatelessWidget {
        items:  [
          CurvedNavigationBarItem(
              child: Icon(Icons.category , color: Colors.white,size: 40,),
-             label: 'الاقسام',
+             label: '10'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
                fontSize: Get.height * 0.018,
@@ -50,7 +50,7 @@ class Home_cbc extends StatelessWidget {
          ),
          CurvedNavigationBarItem(
              child: Icon(Icons.credit_card , color: Colors.white,size: 40,),
-             label: 'البطاقة',
+             label: '150'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
                fontSize: Get.height * 0.018,
@@ -58,7 +58,7 @@ class Home_cbc extends StatelessWidget {
          ),
          CurvedNavigationBarItem(
              child: Icon(Icons.home , color: Colors.white,size: 40,),
-             label: 'الرئيسية',
+             label: '14'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
                fontSize: Get.height * 0.018,
@@ -66,7 +66,7 @@ class Home_cbc extends StatelessWidget {
          ),
          CurvedNavigationBarItem(
              child: Icon(Icons.help , color: Colors.white,size: 40,),
-             label: 'المساعدة',
+             label: '149'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
                fontSize: Get.height * 0.018,
@@ -74,7 +74,7 @@ class Home_cbc extends StatelessWidget {
          ),
          CurvedNavigationBarItem(
              child: Icon(Icons.person , color: Colors.white,size: 40,),
-             label: 'الحساب',
+             label: '17'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
                fontSize: Get.height * 0.018,

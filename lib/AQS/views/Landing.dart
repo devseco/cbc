@@ -246,7 +246,7 @@ class Landing extends StatelessWidget {
                  fontSize: Get.height * 0.017
              ),),
              onTap: () {
-               locale_controller.changelocale();
+               //locale_controller.changelocale();
              },
            ),
            ListTile(
