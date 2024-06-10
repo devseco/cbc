@@ -11,6 +11,7 @@ class ActiveAcount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
+      color: Colors.white,
       child: GetBuilder<AccountController>(builder: (builder){
        return notActive();
       },),

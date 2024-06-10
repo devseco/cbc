@@ -1,13 +1,10 @@
-import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/AllCategoriesController.dart';
-import 'package:ui_ecommerce/CBC/views/StorePage.dart';
+import 'package:ui_ecommerce/CBC/views/Stories.dart';
 import '../../res/colors.dart';
 class AllCategories extends StatelessWidget {
   AllCategories({super.key});
@@ -22,11 +19,11 @@ class AllCategories extends StatelessWidget {
           color: Colors.white,
           child: Column(
             children: [
-              Container(
+              Obx(() => Container(
                 margin: EdgeInsets.only(top: Get.width * 0.05 , bottom: Get.width *  0.02),
                 height: Get.width * 0.1, // Set the height as desired
                 child: filterList(),
-              ),
+              ),),
               Center(
                 child: Container(
                   margin: EdgeInsets.only(left: Get.width * 0.05 , right: Get.width * 0.05 ),
@@ -36,7 +33,7 @@ class AllCategories extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Center(
-                        child: Text('94'.tr ,
+                        child: Text('10'.tr ,
                           style: TextStyle(
                               color: AppColors.cbcColor,
                               fontSize: Get.width * 0.05,
@@ -44,63 +41,76 @@ class AllCategories extends StatelessWidget {
                           ),),
                       ),
                       GetBuilder<AllCategoriesController>(builder: (builder){
-                        return  DropdownButtonHideUnderline(
-
-                          child: DropdownButton2<String>(
-                            iconStyleData: IconStyleData(
-                                icon: Icon(Icons.filter_alt_rounded)
+                        return  Container(
+                          height: Get.width * 0.07,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColors.cbcColor, // You can set the color of the border here
+                              width: 0.5, // You can adjust the width of the border here
                             ),
-
-                            isExpanded: true,
-                            hint: Center(
-                              child: Text(
-                                '76'.tr,
-                                style: TextStyle(
-                                  fontSize: Get.width * 0.03,
-                                  color: Theme.of(context).hintColor,
-                                ),
+                            borderRadius: BorderRadius.circular(8.0), // Adjust the radius to round the corners of the border
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2<String>(
+                              iconStyleData: IconStyleData(
+                                  icon: Icon(Icons.filter_alt_rounded)
                               ),
-                            ),
-                            items: builder.items
-                                .map((String item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Center(
+                              isExpanded: true,
+                              hint: Center(
                                 child: Text(
-                                  item,
-                                  style:  TextStyle(
-                                      fontSize: Get.width * 0.03,
-                                      fontWeight: FontWeight.bold
+                                  '76'.tr,
+                                  style: TextStyle(
+                                    fontSize: Get.width * 0.03,
+                                    color: Theme.of(context).hintColor,
                                   ),
                                 ),
                               ),
-                            ))
-                                .toList(),
-                            value: builder.selectedValue,
-                            onChanged: (String? value) {
-                              builder.changeFilter(value);
-                            },
-                            buttonStyleData:  ButtonStyleData(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              height: Get.width * 0.3,
-                              width: Get.width * 0.25,
-                            ),
-                            menuItemStyleData:  MenuItemStyleData(
-                              height: Get.width * 0.08,
+                              items: builder.items
+                                  .map((String item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Center(
+                                  child: Text(
+                                    item,
+                                    style:  TextStyle(
+                                        fontSize: Get.width * 0.03,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                ),
+                              ))
+                                  .toList(),
+                              value: builder.selectedValue,
+                              onChanged: (String? value) {
+                                builder.changeFilter(value);
+                              },
+                              buttonStyleData:  ButtonStyleData(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                height: Get.width * 0.3,
+                                width: Get.width * 0.25,
+                              ),
+                              menuItemStyleData:  MenuItemStyleData(
+                                height: Get.width * 0.08,
 
+                              ),
                             ),
                           ),
                         );
-                      }
-
-                      )
+                      }),
                     ],
                   ),
                 ),
               ),
-
               Obx(() {
                 if(!controller.isFilter.value){
-                  return  Expanded(child: stories());
+                  if(controller.storiesList.isNotEmpty){
+                    return  Expanded(child: stories());
+                  }else{
+                    return Center(
+                      child: Text(
+                          '${'20'.tr}'
+                      ),
+                    );
+                  }
                 }else{
                   if(controller.isLoadingFilter.value){
                     return  Center(child: SpinKitWave(
@@ -112,15 +122,9 @@ class AllCategories extends StatelessWidget {
                   }
                 }
               }),
-
             ],
           )
       )
-
-
-
-
-
     );
   }
   Widget filterList() {
@@ -149,7 +153,7 @@ class AllCategories extends StatelessWidget {
         controller.selectedFilter.value = filter;
       },
       child: Obx(() => Container(
-        width: Get.width * 0.25,
+        width: Get.width * 0.28,
         padding: const EdgeInsets.all(5),
         margin: EdgeInsets.only(left: Get.width * 0.02, right: Get.width * 0.02),
         decoration: BoxDecoration(
@@ -161,6 +165,8 @@ class AllCategories extends StatelessWidget {
           child: Text(
             filter,
             style: TextStyle(
+              fontSize: Get.width * 0.022,
+              fontWeight: FontWeight.bold,
               color: controller.selectedFilter.value == filter ? Colors.white : Colors.black,
             ),
           ),
@@ -174,23 +180,24 @@ class AllCategories extends StatelessWidget {
       padding: EdgeInsets.only(left: Get.height * 0.01, right: Get.height * 0.01, top: Get.height * 0.01 ),
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: 3,
         crossAxisSpacing: 20.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1.2,
+        childAspectRatio: 0.75,
       ),
       itemCount: controller.storiesList.length,
       itemBuilder: (BuildContext context, int index) {
         final Item = controller.storiesList[index];
-        return StoreItem(Item.logo, Item.name, Item.id, Item.active , Item.discountCount);
+        return StoreItem(Item.image, Item.title, Item.id, Item.city , Item.active , Item.cityTitle );
       },
     );
   }
-  StoreItem(String url , String title , int id , int active , int count) {
+  StoreItem(String url , String title , int id  , int city , int active , String city_title) {
     if (id != -1) { // تحقق من أن الـ ID ليس يساوي -1 قبل عرض المحافظة
       return GestureDetector(
         onTap: () {
-          Get.to(()=>StorePage() , arguments: [{"id" : id}]);
+          Get.to(()=>Stories() , arguments: [{'cate' : id , 'city' : city ,
+            'id' : 0 ,'city_name' : city_title ,  'cate_name' : title }]);
         },
         child: Container(
           margin: const EdgeInsets.all(8),
@@ -198,7 +205,6 @@ class AllCategories extends StatelessWidget {
           width: Get.height * 0.25,
           decoration: BoxDecoration(
               color: (active == 0) ? AppColors.cbcColor : Colors.white,
-              border: Border.all(color: Colors.black12),
               borderRadius: const BorderRadius.all(Radius.circular(15))
           ),
           child: Column(
@@ -207,7 +213,7 @@ class AllCategories extends StatelessWidget {
             children: <Widget>[
               (active == 1) ? Center(
                 child:  CachedNetworkImage(
-                  height: Get.height * 0.07,
+                  height: Get.height * 0.09,
                   width: Get.height * 0.2,
                   imageUrl: url,
                   imageBuilder: (context, imageProvider) => Container(
@@ -226,27 +232,17 @@ class AllCategories extends StatelessWidget {
               ) : const SizedBox(),
               SizedBox(height: Get.height * 0.01,),
               Center(
-                child: Text(title , textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
                   style: TextStyle(
-                      fontSize: Get.width * 0.025,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.cbcColor
-
+                    fontSize: Get.width * 0.025,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
               ),
-              SizedBox(height: Get.height * 0.007,),
-              Center(
-                child:  Text('${'95'.tr} ${count}٪' , textAlign: TextAlign.start,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: Get.width * 0.025,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.cbcRed
-                  ),
-                ),
-              )
             ],
           ),
         ),

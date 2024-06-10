@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Help.dart';
 import 'package:ui_ecommerce/CBC/views/InstructionsView.dart';
 import 'package:ui_ecommerce/CBC/views/ShareView.dart';
-
 import '../../res/colors.dart';
 import 'CallCenterView.dart';
 class Help extends StatelessWidget {
@@ -14,6 +12,7 @@ class Help extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Container(
+        color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -38,14 +37,14 @@ class Help extends StatelessWidget {
            color: AppColors.cbcColor,
          ),
          indicatorWeight: 0.0, // تعيين الوزن إلى 0.0 لإزالة الخط
-         labelStyle: const TextStyle(
-             fontSize: 12.0,
+         labelStyle:  TextStyle(
+             fontSize: Get.width * 0.023,
              fontWeight: FontWeight.bold,
              color: Colors.white,
              fontFamily: 'Tajawal'
          ),
-         unselectedLabelStyle: const TextStyle(
-             fontSize: 12.0,
+         unselectedLabelStyle:  TextStyle(
+             fontSize: Get.width * 0.023,
              fontWeight: FontWeight.bold,
              color: Colors.black,
              fontFamily: 'Tajawal'
@@ -61,17 +60,20 @@ class Help extends StatelessWidget {
    }
    PagesTabs(){
      return Expanded(
-       child: GetBuilder<HelpController>(builder: (builder){
-         return TabBarView(
-           controller: controller.tabController,
-           children: [
-             CallCenterView(),
-             InstructionsView(),
-             ShareView(),
+       child: Padding(
+         padding: EdgeInsets.only(bottom: Get.width * 0.07),
+         child: GetBuilder<HelpController>(builder: (builder){
+           return TabBarView(
+             controller: controller.tabController,
+             children: [
+               CallCenterView(),
+               InstructionsView(),
+               ShareView(),
 
-           ],
-         );
-       },),
+             ],
+           );
+         },),
+       )
      );
    }
 }

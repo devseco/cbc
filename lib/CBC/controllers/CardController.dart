@@ -18,11 +18,8 @@ class CardController extends GetxController with SingleGetTickerProviderMixin{
     isLoadingAbout(true);
     try {
       var list = await RemoteServices.fetchCardAbout();
-      if(list != null){
         cardAbout = list;
-      }else{
-        isLoadingAbout(false);
-      }
+
     }finally{
       isLoadingAbout(false);
     }
@@ -34,26 +31,17 @@ class CardController extends GetxController with SingleGetTickerProviderMixin{
     isLoadingType(true);
     try {
       var list = await RemoteServices.fetchCardTypes();
-      if(list != null){
         cardType = list;
-      }else{
         isLoadingType(false);
-      }
     }finally{
-      isLoadingType(false);
     }
-    isLoadingType(false);
     update();
   }
   void fetchCardSale() async{
     isLoadingSale(true);
     try {
       var list = await RemoteServices.fetchCardSales();
-      if(list != null){
         cardSale = list;
-      }else{
-        isLoadingSale(false);
-      }
     }finally{
       isLoadingSale(false);
     }
@@ -69,6 +57,7 @@ class CardController extends GetxController with SingleGetTickerProviderMixin{
     fetchCardAbout();
     fetchCardType();
     fetchCardSale();
+
     // TODO: implement onInit
     super.onInit();
   }

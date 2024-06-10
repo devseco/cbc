@@ -87,6 +87,7 @@ class Chome_controller extends GetxController {
     }finally{
       isLoadingSliders(false);
     }
+    update();
   }
   //fetch Categories
   void fetchCities() async {
@@ -97,13 +98,16 @@ class Chome_controller extends GetxController {
         citiesList.value = cities;
         if (citiesList.length >= 5) {
           citiesList.insert(5, fixedItem);
+          isLoadingCities(false);
         } else {
           citiesList.add(fixedItem);
+          isLoadingCities(false);
         }
       }
     } finally {
-      isLoadingCities(false);
+
     }
+    update();
   }
 
   @override

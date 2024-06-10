@@ -28,31 +28,23 @@ class CardAbout {
 }
 
 class About {
-  String title;
-  String des;
   String imageFront;
   String imageBack;
   int id;
 
   About({
-    required this.title,
-    required this.des,
     required this.imageFront,
     required this.imageBack,
     required this.id,
   });
 
   factory About.fromJson(Map<String, dynamic> json) => About(
-    title: json["title"],
-    des: json["des"],
     imageFront: json["image_front"],
     imageBack: json["image_back"],
     id: json["id"],
   );
 
   Map<String, dynamic> toJson() => {
-    "title": title,
-    "des": des,
     "image_front": imageFront,
     "image_back": imageBack,
     "id": id,

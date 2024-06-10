@@ -90,14 +90,14 @@ class StorePage extends StatelessWidget {
             color: AppColors.cbcColor,
           ),
           indicatorWeight: 0.0, // تعيين الوزن إلى 0.0 لإزالة الخط
-          labelStyle: const TextStyle(
-              fontSize: 10.0,
+          labelStyle:  TextStyle(
+              fontSize: Get.width * 0.021,
               fontWeight: FontWeight.bold,
               color: Colors.white,
               fontFamily: 'Tajawal'
           ),
-          unselectedLabelStyle: const TextStyle(
-              fontSize: 10.0,
+          unselectedLabelStyle: TextStyle(
+              fontSize: Get.width * 0.021,
               fontWeight: FontWeight.bold,
               color: Colors.black,
               fontFamily: 'Tajawal'

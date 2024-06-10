@@ -35,49 +35,54 @@ class Home_cbc extends StatelessWidget {
   }
    menuBottom(){
      return CurvedNavigationBar(
-       height: Get.height * 0.12,
+       height: Get.height * 0.08,
        color: AppColors.cbcColor,
        buttonBackgroundColor: Colors.red,
        backgroundColor: Colors.white,
        items:  [
          CurvedNavigationBarItem(
-             child: Icon(Icons.category , color: Colors.white,size: 40,),
+             child: Icon(Icons.category , color: Colors.white,size: Get.width * 0.05,),
              label: '10'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
-               fontSize: Get.height * 0.018,
+               fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
              )
          ),
          CurvedNavigationBarItem(
-             child: Icon(Icons.credit_card , color: Colors.white,size: 40,),
+             child: Icon(Icons.credit_card , color: Colors.white,size: Get.width * 0.05,),
              label: '150'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
-               fontSize: Get.height * 0.018,
+               fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
              )
          ),
          CurvedNavigationBarItem(
-             child: Icon(Icons.home , color: Colors.white,size: 40,),
+             child: Icon(Icons.home , color: Colors.white,size: Get.width * 0.05,),
              label: '14'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
-               fontSize: Get.height * 0.018,
+               fontSize: Get.height * 0.012,
+               fontWeight: FontWeight.bold
              )
          ),
          CurvedNavigationBarItem(
-             child: Icon(Icons.help , color: Colors.white,size: 40,),
+             child: Icon(Icons.help , color: Colors.white,size: Get.width * 0.05,),
              label: '149'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
-               fontSize: Get.height * 0.018,
+               fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
              )
          ),
          CurvedNavigationBarItem(
-             child: Icon(Icons.person , color: Colors.white,size: 40,),
+             child: Icon(Icons.person , color: Colors.white,size: Get.width * 0.05,),
              label: '17'.tr,
              labelStyle: TextStyle(
                color: Colors.white,
-               fontSize: Get.height * 0.018,
+               fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
              )
          ),
        ],

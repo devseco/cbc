@@ -77,49 +77,58 @@ class Stories extends StatelessWidget {
                               ),),
                             ),
                            GetBuilder<StoreController>(builder: (builder){
-                             return  DropdownButtonHideUnderline(
-
-                               child: DropdownButton2<String>(
-                                 iconStyleData: IconStyleData(
-                                   icon: Icon(Icons.filter_alt_rounded)
+                             return Container(
+                               height: Get.width * 0.07,
+                               decoration: BoxDecoration(
+                                 border: Border.all(
+                                   color: AppColors.cbcColor, // You can set the color of the border here
+                                   width: 0.5, // You can adjust the width of the border here
                                  ),
-
-                                 isExpanded: true,
-                                 hint: Center(
-                                   child: Text(
-                                     '76'.tr,
-                                     style: TextStyle(
-                                       fontSize: Get.width * 0.03,
-                                       color: Theme.of(context).hintColor,
-                                     ),
+                                 borderRadius: BorderRadius.circular(8.0), // Adjust the radius to round the corners of the border
+                               ),
+                               child:  DropdownButtonHideUnderline(
+                                 child: DropdownButton2<String>(
+                                   iconStyleData: IconStyleData(
+                                       icon: Icon(Icons.filter_alt_rounded)
                                    ),
-                                 ),
-                                 items: builder.items
-                                     .map((String item) => DropdownMenuItem<String>(
-                                   value: item,
-                                   child: Center(
+
+                                   isExpanded: true,
+                                   hint: Center(
                                      child: Text(
-                                       item,
-                                       style:  TextStyle(
-                                           fontSize: Get.width * 0.03,
-                                           fontWeight: FontWeight.bold
+                                       '76'.tr,
+                                       style: TextStyle(
+                                         fontSize: Get.width * 0.03,
+                                         color: Theme.of(context).hintColor,
                                        ),
                                      ),
                                    ),
-                                 ))
-                                     .toList(),
-                                 value: builder.selectedValue,
-                                 onChanged: (String? value) {
-                                   builder.changeFilter(value);
-                                 },
-                                 buttonStyleData:  ButtonStyleData(
-                                   padding: EdgeInsets.symmetric(horizontal: 16),
-                                   height: Get.width * 0.3,
-                                   width: Get.width * 0.25,
-                                 ),
-                                 menuItemStyleData:  MenuItemStyleData(
-                                   height: Get.width * 0.08,
+                                   items: builder.items
+                                       .map((String item) => DropdownMenuItem<String>(
+                                     value: item,
+                                     child: Center(
+                                       child: Text(
+                                         item,
+                                         style:  TextStyle(
+                                             fontSize: Get.width * 0.03,
+                                             fontWeight: FontWeight.bold
+                                         ),
+                                       ),
+                                     ),
+                                   ))
+                                       .toList(),
+                                   value: builder.selectedValue,
+                                   onChanged: (String? value) {
+                                     builder.changeFilter(value);
+                                   },
+                                   buttonStyleData:  ButtonStyleData(
+                                     padding: EdgeInsets.symmetric(horizontal: 16),
+                                     height: Get.width * 0.3,
+                                     width: Get.width * 0.25,
+                                   ),
+                                   menuItemStyleData:  MenuItemStyleData(
+                                     height: Get.width * 0.08,
 
+                                   ),
                                  ),
                                ),
                              );

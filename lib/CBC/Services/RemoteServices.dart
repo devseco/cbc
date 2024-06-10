@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/CBC/models/Account.dart';
 import 'package:ui_ecommerce/CBC/models/AllStore.dart';
@@ -121,22 +120,17 @@ class RemoteServices {
       }
   }
   //Fetch Stories From Endpoint (getStories)
-  static Future<List<AllStore>?> fetchAllStories(orderby,city) async {
-    var endpoint = 'getAllStoriesBy/${orderby}/${city}';
+  static Future<List<CategoryAll>?> fetchFilterCategories(orderby,city) async {
+    var endpoint = 'getFilterCategories/${city}/${orderby}';
     try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
-      if (response.statusCode == 200) {
+      print(response.body);
         var jsonData = response.body;
-        print(jsonData);
-        List<AllStore> items = allStoreFromJson(jsonData);
-        return items;
-      } else {
-        return null;
-      }
+        List<CategoryAll> list = categoryAllFromJson(jsonData);
+        return list;
     } catch (e) {
       return null;
     }
-
   }
 
 //Fetch Stories From Endpoint (getStories)
@@ -170,9 +164,11 @@ class RemoteServices {
         CardAbout cardAbout = cardAboutFromJson(jsonData);
         return cardAbout;
       } else {
+        print('not about');
         return null;
       }
     } catch (e) {
+      print(e.toString());
       return null;
     }
   }
@@ -197,14 +193,19 @@ class RemoteServices {
     var endpoint = 'getCardSales';
     try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
+      print('saless: ${response.body}');
       if (response.statusCode == 200) {
+        print("on data");
         var jsonData = response.body;
-        CardSale cardSale = cardSaleFromJson(jsonData);
+        CardSale? cardSale = cardSaleFromJson(jsonData);
         return cardSale;
+
       } else {
+        print("out data");
         return null;
       }
     } catch (e) {
+      print(e.toString());
       return null;
     }
   }

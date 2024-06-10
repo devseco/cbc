@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ui_ecommerce/CBC/models/AllStore.dart';
 import '../Services/RemoteServices.dart';
+import '../models/AllStore.dart';
 import '../models/City.dart';
 class AllCategoriesController extends GetxController {
   var isLoadingStories= true.obs;
@@ -11,16 +10,14 @@ class AllCategoriesController extends GetxController {
   var selectedFilter = RxString('');
   var citiesList = <City>[].obs;
   int cate = 0;
-  int city_id = 0;
+  int city_id = -1;
   int orderby = 0;
   var isFilter= false.obs;
   String? city_name;
   String? cate_name;
   final List<String> items = [
     'الاحدث',
-    'الاقدم',
-    'الاعلى خصم',
-    'الادنى خصم',
+    'الاقدم'
   ];
   String? selectedValue;
   final fixedItem = City(
@@ -29,22 +26,24 @@ class AllCategoriesController extends GetxController {
     image: 'https://static.vecteezy.com/system/resources/previews/019/633/209/original/doodle-freehand-drawing-of-iraq-map-free-png.png',
     active: 1,
   );
-  var storiesList = <AllStore>[].obs;
+  var storiesList = <CategoryAll>[].obs;
   void fetchStories(orderby) async{
     isLoadingStories(true);
+    isFilter(true);
     storiesList.clear();
     try {
-      var list = await RemoteServices.fetchAllStories(orderby , city_id);
+      var list = await RemoteServices.fetchFilterCategories(orderby , city_id);
       if(list != null){
         storiesList.value = list;
       }else{
         print('loading not');
         isLoadingStories(false);
+        isFilter(false);
       }
     }finally{
       isLoadingStories(false);
+      isFilter(false);
     }
-    isLoadingStories(false);
     update();
   }
   void fetchCities() async {
@@ -63,7 +62,7 @@ class AllCategoriesController extends GetxController {
     isFilter(true);
     storiesList.clear();
     try {
-      var list = await RemoteServices.fetchAllStories(orderby ,city );
+      var list = await RemoteServices.fetchFilterCategories(orderby ,city );
       if(list != null){
         storiesList.value = list;
       }else{
@@ -81,6 +80,7 @@ class AllCategoriesController extends GetxController {
     selectedValue = value;
     id = items.indexOf(value) + 1;
     filterItems(id , city_id);
+    print(id);
     update();
   }
   void filterBillsByStatus(statusCode) {

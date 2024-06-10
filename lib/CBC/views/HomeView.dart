@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:textfield_search/textfield_search.dart';
 import 'package:ui_ecommerce/res/colors.dart';
@@ -40,7 +41,26 @@ class HomeView extends StatelessWidget {
           }),
           Expanded(child: ListView(
             children: [
-              citys(),
+
+             GetBuilder<Chome_controller>(builder: (builder){
+               if(!builder.isLoadingCities.value){
+                 if(builder.citiesList.isNotEmpty){
+                   return citys();
+                 }else{
+                   return Center(
+                     child: Text(
+                         '${'20'.tr}'
+                     ),
+                   );
+                 }
+               }else{
+                 return Center(child: SpinKitWave(
+                   color: AppColors.cbcColor,
+                   size: Get.width * 0.1,
+                 ),);
+               }
+            }),
+
               SizedBox(
                 height: Get.height * 0.02,
               ),
@@ -48,7 +68,25 @@ class HomeView extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              discountItems(controller.recentlyList),
+              GetBuilder<Chome_controller>(builder: (builder){
+                if(!builder.isLoadingRecently.value){
+                  if(builder.highestList.isNotEmpty){
+                    return discountItems(builder.recentlyList);
+                  }else{
+                    return Center(
+                      child: Text(
+                          '${'20'.tr}'
+                      ),
+                    );
+                  }
+                }else{
+                  return Center(child: SpinKitWave(
+                    color: AppColors.cbcColor,
+                    size: Get.width * 0.1,
+                  ),);
+                }
+
+              }),
               SizedBox(
                 height: Get.height * 0.02,
               ),
@@ -56,7 +94,24 @@ class HomeView extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              discountItems(controller.highestList),
+              GetBuilder<Chome_controller>(builder: (builder){
+                if(!builder.isLoadingHighest.value){
+                  if(builder.highestList.isNotEmpty){
+                    return discountItems(builder.highestList);
+                  }else{
+                    return Center(
+                      child: Text(
+                          '${'20'.tr}'
+                      ),
+                    );
+                  }
+                }else{
+                  return Center(child: SpinKitWave(
+                    color: AppColors.cbcColor,
+                    size: Get.width * 0.1,
+                  ),);
+                }
+              }),
             ],
           )),
 
@@ -99,7 +154,6 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-
   discountItems(list) {
     return SizedBox(
       height: Get.height * 0.15,
@@ -148,7 +202,7 @@ class HomeView extends StatelessWidget {
             ),
             SizedBox(height: Get.height * 0.003,),
             Flexible(
-              child: Text(label.length > 15 ? '${label.substring(0, 20)}...' : label,
+              child: Text(label,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: Get.height * 0.015
@@ -338,17 +392,17 @@ class HomeView extends StatelessWidget {
   }
   citys(){
     return GridView.builder(
-
-      padding: EdgeInsets.only(left: Get.height * 0.01,right: Get.height * 0.01),
+      padding: EdgeInsets.only(left: Get.height * 0.04,right: Get.height * 0.04),
       physics: const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
       shrinkWrap: true, // You won't see infinite size error
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        crossAxisSpacing: 5.0,
+        crossAxisSpacing: 20.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1,
+        childAspectRatio: 1.2,
+
       ),
-      itemCount: (controller.citiesList.length > 6 )?  6 : controller.citiesList.length,
+      itemCount: (controller.citiesList.length > 8 )?  8 : controller.citiesList.length,
       itemBuilder: (BuildContext context, int index) {
         final city = controller.citiesList[index];
         return CityItem(
@@ -379,14 +433,13 @@ class HomeView extends StatelessWidget {
             children: <Widget>[
               Center(
                 child:  CachedNetworkImage(
-                  height: Get.height * 0.08,
-                  width: Get.height * 0.2,
+                  height: Get.height * 0.05,
                   imageUrl: url,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -394,11 +447,12 @@ class HomeView extends StatelessWidget {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-              SizedBox(height: Get.height * 0.01,),
+              SizedBox(height: Get.height * 0.005,),
               Center(
                 child: Text(title , textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style:  TextStyle(
+                    fontSize: Get.width * 0.025,
                       fontWeight: FontWeight.bold,
                       color: Colors.white
                   ),
@@ -426,14 +480,14 @@ class HomeView extends StatelessWidget {
             children: <Widget>[
               Center(
                 child:  CachedNetworkImage(
-                  height: Get.height * 0.08,
-                  width: Get.height * 0.2,
+                  height: Get.height * 0.045,
+                  width: Get.height * 0.055,
                   imageUrl: url,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -441,11 +495,12 @@ class HomeView extends StatelessWidget {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-              SizedBox(height: Get.height * 0.01,),
+              SizedBox(height: Get.height * 0.005,),
               Center(
                 child: Text(title , textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style:  TextStyle(
+                      fontSize: Get.width * 0.025,
                       fontWeight: FontWeight.bold,
                       color: Colors.white
                   ),

@@ -96,8 +96,6 @@ class CategoriesView extends StatelessWidget {
            width: Get.height * 0.25,
            decoration: BoxDecoration(
                color: (active == 0) ? AppColors.cbcRed : Colors.white,
-               border: Border.all(color: Colors.black12),
-               borderRadius: const BorderRadius.all(Radius.circular(15))
            ),
            child: Column(
              crossAxisAlignment: CrossAxisAlignment.center,

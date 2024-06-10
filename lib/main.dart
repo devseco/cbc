@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,7 +11,6 @@ import 'package:ui_ecommerce/AQS/models/CartModel.dart';
 import 'package:ui_ecommerce/AQS/models/FavoriteModel.dart';
 import '/AQS/controllers/Cart_controller.dart';
 import 'package:intl/intl.dart';
-import 'CBC/Services/HttpsOverrides.dart';
 SharedPreferences? sharedPreferences;
 var formatter = NumberFormat("#,###");
 void main() async {
@@ -23,7 +21,6 @@ void main() async {
   Hive.registerAdapter(FavoriteModelAdapter());
   BoxCart = await Hive.openBox<CartModel>('Cart');
   BoxFavorite = await Hive.openBox<FavoriteModel>('Favorite');
-  HttpOverrides.global = MyHttpOverrides();
   await Future.delayed(const Duration(milliseconds: 300));
   runApp(const MyApp());
 }

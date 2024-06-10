@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:ui_ecommerce/CBC/controllers/AllCategoriesController.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/CBC/controllers/Landing_controller.dart';
 import '../../main.dart';
 import '../../res/colors.dart';
 class First_cbc extends StatelessWidget {
    First_cbc({super.key});
-   final Chome_controller controller = Get.put(Chome_controller());
+   final AllCategoriesController Categorycontroller = Get.put(AllCategoriesController());
+   final Chome_controller HomeController = Get.put(Chome_controller());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -141,8 +143,12 @@ class First_cbc extends StatelessWidget {
           ),
 
           Obx(() {
-            final isLoadingSliders = controller.isLoadingSliders.value;
-            if (!isLoadingSliders) {
+            final categoryLoading = Categorycontroller.isFilter.value;
+            final homeLoading = HomeController.isLoadingSliders.value;
+            final recentlyLoading = HomeController.isLoadingRecently.value;
+            final highlestLoading = HomeController.isLoadingHighest.value;
+            final citiesLoading = HomeController.isLoadingCities.value;
+            if (!categoryLoading || !homeLoading || !recentlyLoading || !highlestLoading || !citiesLoading) {
               return Padding(
                 padding: EdgeInsets.only(
                   top: Get.height * 0.06,

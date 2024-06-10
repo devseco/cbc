@@ -67,7 +67,7 @@ class HighestStories extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1,
+        childAspectRatio: 1.1,
       ),
       itemCount: controller.highestList.length,
       itemBuilder: (BuildContext context, int index) {
@@ -93,6 +93,8 @@ class HighestStories extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(15))
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
                   decoration: const BoxDecoration(
@@ -117,12 +119,13 @@ class HighestStories extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: Get.height * 0.003,),
-                Flexible(
-                  child: Text(label.length > 15 ? '${label.substring(0, 20)}...' : label,
+                SizedBox(height: Get.height * 0.008,),
+                SizedBox(
+                  child: Text(label,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: Get.height * 0.015
+                          fontSize: Get.height * 0.013
                       )),),
                 SizedBox(height: Get.height * 0.003,),
                 Row(
