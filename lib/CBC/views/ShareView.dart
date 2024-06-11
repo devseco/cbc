@@ -13,95 +13,101 @@ class ShareView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: ListView(
-        children: [
-          Center(
-            child: SizedBox(
-              height: Get.width * 0.3,
-              width: Get.width * 0.8,
-              child: Image.asset('assets/images/callcenter.png', fit: BoxFit.fill),
-            ),
-          ),
-          Container(
-            height: Get.width * 0.0003,
-            width: Get.width * 0.9,
-            color: Colors.black,
-          ),
-          SizedBox(
-            height: Get.width * 0.05,
-          ),
-          Center(
-            child: Text(
-              '140'.tr,
-              style: TextStyle(
-                color: AppColors.cbcRed,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.039,
+      child: RefreshIndicator(
+        onRefresh: () async{
+          controller.fetchQr();
+        },
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            Center(
+              child: SizedBox(
+                height: Get.width * 0.3,
+                width: Get.width * 0.8,
+                child: Image.asset('assets/images/callcenter.png', fit: BoxFit.fill),
               ),
             ),
-          ),
-          SizedBox(
-            height: Get.width * 0.05,
-          ),
-          Center(
-            child: Padding(
-              padding: EdgeInsetsDirectional.only(start: Get.width * 0.1, end: Get.width * 0.1),
+            Container(
+              height: Get.width * 0.0003,
+              width: Get.width * 0.9,
+              color: Colors.black,
+            ),
+            SizedBox(
+              height: Get.width * 0.05,
+            ),
+            Center(
               child: Text(
-                '141'.tr,
+                '140'.tr,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: AppColors.cbcRed,
                   fontWeight: FontWeight.bold,
-                  fontSize: Get.width * 0.03,
+                  fontSize: Get.width * 0.039,
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: Get.width * 0.1,
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.only(start: Get.width * 0.05, end: Get.width * 0.05),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: Get.width * 0.35,
-                  child: Text(
-                    '142'.tr,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Get.width * 0.03,
-                    ),
+            SizedBox(
+              height: Get.width * 0.05,
+            ),
+            Center(
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(start: Get.width * 0.1, end: Get.width * 0.1),
+                child: Text(
+                  '141'.tr,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Get.width * 0.03,
                   ),
                 ),
-                if (controller.qrList != null && controller.qrList.isNotEmpty)
-                  Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+            ),
+            SizedBox(
+              height: Get.width * 0.1,
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.only(start: Get.width * 0.05, end: Get.width * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: Get.width * 0.35,
+                    child: Text(
+                      '142'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Get.width * 0.03,
+                      ),
                     ),
-                    height: Get.height * 0.15,
-                    width: Get.height * 0.15,
-                    child: CachedNetworkImage(
-                      imageUrl: controller.qrList[0].image ?? '',
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.fill,
+                  ),
+                  if (controller.qrList != null && controller.qrList.isNotEmpty)
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      height: Get.height * 0.15,
+                      width: Get.height * 0.15,
+                      child: CachedNetworkImage(
+                        imageUrl: controller.qrList[0].image ?? '',
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
-                      placeholder: (context, url) => const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
-                    ),
-                  )
-                else
-                  const Icon(Icons.error, size: 50, color: Colors.red),
-              ],
+                    )
+                  else
+                    const Icon(Icons.error, size: 50, color: Colors.red),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -13,7 +13,6 @@ import '../../res/colors.dart';
 class RecentlyStories extends StatelessWidget {
   RecentlyStories({super.key});
   final Chome_controller controller = Get.put(Chome_controller());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,32 +28,38 @@ class RecentlyStories extends StatelessWidget {
             fontWeight: FontWeight.bold
         ),),
       ),
-      body: GetBuilder<Chome_controller>(builder: (builder){
-        if(!builder.isLoadingRecently.value){
-          if(builder.recentlyList.isNotEmpty){
-            return Container(
+      body: RefreshIndicator(
+        onRefresh: () async{
+          controller.fetchRecently();
+
+        },
+        child: GetBuilder<Chome_controller>(builder: (builder){
+          if(!builder.isLoadingRecently.value){
+            if(builder.recentlyList.isNotEmpty){
+              return Container(
                 height: Get.height,
                 width: Get.width,
                 margin: EdgeInsets.only(bottom: Get.height * 0.02),
                 color: Colors.white,
                 child: stories(),
-            );
-          }else{
-            print('not data');
-            return Center(
-              child: Text(
-                  '${'20'.tr}'
-              ),
-            );
-          }
+              );
+            }else{
+              print('not data');
+              return Center(
+                child: Text(
+                    '${'20'.tr}'
+                ),
+              );
+            }
 
-        }else{
-          return Center(child: SpinKitWave(
-            color: AppColors.cbcColor,
-            size: Get.width * 0.1,
-          ),);
-        }
-      }),
+          }else{
+            return Center(child: SpinKitWave(
+              color: AppColors.cbcColor,
+              size: Get.width * 0.1,
+            ),);
+          }
+        }),
+      ),
     );
   }
   stories(){

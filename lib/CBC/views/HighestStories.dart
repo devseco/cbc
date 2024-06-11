@@ -29,32 +29,38 @@ class HighestStories extends StatelessWidget {
             fontWeight: FontWeight.bold
         ),),
       ),
-      body: GetBuilder<Chome_controller>(builder: (builder){
-        if(!builder.isLoadingRecently.value){
-          if(builder.recentlyList.isNotEmpty){
-            return Container(
-              height: Get.height,
-              width: Get.width,
-              margin: EdgeInsets.only(bottom: Get.height * 0.02),
-              color: Colors.white,
-              child: stories(),
-            );
-          }else{
-            print('not data');
-            return Center(
-              child: Text(
-                  '${'20'.tr}'
-              ),
-            );
-          }
+      body: RefreshIndicator(
+        onRefresh: ()async{
+          controller.fetchHighest();
 
-        }else{
-          return Center(child: SpinKitWave(
-            color: AppColors.cbcColor,
-            size: Get.width * 0.1,
-          ),);
-        }
-      }),
+        },
+        child: GetBuilder<Chome_controller>(builder: (builder){
+          if(!builder.isLoadingRecently.value){
+            if(builder.recentlyList.isNotEmpty){
+              return Container(
+                height: Get.height,
+                width: Get.width,
+                margin: EdgeInsets.only(bottom: Get.height * 0.02),
+                color: Colors.white,
+                child: stories(),
+              );
+            }else{
+              print('not data');
+              return Center(
+                child: Text(
+                    '${'20'.tr}'
+                ),
+              );
+            }
+
+          }else{
+            return Center(child: SpinKitWave(
+              color: AppColors.cbcColor,
+              size: Get.width * 0.1,
+            ),);
+          }
+        }),
+      ),
     );
   }
 

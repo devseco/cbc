@@ -16,7 +16,6 @@ class Stories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         actions: [
           Padding(padding: const EdgeInsetsDirectional.only(end: 20),
@@ -42,138 +41,143 @@ class Stories extends StatelessWidget {
             fontWeight: FontWeight.bold
         ),),
       ),
-      body: GetBuilder<StoreController>(builder: (builder){
-        if(!builder.isLoadingStories.value){
-          if(builder.storiesList.isNotEmpty){
+      body: RefreshIndicator(
+        onRefresh: () async{
+          print('refresh');
+          controller.fetchStories(1);
+        },
+        child: GetBuilder<StoreController>(builder: (builder){
+          if(!builder.isLoadingStories.value){
+            if(builder.storiesList.isNotEmpty){
+              return Container(
+                  height: Get.height,
+                  width: Get.width,
+                  margin: EdgeInsets.only(bottom: Get.height * 0.02),
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        if(!controller.isLoadingStories.value){
+                          return (controller.storiesList[0].ads.length > 0)? StoreSliders() : placholder404();
+                        }else{
+                          return placholderSlider();
+                        }
+                      }),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(left: Get.width * 0.05 , right: Get.width * 0.05 ),
+                          height: Get.width * 0.13,
+                          width: Get.width ,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Center(
+                                child: Text('94'.tr ,
+                                  style: TextStyle(
+                                      color: AppColors.cbcColor,
+                                      fontSize: Get.width * 0.05,
+                                      fontWeight: FontWeight.bold
+                                  ),),
+                              ),
+                              GetBuilder<StoreController>(builder: (builder){
+                                return Container(
+                                  height: Get.width * 0.07,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: AppColors.cbcColor, // You can set the color of the border here
+                                      width: 0.5, // You can adjust the width of the border here
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0), // Adjust the radius to round the corners of the border
+                                  ),
+                                  child:  DropdownButtonHideUnderline(
+                                    child: DropdownButton2<String>(
+                                      iconStyleData: IconStyleData(
+                                          icon: Icon(Icons.filter_alt_rounded)
+                                      ),
 
-            return Container(
-                height: Get.height,
-                width: Get.width,
-                margin: EdgeInsets.only(bottom: Get.height * 0.02),
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Obx(() {
-                      if(!controller.isLoadingStories.value){
-                        return (controller.storiesList[0].ads.length > 0)? StoreSliders() : placholder404();
-                      }else{
-                        return placholderSlider();
-                      }
-                    }),
-                    Center(
-                      child: Container(
-                        margin: EdgeInsets.only(left: Get.width * 0.05 , right: Get.width * 0.05 ),
-                        height: Get.width * 0.13,
-                        width: Get.width ,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Center(
-                              child: Text('94'.tr ,
-                                style: TextStyle(
-                                  color: AppColors.cbcColor,
-                                  fontSize: Get.width * 0.05,
-                                  fontWeight: FontWeight.bold
-                              ),),
-                            ),
-                           GetBuilder<StoreController>(builder: (builder){
-                             return Container(
-                               height: Get.width * 0.07,
-                               decoration: BoxDecoration(
-                                 border: Border.all(
-                                   color: AppColors.cbcColor, // You can set the color of the border here
-                                   width: 0.5, // You can adjust the width of the border here
-                                 ),
-                                 borderRadius: BorderRadius.circular(8.0), // Adjust the radius to round the corners of the border
-                               ),
-                               child:  DropdownButtonHideUnderline(
-                                 child: DropdownButton2<String>(
-                                   iconStyleData: IconStyleData(
-                                       icon: Icon(Icons.filter_alt_rounded)
-                                   ),
+                                      isExpanded: true,
+                                      hint: Center(
+                                        child: Text(
+                                          '76'.tr,
+                                          style: TextStyle(
+                                            fontSize: Get.width * 0.03,
+                                            color: Theme.of(context).hintColor,
+                                          ),
+                                        ),
+                                      ),
+                                      items: builder.items
+                                          .map((String item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Center(
+                                          child: Text(
+                                            item,
+                                            style:  TextStyle(
+                                                fontSize: Get.width * 0.03,
+                                                fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                        ),
+                                      ))
+                                          .toList(),
+                                      value: builder.selectedValue,
+                                      onChanged: (String? value) {
+                                        builder.changeFilter(value);
+                                      },
+                                      buttonStyleData:  ButtonStyleData(
+                                        padding: EdgeInsets.symmetric(horizontal: 16),
+                                        height: Get.width * 0.3,
+                                        width: Get.width * 0.25,
+                                      ),
+                                      menuItemStyleData:  MenuItemStyleData(
+                                        height: Get.width * 0.08,
 
-                                   isExpanded: true,
-                                   hint: Center(
-                                     child: Text(
-                                       '76'.tr,
-                                       style: TextStyle(
-                                         fontSize: Get.width * 0.03,
-                                         color: Theme.of(context).hintColor,
-                                       ),
-                                     ),
-                                   ),
-                                   items: builder.items
-                                       .map((String item) => DropdownMenuItem<String>(
-                                     value: item,
-                                     child: Center(
-                                       child: Text(
-                                         item,
-                                         style:  TextStyle(
-                                             fontSize: Get.width * 0.03,
-                                             fontWeight: FontWeight.bold
-                                         ),
-                                       ),
-                                     ),
-                                   ))
-                                       .toList(),
-                                   value: builder.selectedValue,
-                                   onChanged: (String? value) {
-                                     builder.changeFilter(value);
-                                   },
-                                   buttonStyleData:  ButtonStyleData(
-                                     padding: EdgeInsets.symmetric(horizontal: 16),
-                                     height: Get.width * 0.3,
-                                     width: Get.width * 0.25,
-                                   ),
-                                   menuItemStyleData:  MenuItemStyleData(
-                                     height: Get.width * 0.08,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
 
-                                   ),
-                                 ),
-                               ),
-                             );
-                           }
-
-                           )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
 
-                    Obx(() {
-                      if(!controller.isFilter.value){
-                        return  Expanded(child: stories());
-                      }else{
-                        if(controller.isLoadingFilter.value){
-                          return  Center(child: SpinKitWave(
-                            color: AppColors.cbcColor,
-                            size: Get.width * 0.1,
-                          ),);
-                        }else{
+                      Obx(() {
+                        if(!controller.isFilter.value){
                           return  Expanded(child: stories());
+                        }else{
+                          if(controller.isLoadingFilter.value){
+                            return  Center(child: SpinKitWave(
+                              color: AppColors.cbcColor,
+                              size: Get.width * 0.1,
+                            ),);
+                          }else{
+                            return  Expanded(child: stories());
+                          }
                         }
-                      }
-                    }),
+                      }),
 
-                  ],
-                )
-            );
+                    ],
+                  )
+              );
+            }else{
+              print('not data');
+              return Center(
+                child: Text(
+                    '${'20'.tr}'
+                ),
+              );
+            }
+
           }else{
-            print('not data');
-            return Center(
-              child: Text(
-                  '${'20'.tr}'
-              ),
-            );
+            return Center(child: SpinKitWave(
+              color: AppColors.cbcColor,
+              size: Get.width * 0.1,
+            ),);
           }
-
-        }else{
-          return Center(child: SpinKitWave(
-            color: AppColors.cbcColor,
-            size: Get.width * 0.1,
-          ),);
-        }
-      }),
+        }),
+      ),
     );
   }
   filterRecently(){
@@ -212,7 +216,7 @@ class Stories extends StatelessWidget {
                     )
                 ),
               ),
-              SizedBox(width: 10), // مسافة بين الزرين
+              SizedBox(width: 10),
               GestureDetector(
                 child: Container(
                     width: Get.width * 0.3,

@@ -27,52 +27,58 @@ class StorePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Obx(() {
-        if(!controller.isLoadingItem.value){
-         if(controller.store != null){
-           return  Container(
-             color: Colors.white,
-             child: Column(
-               children: [
-                 Obx(() {
-                   if(!controller.isLoadingItem.value){
-                     return (controller.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
-                   }else{
-                     return placholderSlider();
-                   }
-                 }),
-                 StoreLogo(),
-                 StoreInfo(),
-                 TabsPages(),
-                 SizedBox(
-                   height: Get.width * 0.03,
-                 ),
-                 PagesTabs(),
-               ],
-             ),
-           );
-         }else{
-           return Center(
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               crossAxisAlignment: CrossAxisAlignment.center,
-               children: [
-                 Text('20'.tr),
-                 SizedBox(
-                   width: Get.width * 0.02,
-                 ),
-                 FaIcon(FontAwesomeIcons.faceSadTear)
-               ],
-             ),
-           );
-         }
-        }else{
-          return Center(child: SpinKitWave(
-            color: AppColors.cbcColor,
-            size: Get.width * 0.1,
-          ),);
-        }
-      }),
+      body: RefreshIndicator(
+        onRefresh: ()async{
+          print('refresh page ');
+          controller.fetchStore();
+        },
+        child: Obx(() {
+          if(!controller.isLoadingItem.value){
+            if(controller.store != null){
+              return  Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Obx(() {
+                      if(!controller.isLoadingItem.value){
+                        return (controller.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
+                      }else{
+                        return placholderSlider();
+                      }
+                    }),
+                    StoreLogo(),
+                    StoreInfo(),
+                    TabsPages(),
+                    SizedBox(
+                      height: Get.width * 0.03,
+                    ),
+                    PagesTabs(),
+                  ],
+                ),
+              );
+            }else{
+              return Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('20'.tr),
+                    SizedBox(
+                      width: Get.width * 0.02,
+                    ),
+                    FaIcon(FontAwesomeIcons.faceSadTear)
+                  ],
+                ),
+              );
+            }
+          }else{
+            return Center(child: SpinKitWave(
+              color: AppColors.cbcColor,
+              size: Get.width * 0.1,
+            ),);
+          }
+        }),
+      ),
     );
   }
   TabsPages(){
@@ -117,6 +123,7 @@ class StorePage extends StatelessWidget {
    branches(){
      if(controller.store!.storeinfo.branches.isNotEmpty){
        return ListView.builder(
+
          padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
          itemCount: controller.store!.storeinfo.branches.length, // عدد العناصر في القائمة
          itemBuilder: (BuildContext context, int index) {

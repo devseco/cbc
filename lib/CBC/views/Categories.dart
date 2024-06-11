@@ -40,29 +40,34 @@ class CategoriesView extends StatelessWidget {
         ),),
       ),
       backgroundColor: Colors.white,
-      body: Container(
-        height: Get.height,
-        margin: EdgeInsets.only(bottom: Get.height * 0.02),
-        color: Colors.white,
-        child: GetBuilder<CategoriesController>(builder: (builder){
-          if(!builder.isLoadingCategories.value){
-            if(builder.categoriesList.isNotEmpty){
-              return Cats();
-            }else{
-              return Center(
-                child: Text(
-                  '${'20'.tr}'
-                ),
-              );
+      body: RefreshIndicator(
+        onRefresh: ()async{
+          controller.fetchRecently();
+        },
+        child: Container(
+            height: Get.height,
+            margin: EdgeInsets.only(bottom: Get.height * 0.02),
+            color: Colors.white,
+            child: GetBuilder<CategoriesController>(builder: (builder){
+              if(!builder.isLoadingCategories.value){
+                if(builder.categoriesList.isNotEmpty){
+                  return Cats();
+                }else{
+                  return Center(
+                    child: Text(
+                        '${'20'.tr}'
+                    ),
+                  );
+                }
+              }else{
+                return Center(child: SpinKitWave(
+                  color: AppColors.cbcColor,
+                  size: Get.width * 0.1,
+                ),);
+              }
             }
-          }else{
-            return Center(child: SpinKitWave(
-              color: AppColors.cbcColor,
-              size: Get.width * 0.1,
-            ),);
-          }
-        }
-        ,)
+              ,)
+        ),
       ),
 
     );

@@ -20,131 +20,137 @@ class cardAbout extends StatelessWidget {
           end: Get.width * 0.05,
           top: Get.width * 0.05,
         ),
-        child: ListView(
-          shrinkWrap: true,
-          physics: PageScrollPhysics(),
-          children: [
-            Text(
-              'بطاقة cbc للخصومات النقدية',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.035,
-              ),
-            ),
-            Text(
-              'تتيح لحامليها الحصول على خصومات مميزة من المتاجر المشتركة في تطبيقنا',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.025,
-              ),
-            ),
-            SizedBox(
-              height: Get.width * 0.10,
-            ),
-            Text(
-              '109'.tr,
-              style: TextStyle(
-                color: AppColors.cbcRed,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.035,
-              ),
-            ),
-            SizedBox(
-              height: Get.width * 0.03,
-            ),
+        child: RefreshIndicator(
+          onRefresh: () async{
+            controller.fetchCardAbout();
 
-            //images
-            Obx(() {
-              if (!controller.isLoadingAbout.value) {
-                if (controller.cardAbout != null) {
-                  return images();
+          },
+          child: ListView(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              Text(
+                'بطاقة cbc للخصومات النقدية',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.035,
+                ),
+              ),
+              Text(
+                'تتيح لحامليها الحصول على خصومات مميزة من المتاجر المشتركة في تطبيقنا',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.025,
+                ),
+              ),
+              SizedBox(
+                height: Get.width * 0.10,
+              ),
+              Text(
+                '109'.tr,
+                style: TextStyle(
+                  color: AppColors.cbcRed,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.035,
+                ),
+              ),
+              SizedBox(
+                height: Get.width * 0.03,
+              ),
+
+              //images
+              Obx(() {
+                if (!controller.isLoadingAbout.value) {
+                  if (controller.cardAbout != null) {
+                    return images();
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
+              }),
 
 
-            SizedBox(
-              height: Get.width * 0.1,
-            ),
-            Text(
-              '110'.tr,
-              style: TextStyle(
-                color: AppColors.cbcRed,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.04,
+              SizedBox(
+                height: Get.width * 0.1,
               ),
-            ),
+              Text(
+                '110'.tr,
+                style: TextStyle(
+                  color: AppColors.cbcRed,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.04,
+                ),
+              ),
 
-            //futures
-            Obx(() {
-              if (!controller.isLoadingAbout.value) {
-                if (controller.cardAbout != null) {
-                  return futures();
+              //futures
+              Obx(() {
+                if (!controller.isLoadingAbout.value) {
+                  if (controller.cardAbout != null) {
+                    return futures();
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
+              }),
 
 
-            Text(
-              '111'.tr,
-              style: TextStyle(
-                color: AppColors.cbcRed,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.04,
+              Text(
+                '111'.tr,
+                style: TextStyle(
+                  color: AppColors.cbcRed,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.04,
+                ),
               ),
-            ),
-            //doing
-            Obx(() {
-              if (!controller.isLoadingAbout.value) {
-                if (controller.cardAbout != null) {
-                  return doing();
+              //doing
+              Obx(() {
+                if (!controller.isLoadingAbout.value) {
+                  if (controller.cardAbout != null) {
+                    return doing();
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
+              }),
 
 
-          ],
+            ],
+          ),
         ),
       ),
     );

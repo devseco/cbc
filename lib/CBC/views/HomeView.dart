@@ -5,6 +5,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:textfield_search/textfield_search.dart';
+import 'package:ui_ecommerce/CBC/views/Messages.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 import '../controllers/Home_controller.dart';
 import '../models/TestItem.dart';
@@ -14,7 +15,14 @@ class HomeView extends StatelessWidget {
   final Chome_controller  controller = Get.put(Chome_controller());
   @override
   Widget build(BuildContext context) {
-    return content();
+    return RefreshIndicator(child: content(),
+      onRefresh: () async {
+         controller.fetchRecently();
+         controller.fetchHighest();
+         controller.fetchCities();
+         controller.fetchSliders();
+      },
+    );
   }
   Container content(){
     return Container(
@@ -24,7 +32,6 @@ class HomeView extends StatelessWidget {
           Row(
             children: [
               searchTextInput(),
-              // searchIcon(),
               notificationIcon(),
             ],
           ),
@@ -265,9 +272,14 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Padding notificationIcon (){
-    return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.009 , end: Get.height * 0.009,top: Get.height * 0.015, ),
-      child:  Icon(Icons.notifications_outlined,color: AppColors.cbcColor,size: Get.height * 0.035,),
+  GestureDetector notificationIcon (){
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=> MessagesView());
+      },
+      child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.009 , end: Get.height * 0.009,top: Get.height * 0.015, ),
+        child:  Icon(Icons.notifications_outlined,color: AppColors.cbcColor,size: Get.height * 0.035,),
+      ),
     );
   }
   Padding searchTextInput() {
@@ -399,7 +411,7 @@ class HomeView extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 20.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1.2,
+        childAspectRatio: 1.1,
 
       ),
       itemCount: (controller.citiesList.length > 8 )?  8 : controller.citiesList.length,

@@ -18,113 +18,118 @@ class cardSales extends StatelessWidget {
       child: Padding(
         padding: EdgeInsetsDirectional.only(
             start: Get.width * 0.05, end: Get.width * 0.05, top: Get.width * 0.05),
-        child: ListView(
-          shrinkWrap: true,
-          physics: PageScrollPhysics(),
-          children: [
-            Text(
-              '116'.tr,
-              style: TextStyle(
-                  color: AppColors.cbcColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Get.width * 0.03),
-            ),
-            SizedBox(
-              height: Get.width * 0.02,
-            ),
-            Text(
-              '117'.tr,
-              style: TextStyle(
-                  color: AppColors.cbcRed,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Get.width * 0.035),
-            ),
-            SizedBox(
-              height: Get.width * 0.02,
-            ),
-            Obx(() {
-              if (!controller.isLoadingSale.value) {
-                if (controller.cardSale != null) {
-                  return  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        '118'.tr,
-                        style: TextStyle(
-                            color: AppColors.cbcColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Get.width * 0.035),
-                      ),
-                      Text(
-                        '${controller.cardSale!.systeminfo.phone}',
-                        style: TextStyle(
-                            color: AppColors.cbcGreen,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Get.width * 0.035),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          controller.callPhone(controller.cardSale!.systeminfo.phone);
-                        },
-                        child: FaIcon(
-                          FontAwesomeIcons.whatsapp,
-                          color: Colors.green,
+        child: RefreshIndicator(
+          onRefresh: () async{
+            controller.fetchCardSale();
+          },
+          child: ListView(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              Text(
+                '116'.tr,
+                style: TextStyle(
+                    color: AppColors.cbcColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Get.width * 0.03),
+              ),
+              SizedBox(
+                height: Get.width * 0.02,
+              ),
+              Text(
+                '117'.tr,
+                style: TextStyle(
+                    color: AppColors.cbcRed,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Get.width * 0.035),
+              ),
+              SizedBox(
+                height: Get.width * 0.02,
+              ),
+              Obx(() {
+                if (!controller.isLoadingSale.value) {
+                  if (controller.cardSale != null) {
+                    return  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          '118'.tr,
+                          style: TextStyle(
+                              color: AppColors.cbcColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Get.width * 0.035),
                         ),
-                      )
-                    ],
-                  );
+                        Text(
+                          '${controller.cardSale!.systeminfo.phone}',
+                          style: TextStyle(
+                              color: AppColors.cbcGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Get.width * 0.035),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            controller.callPhone(controller.cardSale!.systeminfo.phone);
+                          },
+                          child: FaIcon(
+                            FontAwesomeIcons.whatsapp,
+                            color: Colors.green,
+                          ),
+                        )
+                      ],
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
+              }),
 
-            SizedBox(
-              height: Get.width * 0.02,
-            ),
-            Text(
-              '119'.tr,
-              style: TextStyle(
-                  color: AppColors.cbcRed,
-                  fontWeight: FontWeight.bold,
-                  fontSize: Get.width * 0.035),
-            ),
-            //sales
-            Obx(() {
-              if (!controller.isLoadingSale.value) {
-                if (controller.cardSale != null) {
-                  return sales();
+              SizedBox(
+                height: Get.width * 0.02,
+              ),
+              Text(
+                '119'.tr,
+                style: TextStyle(
+                    color: AppColors.cbcRed,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Get.width * 0.035),
+              ),
+              //sales
+              Obx(() {
+                if (!controller.isLoadingSale.value) {
+                  if (controller.cardSale != null) {
+                    return sales();
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
-            SizedBox(
-              height: Get.width * 0.06,
-            )
-          ],
+              }),
+              SizedBox(
+                height: Get.width * 0.06,
+              )
+            ],
+          ),
         ),
       ),
     );

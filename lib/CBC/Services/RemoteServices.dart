@@ -9,6 +9,7 @@ import 'package:ui_ecommerce/CBC/models/CardType.dart';
 import 'package:ui_ecommerce/CBC/models/Category.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
+import 'package:ui_ecommerce/CBC/models/Message.dart';
 import 'package:ui_ecommerce/CBC/models/Qr.dart';
 import 'package:ui_ecommerce/CBC/models/Store.dart';
 import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
@@ -27,6 +28,22 @@ class RemoteServices {
         var jsonData = response.body;
         List<Discount> stories = discountFromJson(jsonData);
         return stories;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  //fetch Messages
+  static Future<List<Message>?> fetchMessages() async {
+    var endpoint = 'getMessages';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<Message> items = messageFromJson(jsonData);
+        return items;
       } else {
         return null;
       }

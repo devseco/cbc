@@ -12,118 +12,125 @@ class AllCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          height: Get.height,
-          width: Get.width,
-          margin: EdgeInsets.only(bottom: Get.height * 0.02),
-          color: Colors.white,
-          child: Column(
-            children: [
-              Obx(() => Container(
-                margin: EdgeInsets.only(top: Get.width * 0.05 , bottom: Get.width *  0.02),
-                height: Get.width * 0.1, // Set the height as desired
-                child: filterList(),
-              ),),
-              Center(
-                child: Container(
-                  margin: EdgeInsets.only(left: Get.width * 0.05 , right: Get.width * 0.05 ),
-                  height: Get.width * 0.13,
-                  width: Get.width ,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Center(
-                        child: Text('10'.tr ,
-                          style: TextStyle(
-                              color: AppColors.cbcColor,
-                              fontSize: Get.width * 0.05,
-                              fontWeight: FontWeight.bold
-                          ),),
-                      ),
-                      GetBuilder<AllCategoriesController>(builder: (builder){
-                        return  Container(
-                          height: Get.width * 0.07,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.cbcColor, // You can set the color of the border here
-                              width: 0.5, // You can adjust the width of the border here
+      body: RefreshIndicator(
+        onRefresh: () async{
+          controller.fetchStories(1);
+          controller.fetchCities();
+          controller.selectedFilter('الكل');
+        },
+        child: Container(
+            height: Get.height,
+            width: Get.width,
+            margin: EdgeInsets.only(bottom: Get.height * 0.02),
+            color: Colors.white,
+            child: Column(
+              children: [
+                Obx(() => Container(
+                  margin: EdgeInsets.only(top: Get.width * 0.05 , bottom: Get.width *  0.02),
+                  height: Get.width * 0.1, // Set the height as desired
+                  child: filterList(),
+                ),),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.only(left: Get.width * 0.05 , right: Get.width * 0.05 ),
+                    height: Get.width * 0.13,
+                    width: Get.width ,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Center(
+                          child: Text('10'.tr ,
+                            style: TextStyle(
+                                color: AppColors.cbcColor,
+                                fontSize: Get.width * 0.05,
+                                fontWeight: FontWeight.bold
+                            ),),
+                        ),
+                        GetBuilder<AllCategoriesController>(builder: (builder){
+                          return  Container(
+                            height: Get.width * 0.07,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.cbcColor, // You can set the color of the border here
+                                width: 0.5, // You can adjust the width of the border here
+                              ),
+                              borderRadius: BorderRadius.circular(8.0), // Adjust the radius to round the corners of the border
                             ),
-                            borderRadius: BorderRadius.circular(8.0), // Adjust the radius to round the corners of the border
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton2<String>(
-                              iconStyleData: IconStyleData(
-                                  icon: Icon(Icons.filter_alt_rounded)
-                              ),
-                              isExpanded: true,
-                              hint: Center(
-                                child: Text(
-                                  '76'.tr,
-                                  style: TextStyle(
-                                    fontSize: Get.width * 0.03,
-                                    color: Theme.of(context).hintColor,
-                                  ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton2<String>(
+                                iconStyleData: IconStyleData(
+                                    icon: Icon(Icons.filter_alt_rounded)
                                 ),
-                              ),
-                              items: builder.items
-                                  .map((String item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Center(
+                                isExpanded: true,
+                                hint: Center(
                                   child: Text(
-                                    item,
-                                    style:  TextStyle(
-                                        fontSize: Get.width * 0.03,
-                                        fontWeight: FontWeight.bold
+                                    '76'.tr,
+                                    style: TextStyle(
+                                      fontSize: Get.width * 0.03,
+                                      color: Theme.of(context).hintColor,
                                     ),
                                   ),
                                 ),
-                              ))
-                                  .toList(),
-                              value: builder.selectedValue,
-                              onChanged: (String? value) {
-                                builder.changeFilter(value);
-                              },
-                              buttonStyleData:  ButtonStyleData(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                height: Get.width * 0.3,
-                                width: Get.width * 0.25,
-                              ),
-                              menuItemStyleData:  MenuItemStyleData(
-                                height: Get.width * 0.08,
+                                items: builder.items
+                                    .map((String item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Center(
+                                    child: Text(
+                                      item,
+                                      style:  TextStyle(
+                                          fontSize: Get.width * 0.03,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                                value: builder.selectedValue,
+                                onChanged: (String? value) {
+                                  builder.changeFilter(value);
+                                },
+                                buttonStyleData:  ButtonStyleData(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  height: Get.width * 0.3,
+                                  width: Get.width * 0.25,
+                                ),
+                                menuItemStyleData:  MenuItemStyleData(
+                                  height: Get.width * 0.08,
 
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                    ],
+                          );
+                        }),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Obx(() {
-                if(!controller.isFilter.value){
-                  if(controller.storiesList.isNotEmpty){
-                    return  Expanded(child: stories());
+                Obx(() {
+                  if(!controller.isFilter.value){
+                    if(controller.storiesList.isNotEmpty){
+                      return  Expanded(child: stories());
+                    }else{
+                      return Center(
+                        child: Text(
+                            '${'20'.tr}'
+                        ),
+                      );
+                    }
                   }else{
-                    return Center(
-                      child: Text(
-                          '${'20'.tr}'
-                      ),
-                    );
+                    if(controller.isLoadingFilter.value){
+                      return  Center(child: SpinKitWave(
+                        color: AppColors.cbcColor,
+                        size: Get.width * 0.1,
+                      ),);
+                    }else{
+                      return  Expanded(child: stories());
+                    }
                   }
-                }else{
-                  if(controller.isLoadingFilter.value){
-                    return  Center(child: SpinKitWave(
-                      color: AppColors.cbcColor,
-                      size: Get.width * 0.1,
-                    ),);
-                  }else{
-                    return  Expanded(child: stories());
-                  }
-                }
-              }),
-            ],
-          )
+                }),
+              ],
+            )
+        ),
       )
     );
   }
@@ -183,7 +190,7 @@ class AllCategories extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 20.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 0.75,
+        childAspectRatio: 0.72,
       ),
       itemCount: controller.storiesList.length,
       itemBuilder: (BuildContext context, int index) {

@@ -19,97 +19,102 @@ class CardType extends StatelessWidget {
           end: Get.width * 0.05,
           top: Get.width * 0.05,
         ),
-        child: ListView(
-          shrinkWrap: true,
-          physics: PageScrollPhysics(),
-          children: [
-            Text(
-              '112'.tr,
-              style: TextStyle(
-                color: AppColors.cbcColor,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.035,
+        child: RefreshIndicator(
+          onRefresh: () async{
+            controller.fetchCardType();
+          },
+          child: ListView(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              Text(
+                '112'.tr,
+                style: TextStyle(
+                  color: AppColors.cbcColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.035,
+                ),
               ),
-            ),
-            SizedBox(height: Get.width * 0.02),
-            SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    '114'.tr,
-                    style: TextStyle(
-                      color: AppColors.cbcRed,
-                      fontWeight: FontWeight.bold,
+              SizedBox(height: Get.width * 0.02),
+              SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      '114'.tr,
+                      style: TextStyle(
+                        color: AppColors.cbcRed,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '115'.tr,
-                    style: TextStyle(
-                      color: AppColors.cbcRed,
-                      fontWeight: FontWeight.bold,
+                    Text(
+                      '115'.tr,
+                      style: TextStyle(
+                        color: AppColors.cbcRed,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            Obx(() {
-              if (!controller.isLoadingType.value) {
-                if (controller.cardType != null) {
-                  return types();
+              Obx(() {
+                if (!controller.isLoadingType.value) {
+                  if (controller.cardType != null) {
+                    return types();
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
+              }),
 
-            //types
+              //types
 
-            //
+              //
 
-            Text(
-              '113'.tr,
-              style: TextStyle(
-                color: AppColors.cbcRed,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.04,
+              Text(
+                '113'.tr,
+                style: TextStyle(
+                  color: AppColors.cbcRed,
+                  fontWeight: FontWeight.bold,
+                  fontSize: Get.width * 0.04,
+                ),
               ),
-            ),
-            //offers
-            Obx(() {
-              if (!controller.isLoadingType.value) {
-                if (controller.cardType != null) {
-                  return offers();
+              //offers
+              Obx(() {
+                if (!controller.isLoadingType.value) {
+                  if (controller.cardType != null) {
+                    return offers();
+                  } else {
+                    return Center(
+                      child: Text(
+                        '${'20'.tr}',
+                      ),
+                    );
+                  }
                 } else {
                   return Center(
-                    child: Text(
-                      '${'20'.tr}',
+                    child: SpinKitWave(
+                      color: AppColors.cbcColor,
+                      size: Get.width * 0.1,
                     ),
                   );
                 }
-              } else {
-                return Center(
-                  child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),
-                );
-              }
-            }),
+              }),
 
-          ],
+            ],
+          ),
         ),
       ),
     );
