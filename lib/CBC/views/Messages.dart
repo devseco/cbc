@@ -32,9 +32,7 @@ class MessagesView extends StatelessWidget {
           if (!controller.isLoadingItem.value) {
             if (controller.messagesList != null) {
               return RefreshIndicator(
-             child: Expanded(
-               child: messages(),
-             ),
+             child: messages(),
               onRefresh: ()async{
                print('refresh');
                controller.fetchMessages();

@@ -30,6 +30,10 @@ async
 2.18
 file:///Users/m1/.pub-cache/hosted/pub.dev/async-2.11.0/
 file:///Users/m1/.pub-cache/hosted/pub.dev/async-2.11.0/lib/
+badges
+3.0
+file:///Users/m1/.pub-cache/hosted/pub.dev/badges-3.1.2/
+file:///Users/m1/.pub-cache/hosted/pub.dev/badges-3.1.2/lib/
 boolean_selector
 2.17
 file:///Users/m1/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/
@@ -190,6 +194,10 @@ fixnum
 2.19
 file:///Users/m1/.pub-cache/hosted/pub.dev/fixnum-1.1.0/
 file:///Users/m1/.pub-cache/hosted/pub.dev/fixnum-1.1.0/lib/
+flutter_app_badger
+2.12
+file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_app_badger-1.5.0/
+file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_app_badger-1.5.0/lib/
 flutter_cache_manager
 2.17
 file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1/
@@ -198,6 +206,10 @@ flutter_launcher_icons
 2.18
 file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_launcher_icons-0.13.1/
 file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_launcher_icons-0.13.1/lib/
+flutter_notification_manager
+3.2
+file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_notification_manager-1.0.0/
+file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_notification_manager-1.0.0/lib/
 flutter_rating_bar
 2.14
 file:///Users/m1/.pub-cache/hosted/pub.dev/flutter_rating_bar-4.0.1/

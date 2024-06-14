@@ -413,11 +413,31 @@ class StorePage extends StatelessWidget {
           width: Get.width * 0.04,
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(controller.store!.storeinfo.name , style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),),
-            Text(controller.store!.storeinfo.name),
+            SizedBox(
+              width: Get.width * 0.63,
+              child: Text(controller.store!.storeinfo.name ,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style:  TextStyle(
+                  fontSize: Get.width * 0.03,
+                  fontWeight: FontWeight.bold,
+                ),),
+            ),
+            SizedBox(
+              width: Get.width * 0.63,
+              child: Text(controller.store!.storeinfo.nameKur ,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style:  TextStyle(
+                  fontSize: Get.width * 0.03,
+                  fontWeight: FontWeight.bold,
+                ),),
+            ),
           ],
         )
 

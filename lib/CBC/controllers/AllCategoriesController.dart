@@ -20,12 +20,6 @@ class AllCategoriesController extends GetxController {
     'الاقدم'
   ];
   String? selectedValue;
-  final fixedItem = City(
-    id: -1,
-    title: 'الكل',
-    image: 'https://static.vecteezy.com/system/resources/previews/019/633/209/original/doodle-freehand-drawing-of-iraq-map-free-png.png',
-    active: 1,
-  );
   var storiesList = <CategoryAll>[].obs;
   void fetchStories(orderby) async{
     isLoadingStories(true);
@@ -52,7 +46,7 @@ class AllCategoriesController extends GetxController {
       var cities = await RemoteServices.fetchCities();
       if (cities != null) {
         citiesList.value = cities;
-        citiesList.insert(0, fixedItem); // إضافة المحافظة ذات الـ ID -1 في الموقع السادس
+        selectedFilter(cities[0].title);
       }
     } finally {
       isLoadingStories(false);
@@ -97,7 +91,7 @@ class AllCategoriesController extends GetxController {
   void onInit() {
     fetchStories(1);
     fetchCities();
-    selectedFilter('الكل');
+
     // TODO: implement onInit
     super.onInit();
   }

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:textfield_search/textfield_search.dart';
@@ -9,18 +11,22 @@ import 'package:ui_ecommerce/CBC/views/Messages.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 import '../controllers/Home_controller.dart';
 import '../models/TestItem.dart';
+import 'package:badges/badges.dart' as badges;
 import 'StorePage.dart';
 class HomeView extends StatelessWidget {
    HomeView({super.key});
   final Chome_controller  controller = Get.put(Chome_controller());
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(child: content(),
+    return RefreshIndicator(
+      child: content(),
       onRefresh: () async {
+        controller.fetchCountMessages();
          controller.fetchRecently();
          controller.fetchHighest();
          controller.fetchCities();
          controller.fetchSliders();
+
       },
     );
   }
@@ -32,7 +38,26 @@ class HomeView extends StatelessWidget {
           Row(
             children: [
               searchTextInput(),
-              notificationIcon(),
+   Obx(() => GestureDetector(
+     onTap: (){
+       Get.to(()=> MessagesView());
+     },
+     child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.009 , end: Get.height * 0.009,top: Get.height * 0.015, ),
+       child: badges.Badge(
+         position: badges.BadgePosition.bottomEnd(bottom: 4, end: 15),
+         badgeAnimation: badges.BadgeAnimation.slide(),
+         showBadge: controller.showCartBadge.value, // Assuming your controller is named 'controller'
+         badgeStyle: badges.BadgeStyle(
+           badgeColor: Colors.redAccent,
+         ),
+         badgeContent: Text(
+           controller.backgroundMessagesLength.value.toString(), // Assuming your controller is named 'controller'
+           style: TextStyle(color: Colors.white),
+         ),
+         child: Icon(Icons.notifications_outlined, color: AppColors.cbcColor, size: Get.height * 0.035,),
+       )
+     ),
+   )),
             ],
           ),
           SizedBox(
@@ -208,11 +233,14 @@ class HomeView extends StatelessWidget {
               ),
             ),
             SizedBox(height: Get.height * 0.003,),
-            Flexible(
+            SizedBox(
+              width: Get.width * 0.24,
               child: Text(label,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontSize: Get.height * 0.015
+                      fontSize: Get.height * 0.011
                   )),),
             SizedBox(height: Get.height * 0.003,),
             Row(
@@ -272,16 +300,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  GestureDetector notificationIcon (){
-    return GestureDetector(
-      onTap: (){
-        Get.to(()=> MessagesView());
-      },
-      child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.009 , end: Get.height * 0.009,top: Get.height * 0.015, ),
-        child:  Icon(Icons.notifications_outlined,color: AppColors.cbcColor,size: Get.height * 0.035,),
-      ),
-    );
-  }
+
+
   Padding searchTextInput() {
     return Padding(
       padding: EdgeInsetsDirectional.only(

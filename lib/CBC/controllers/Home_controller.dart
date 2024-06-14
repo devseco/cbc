@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
+import 'package:ui_ecommerce/main.dart';
 import '../Services/RemoteServices.dart';
 import '../models/Slider.dart';
 import '../models/TestItem.dart';
@@ -16,6 +18,8 @@ class Chome_controller extends GetxController {
   late TextEditingController myController = TextEditingController();
   int selectedIndex = 0;
   int index = 0;
+  var showCartBadge = false.obs;
+  RxInt backgroundMessagesLength = 0.obs;
   var isLoadingRecently= true.obs;
   var isLoadingHighest= true.obs;
   var isLoadingSliders= true.obs;
@@ -35,7 +39,20 @@ class Chome_controller extends GetxController {
     }
     return _list;
   }
-
+  fetchCountMessages(){
+    sharedPreferences.reload();
+     int count = sharedPreferences.getInt('unread_notifications_count') ?? 0;
+    print('shard is : ${sharedPreferences.getInt('unread_notifications_count')}');
+    backgroundMessagesLength.value = count;
+    print('count notif : ${count}');
+    if(count! > 0 ){
+      showCartBadge(true);
+    }else{
+      showCartBadge(false);
+    }
+    print('notificaions is : ${count}');
+    update();
+  }
   _printLatestValue() {
     print("Textfield value: ${myController.text}");
 
@@ -110,13 +127,37 @@ class Chome_controller extends GetxController {
     update();
   }
 
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    print('okk');
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print("okkkk");
+  }
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    super.onReady();
+    print("ok");
+  }
   @override
   void onInit() {
     // TODO: implement onInit
+
+    FlutterAppBadger.updateBadgeCount(1);
+    sharedPreferences.reload();
+    fetchCountMessages();
     fetchRecently();
     fetchHighest();
     fetchCities();
     fetchSliders();
+
     super.onInit();
   }
   void changeindex(int i){

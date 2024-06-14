@@ -14,9 +14,8 @@ class AllCategories extends StatelessWidget {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async{
-          controller.fetchStories(1);
+          controller.fetchStories(controller.id);
           controller.fetchCities();
-          controller.selectedFilter('الكل');
         },
         child: Container(
             height: Get.height,

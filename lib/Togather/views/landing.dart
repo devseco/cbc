@@ -97,7 +97,7 @@ class Landing_togather extends StatelessWidget {
           body: TabBarView(
             children: [
               Landing_cbc(),
-              Center(child: Text('Tab 2 Content')),
+              Center(child: Text('قريبا ..')),
             ],
           ),
         ),
