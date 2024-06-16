@@ -13,7 +13,12 @@ class Home_controller extends GetxController {
   var slidersList = <SliderBar>[].obs;
   var filterProducts = <Product>[].obs;
   var categoriesList = <CategoryModel>[].obs;
-
+  final fixedItem = CategoryModel(
+    id: -1,
+    title: 'الاقسام',
+    image: 'https://i.ibb.co/Z1cjFwp/image.png',
+    active: 1,
+  );
   //fetch Productes
   void fetchProducts() async{
     isLoadingProductes(true);
@@ -21,19 +26,23 @@ class Home_controller extends GetxController {
       var products = await RemoteServices.fetchProductsRecently();
       if(products != null){
         productsList.value = products;
+        isLoadingProductes(false);
       }else{
+        isLoadingProductes(false);
       }
     }finally{
       isLoadingProductes(false);
+
     }
+    isLoadingProductes(false);
     update();
   }
   //fetch Sliders
   void fetchSliders() async{
+    print("loaddd slider");
     isLoadingSliders(true);
     try {
       var sliders = await RemoteServices.fetchSliders();
-
       if(sliders != null){
         isLoadingSliders(true);
         slidersList.value = sliders;
@@ -48,8 +57,14 @@ class Home_controller extends GetxController {
     try {
       var categories = await RemoteServices.fetchCategories();
       if(categories != null){
-        isLoadingCategories(true);
         categoriesList.value = categories;
+        if (categoriesList.length >= 8) {
+          categoriesList.insert(8, fixedItem);
+        } else {
+          categoriesList.add(fixedItem);
+        }
+
+        isLoadingCategories(true);
         print(isLoadingSliders);
       }
     }finally{

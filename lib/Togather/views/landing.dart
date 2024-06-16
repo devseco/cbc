@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ui_ecommerce/AQS/views/Home.dart';
+import 'package:ui_ecommerce/AQS/views/Landing.dart';
 import 'package:ui_ecommerce/CBC/views/Landing.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 class Landing_togather extends StatelessWidget {
@@ -97,7 +99,7 @@ class Landing_togather extends StatelessWidget {
           body: TabBarView(
             children: [
               Landing_cbc(),
-              Center(child: Text('قريبا ..')),
+              Landing(),
             ],
           ),
         ),

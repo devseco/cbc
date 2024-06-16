@@ -17,7 +17,6 @@ import 'package:ui_ecommerce/AQS/Bindings/Products_bindings.dart';
 import 'package:ui_ecommerce/AQS/middleware/auth_middleware.dart';
 import 'package:ui_ecommerce/AQS/views/Billing.dart';
 import 'package:ui_ecommerce/AQS/views/Checkout.dart';
-import 'package:ui_ecommerce/AQS/views/Favorites.dart';
 import 'package:ui_ecommerce/AQS/views/Item_Billing.dart';
 import 'package:ui_ecommerce/AQS/views/RecentlyProducts.dart';
 import 'package:ui_ecommerce/AQS/views/Cart.dart';
@@ -35,13 +34,12 @@ final List<GetPage> appPages = [
   GetPage(name: '/', page: ()=>  Login() ,binding: Landing_bindings(),middlewares: [auth_middleware()]),
   GetPage(name: '/product', page: ()=>  ProductPage() ,binding: Product_bindings()),
   GetPage(name: '/landing', page: ()=>  Landing() ,binding: Landing_bindings()),
-  GetPage(name: '/home', page: ()=>  Home() , binding: Home_Bindings()),
+  GetPage(name: '/homeAQS', page: ()=>  Home_AQS() , binding: Home_Bindings()),
   GetPage(name: '/bestProducts', page: ()=>RecentlyProducts() , binding: RecentlyProducts_bindings()),
   GetPage(name: '/cart', page: ()=>CartPage() , binding: Cart_bindings()),
   GetPage(name: '/categories', page: ()=>Categories() , binding: Category_bindings()),
   GetPage(name: '/products', page: ()=>Products() , binding: Products_bindings()),
   GetPage(name: '/checkout', page: ()=>Checkout() , binding: Checkout_bindings()),
-  GetPage(name: '/favorites', page: ()=>Favorites() , binding: Checkout_bindings()),
   GetPage(name: '/billing', page: ()=>Billing() , binding: Billing_bindings()),
   GetPage(name: '/Item_Billing', page: ()=>Item_Billing() , binding: ItemBilling_bindings()),
   GetPage(name: '/cities', page: ()=>Cities_view()),

@@ -1,3 +1,5 @@
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/AQS/controllers/Landing_controller.dart';
@@ -6,12 +8,14 @@ import 'package:ui_ecommerce/AQS/views/Cart.dart';
 import 'package:ui_ecommerce/AQS/views/Categories.dart';
 import 'package:ui_ecommerce/AQS/views/Home.dart';
 import 'package:ui_ecommerce/AQS/views/Profile.dart';
+
+import '../../res/colors.dart';
 class Landing extends StatelessWidget {
    Landing({super.key});
    final Landing_controller controller =  Get.find();
    final locale_controller = Get.put(Locale_controller());
    static  final List<Widget> _pages = <Widget>[
-     Home(),
+     Home_AQS(),
      Categories(),
      CartPage(),
      const Profile()
@@ -19,51 +23,91 @@ class Landing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: controller.pagesViewScaffoldKey,
-      drawer: Drawer(
-        child: drawer(),
-      ),
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        scrolledUnderElevation:0.0,
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        leadingWidth: Get.height * 0.3,
-        actions: [
-          actions(),
-        ],
-        leading: logo(),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: controller.selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        onTap: (i){
-          controller.onItemTapped(i);
-        },
-        items:  <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home_outlined),
-            label: '14'.tr,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.category_outlined),
-            label: '15'.tr,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            label: '16'.tr,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.person_outlined),
-            label: '17'.tr,
-          ),
-        ],
-      ),
+      bottomNavigationBar: menuBottom(),
       body: GetBuilder<Landing_controller>(builder: (c){
         return _pages.elementAt(c.selectedIndex);
       },),
     );
   }
+   menuBottom(){
+     return CurvedNavigationBar(
+       height: Get.height * 0.08,
+       color: AppColors.aqsfullGreen,
+       buttonBackgroundColor: AppColors.aqsyallow,
+       backgroundColor: Colors.white,
+       items:  [
+         CurvedNavigationBarItem(
+             child: Icon(Icons.category , color: Colors.white,size: Get.width * 0.05,),
+             label: '10'.tr,
+             labelStyle: TextStyle(
+                 color: Colors.white,
+                 fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
+             )
+         ),
+         CurvedNavigationBarItem(
+             child: Icon(Icons.shopping_cart_outlined , color: Colors.white,size: Get.width * 0.05,),
+             label: '16'.tr,
+             labelStyle: TextStyle(
+                 color: Colors.white,
+                 fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
+             )
+         ),
+         CurvedNavigationBarItem(
+             child: Icon(Icons.home , color: Colors.white,size: Get.width * 0.05,),
+             label: '14'.tr,
+             labelStyle: TextStyle(
+                 color: Colors.white,
+                 fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
+             )
+         ),
+         CurvedNavigationBarItem(
+             child: Icon(Icons.settings , color: Colors.white,size: Get.width * 0.05,),
+             label: '154'.tr,
+             labelStyle: TextStyle(
+                 color: Colors.white,
+                 fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
+             )
+         ),
+         CurvedNavigationBarItem(
+             child: Icon(Icons.person , color: Colors.white,size: Get.width * 0.05,),
+             label: '17'.tr,
+             labelStyle: TextStyle(
+                 color: Colors.white,
+                 fontSize: Get.height * 0.012,
+                 fontWeight: FontWeight.bold
+             )
+         ),
+       ],
+       index: 2,
+       onTap: (index) {
+         switch (index) {
+           case 0:
+             controller.onItemTapped(1);
+             print('ok');
+             break;
+           case 1:
+             controller.onItemTapped(2);
+           case 2:
+             controller.onItemTapped(0);
+             break;
+           case 3:
+             controller.onItemTapped(4);
+             break;
+           case 4:
+             controller.onItemTapped(3);
+             break;
+
+         }
+         print(index);
+
+         // Handle button tap
+       },
+     );
+   }
    SizedBox spaceH(double size) {
      return SizedBox(
        height: size,

@@ -128,14 +128,12 @@ class RecentlyProducts extends StatelessWidget {
             product.image,
             product.title,
             product.price,
-            product.id,
-            product.lastprice,
-            product.rate
+            product.id
         );
       },
     );
   }
-  Item(String url , String title , int price , int id , lastprice ,String rate){
+  Item(String url , String title , int price , int id ){
     return GestureDetector(
       onTap: (){
         Get.toNamed('/product' , arguments: [{'id':id}]);
@@ -182,39 +180,6 @@ class RecentlyProducts extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            spaceH(Get.height * 0.004),
-            Text(formatter.format(lastprice) + " د.ع " , textAlign: TextAlign.start,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                decoration: TextDecoration.lineThrough,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            Row(
-              children: [
-                Text('(${rate})'),
-                spaceW(Get.height * 0.005),
-                SizedBox(
-                  child: RatingBar.builder(
-                    initialRating: double.parse(rate),
-                    minRating: 1,
-                    ignoreGestures: true,
-                    itemSize: 17,
-                    direction: Axis.horizontal,
-                    itemCount: 5,
-                    allowHalfRating: true,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      //controller.changeRate(rating);
-                    },
-                  ),
-                )
-              ],
-            )
           ],
         ),
       ),

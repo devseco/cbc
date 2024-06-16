@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_ecommerce/AQS/Bindings/Landing_bindings.dart';
-import 'package:ui_ecommerce/AQS/controllers/Favorite_controller.dart';
 import 'package:ui_ecommerce/res/app_pages.dart';
 import 'package:ui_ecommerce/locale/Locale_controller.dart';
 import 'package:ui_ecommerce/locale/locale.dart';
@@ -35,7 +34,6 @@ Future<void> _firebaseMessagingBackgroundHandler(
     sharedPreferences.setInt('unread_notifications_count', unreadCount);
     FlutterAppBadger.updateBadgeCount(1);
   }
-
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,15 +43,12 @@ void main() async {
   Hive.registerAdapter(CartModelAdapter());
   Hive.registerAdapter(FavoriteModelAdapter());
   BoxCart = await Hive.openBox<CartModel>('Cart');
-  BoxFavorite = await Hive.openBox<FavoriteModel>('Favorite');
   await Future.delayed(const Duration(milliseconds: 300));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   if (Firebase.apps.isNotEmpty) {
     print('Firebase initialized successfully!');
-    final fcmToken = await FirebaseMessaging.instance.getToken();
-    print('token is : ${fcmToken}');
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     messaging.subscribeToTopic('offers');
     NotificationSettings settings = await messaging.requestPermission(
@@ -65,7 +60,6 @@ void main() async {
       provisional: false,
       sound: true,
     );
-
     print('User granted permission: ${settings.authorizationStatus}');
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
@@ -104,6 +98,7 @@ class MyApp extends StatelessWidget {
       title: 'CBC',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Tajawal',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

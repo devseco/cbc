@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/AQS/controllers/Category_controller.dart';
+import 'package:ui_ecommerce/res/colors.dart';
 
 class Categories extends StatelessWidget {
    Categories({super.key});
@@ -9,34 +10,13 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: SafeArea(
-          child: Column(
-            children: [
-              spaceH(Get.height * 0.015),
-              Row(
-                children: [
-                  searchTextInput(),
-                  filtersIcon(),
-                ],
-              ),
-              spaceH(Get.height * 0.015),
-              Expanded(child: bestproductslist())
-            ],
-          )),
-
+      body: bestproductslist(),
     );
   }
    bestproductslist() {
-     return GridView.builder(
-       padding: EdgeInsets.only(right: Get.height * 0.009,left: Get.height * 0.009),
-       // to disable GridView's scrolling
+     return ListView.builder(
+       padding: EdgeInsets.only(top: Get.width * 0.05),
        shrinkWrap: true, // You won't see infinite size error
-       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-         childAspectRatio: 0.95,
-         crossAxisCount: 2,
-         crossAxisSpacing: 10.0,
-         mainAxisSpacing: 15.0,
-       ),
        itemCount: controller.categoriesList.length,
        itemBuilder: (BuildContext context, int index) {
          final Category = controller.categoriesList[index];
@@ -49,50 +29,49 @@ class Categories extends StatelessWidget {
      );
    }
    CategoryItem(String url , String title  , int index){
-     return GestureDetector(
-       onTap: (){
-         Get.toNamed('/products' , arguments: [{'id':index}]);
-       },
-       child: Container(
-         padding: EdgeInsets.all(Get.height * 0.017),
-         width: Get.height * 0.2,
-         decoration: BoxDecoration(
-             border: Border.all(color: Colors.black12),
-             borderRadius: const BorderRadius.all(Radius.circular(15))
-         ),
-         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: <Widget>[
-             spaceH(Get.height * 0.02),
-             Center(
-               child:  CachedNetworkImage(
-                 height: Get.height * 0.12,
-                 width: Get.height * 0.18,
-                 imageUrl: url,
-                 imageBuilder: (context, imageProvider) => Container(
-                   decoration: BoxDecoration(
-                     image: DecorationImage(
-                       image: imageProvider,
-                       fit: BoxFit.scaleDown,
-                     ),
-                   ),
+     return Container(
+       margin: EdgeInsets.only(bottom: Get.width * 0.01 , left: Get.width * 0.03 ),
+       padding: EdgeInsets.all(Get.width * 0.005),
+       decoration: BoxDecoration(
+         color: Colors.white,
+         borderRadius: BorderRadius.all(Radius.circular(10)),
+         boxShadow: [
+           BoxShadow(
+             color: Colors.grey.withOpacity(0.2),
+             spreadRadius: 5,
+             blurRadius: 7,
+             offset: Offset(0, 3), // changes position of shadow
+           ),
+         ],
+       ),
+
+       child: Row(
+         children: [
+           CachedNetworkImage(
+             height: Get.height * 0.08,
+             width: Get.height * 0.05,
+             imageUrl: url,
+             imageBuilder: (context, imageProvider) => Container(
+               decoration: BoxDecoration(
+                 image: DecorationImage(
+                   image: imageProvider,
+                   fit: BoxFit.scaleDown,
                  ),
-                 placeholder: (context, url) => const CircularProgressIndicator(),
-                 errorWidget: (context, url, error) => const Icon(Icons.error),
                ),
              ),
-             spaceH(Get.height * 0.01),
-             Center(
-               child: Text(title , textAlign: TextAlign.start,
-                 overflow: TextOverflow.ellipsis,
-                 style: const TextStyle(
-                   fontWeight: FontWeight.bold,
-
-                 ),
-               ),
-             )
-           ],
-         ),
+             placeholder: (context, url) => const CircularProgressIndicator(),
+             errorWidget: (context, url, error) => const Icon(Icons.error),
+           ),
+           spaceW(Get.width * 0.05),
+           Text(
+             title,
+             style: TextStyle(
+               color: AppColors.aqsfullGreen,
+               fontSize: Get.width * 0.05,
+               fontWeight: FontWeight.bold
+             ),
+           )
+         ],
        ),
      );
    }

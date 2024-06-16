@@ -5,10 +5,9 @@ import 'package:ui_ecommerce/AQS/models/Category.dart';
 import 'package:ui_ecommerce/AQS/models/Product.dart';
 import 'package:ui_ecommerce/AQS/models/Sale.dart';
 import '../models/Slider.dart';
-
 class RemoteServices {
   static var client = http.Client();
-  static var baseUrl = 'http://127.0.0.1:3000/';
+  static var baseUrl = 'http://10.22.129.133:3000/aqs/api/v1/';
 //Login
   static Future login(phone) async {
     var endpoint = 'login';
@@ -196,14 +195,17 @@ class RemoteServices {
     var endpoint = 'getSliders';
     try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
+      print('slider ${response.body}');
       if (response.statusCode == 200) {
         var jsonData = response.body;
         List<SliderBar> sliders = sliderFromJson(jsonData);
         return sliders;
       } else {
+        print('errro slider');
         return null;
       }
     } catch (e) {
+      print(e.toString());
       return null;
     }
   }

@@ -4,49 +4,28 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:ui_ecommerce/AQS/controllers/Cart_controller.dart';
-import 'package:ui_ecommerce/AQS/controllers/Favorite_controller.dart';
 import 'package:ui_ecommerce/AQS/controllers/Product_controller.dart';
+import 'package:ui_ecommerce/res/colors.dart';
 import '../../main.dart';
 class ProductPage extends StatelessWidget {
    ProductPage({super.key});
    final Product_controller controller = Get.find();
    final Cart_controller cart_controller = Get.put(Cart_controller());
-   final Favorite_controller fav_controller = Get.put(Favorite_controller());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        forceMaterialTransparency: true,
         scrolledUnderElevation:0.0,
-        surfaceTintColor: Colors.transparent,
-        actions: [
-          GetBuilder<Product_controller>(builder: (c){
-            if(c.isLoadingItem.value){
-              return Text('');
-            }else{
-              if(c.productList.isNotEmpty){
-                return actions();
-              }else{
-                return Text('');
-              }
-            }
-          },
-          ),
-        ],
         elevation: 9.0,
-        title: GetBuilder<Product_controller>(builder: (c){
-         if(c.isLoadingItem.value){
-           return Text('');
-         }else{
-           if(c.productList.isNotEmpty){
-             return title();
-           }else{
-             return Text('');
-           }
-         }
-          },
-        ),
-
+        backgroundColor: AppColors.aqsfullGreen,
+        centerTitle: true,
+        title: Text('155'.tr,
+          style: TextStyle(
+              fontSize: Get.height * 0.02,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        )
       ),
       body: GetBuilder<Product_controller>(builder: (c){
        if(c.isLoadingItem.value){
@@ -63,10 +42,6 @@ class ProductPage extends StatelessWidget {
                  _text(c.productList[0].title , Get.height * 0.018,Colors.black,FontWeight.bold),
                  spaceH(Get.height * 0.002),
                  _description(c.productList[0].description),
-                 spaceH(Get.height * 0.002),
-                 rate(double.parse(c.productList[0].rate)),
-                 spaceH(Get.height * 0.002),
-                 price(c.productList[0].price.toString(), c.productList[0].lastprice.toString()),
                  spaceH(Get.height * 0.01),
                  _counter(),
                  spaceH(Get.height * 0.08),
@@ -272,48 +247,8 @@ class ProductPage extends StatelessWidget {
      ),
      );
    }
-  title(){
-    return Text(controller.productList[0].title,
-    style: TextStyle(
-      fontSize: Get.height * 0.02,
-      fontWeight: FontWeight.bold
-    ),
-
-    );
-  }
   //builder.putDate(controller.productList[0].title, controller.productList[0].price, controller.productList[0].id, controller.productList[0].image, controller.productList[0].category, controller.productList[0].lastprice, controller.productList[0].rate);
    //
-  Padding actions() {
-    return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02, top: Get.height * 0.01 , end: Get.height * 0.02),
-      child: GetBuilder<Favorite_controller>(builder: (c){
-        if (c.getStatus(controller.productList[0].id)) {
-          return GestureDetector(
-            onTap: (){
-              c.is_existsloading(controller.productList[0].id);
-            },
-            child: Icon(Icons.favorite , color: Colors.red,),
-          );
-        } else {
-          return  GestureDetector(
-            onTap: () {
-              c.putDate(
-                controller.productList[0].title,
-                controller.productList[0].price,
-                controller.productList[0].id,
-                controller.productList[0].image,
-                controller.productList[0].category,
-                controller.productList[0].lastprice,
-                controller.productList[0].rate,
-              );
-            },
-            child: Icon(Icons.favorite_outline , color: Colors.black,),
-          );
-        }
-      })
-
-
-    );
-  }
   line() {
     return const Divider(
       color: Colors.black12,
