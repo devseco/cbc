@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -16,9 +18,12 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation:0.0,
-        elevation: 9.0,
+        elevation: 0.0,
         backgroundColor: AppColors.aqsfullGreen,
         centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
         title: Text('155'.tr,
           style: TextStyle(
               fontSize: Get.height * 0.02,
@@ -27,40 +32,59 @@ class ProductPage extends StatelessWidget {
           ),
         )
       ),
-      body: GetBuilder<Product_controller>(builder: (c){
-       if(c.isLoadingItem.value){
-        return loading_();
-       }else{
-         if(c.productList.isNotEmpty){
-           return SafeArea(
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 sliders(),
-                 line(),
-                 spaceH(Get.height * 0.002),
-                 _text(c.productList[0].title , Get.height * 0.018,Colors.black,FontWeight.bold),
-                 spaceH(Get.height * 0.002),
-                 _description(c.productList[0].description),
-                 spaceH(Get.height * 0.01),
-                 _counter(),
-                 spaceH(Get.height * 0.08),
-                 GetBuilder<Cart_controller>(builder: (builder){
-                   if(builder.isLoadingAdded.value){
-                     return loading_button();
-                   }else{
-                     return botton();
-                   }
-                 })
-               ],
-             ),
-
-           );
-         }else{
-           return Center(child: Text('20'.tr),);
-         }
-       }
-      },),
+      body: RefreshIndicator(
+        onRefresh: ()async {
+          controller.fetchProduct();
+        },
+        child: SizedBox(
+          height: Get.height,
+          child: GetBuilder<Product_controller>(builder: (c){
+            if(c.isLoadingItem.value){
+              return loading_();
+            }else{
+              if(c.productList.isNotEmpty){
+                return RefreshIndicator(
+                  onRefresh: ()async{
+                    controller.fetchProduct();
+                  },
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Obx(() {
+                        if(!controller.isLoadingItem.value){
+                          return (controller.productList[0].images.length > 0)? sliders() : placholder404();
+                        }else{
+                          return placholderSlider();
+                        }
+                      }),
+                      spaceH(Get.height * 0.01),
+                      _text(c.productList[0].title , Get.height * 0.018,Colors.black,FontWeight.bold),
+                      spaceH(Get.height * 0.03),
+                      line(),
+                      spaceH(Get.height * 0.01),
+                      _brand(),
+                      spaceH(Get.height * 0.01),
+                      _description(c.productList[0].description),
+                      spaceH(Get.height * 0.03),
+                      line(),
+                      spaceH(Get.height * 0.01),
+                      price(),
+                      spaceH(Get.height * 0.02),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child:  _payment(),
+                      )
+                    ],
+                  ),
+                );
+              }else{
+                return Center(child: Text('20'.tr),);
+              }
+            }
+          },
+          ),
+        )
+      )
     );
   }
   msgAdded(title , msg){
@@ -80,12 +104,67 @@ class ProductPage extends StatelessWidget {
          size: 20,
        ),);
    }
+   placholder404(){
+     return Container(
+       height: Get.height * 0.3,
+       width: Get.width * 0.9,
+       decoration: BoxDecoration(
+           borderRadius: BorderRadius.circular(30),
+       ),
+       margin: EdgeInsets.all(Get.height * 0.004),
+       child: Center(
+           child: ClipRRect(
+             borderRadius: BorderRadius.circular(10.0),
+             child: Image.asset('assets/images/comingsoon.jpg' , fit: BoxFit.fill,),
+           )
+       ),
+     );
+   }
+   placholderSlider(){
+     return Container(
+       height: Get.height * 0.3,
+       width: Get.width * 0.9,
+       decoration: BoxDecoration(
+           borderRadius: BorderRadius.circular(30),
+       ),
+       margin: EdgeInsets.all(Get.height * 0.004),
+       child: Center(
+           child: ClipRRect(
+             borderRadius: BorderRadius.circular(10.0),
+             child: const CircularProgressIndicator(),
+           )
+       ),
+     );
+   }
+   _payment(){
+    return Padding(padding: EdgeInsetsDirectional.only(start: Get.width * 0.02 , end: Get.width * 0.02),
+    child: Row(
+      children: [
+        _counter(),
+        spaceW(Get.width * 0.02),
+        GetBuilder<Cart_controller>(builder: (builder){
+          if(builder.isLoadingAdded.value){
+            return loading_button();
+          }else{
+            return botton();
+          }
+        })
+      ],
+    ),
+    );
+   }
    botton(){
     return GetBuilder<Cart_controller>(builder: (builder){
       return Center(
         child: Container(
-          child: ElevatedButton(
-            onPressed: () {
+          width: Get.width * 0.6,
+          height: Get.width * 0.1,
+          decoration: BoxDecoration(
+              color: AppColors.aqsyallow,
+              borderRadius: BorderRadius.all(Radius.circular(5))
+          ),
+          child: GestureDetector(
+            onTap: () {
               builder.putDate(controller.productList[0].title, controller.productList[0].price, controller.count, controller.productList[0].id, controller.productList[0].image, controller.productList[0].category);
               if(!builder.isLoadingAdded.value){
                 if(builder.isAddedCart.value){
@@ -97,59 +176,98 @@ class ProductPage extends StatelessWidget {
                 print(builder.msgAdded);
               }
               },
-            style: ElevatedButton.styleFrom(
-              backgroundColor:Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(20), // Rounded corners
-              ),
-              minimumSize: Size(200, 60), // Set the button's size
-            ),
-            child: Text('19'.tr,
-                style: TextStyle(color: Colors.white,
-                    fontSize: Get.height * 0.02,
-                    fontWeight: FontWeight.bold
-
-                )),
+            child: Center(
+              child: Text('19'.tr,
+                  style: TextStyle(
+                      color: AppColors.aqsfullGreen,
+                      fontSize: Get.height * 0.013,
+                      fontWeight: FontWeight.bold
+                  )),
+            )
           ),
         ),
       );
     });
    }
+   _brand(){
+    return Padding(padding: EdgeInsetsDirectional.only(start: Get.width * 0.02 , end: Get.width * 0.02),
+    child: Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(Get.height * 0.005),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(45))
+          ),
+          height: Get.height * 0.06,
+          width: Get.height * 0.06,
+          child: CachedNetworkImage(
+            imageUrl: controller.productList[0].brandLogo ,
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
+        ),
+
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${'156'.tr} : ${controller.productList[0].brand}'),
+            Text('${'157'.tr} : ${controller.productList[0].model}'),
+          ],
+        )
+        
+        
+        
+        
+      ],
+    ),
+
+    );
+   }
   _counter(){
     return Center(
       child: GetBuilder<Product_controller>(builder: (c){
         return Container(
-          padding: EdgeInsets.only(top: Get.height * 0.03),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container( // مسافة داخلية حول الأيقونات والنص
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey), // لون الإطار
-                  borderRadius: BorderRadius.circular(10.0), // تقريب زوايا الإطار
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min, // لجعل الصف يأخذ أقل مساحة ممكنة
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: controller.outCounter, // تقليل الكمية
-                    ),
-                    GetBuilder<Product_controller>(builder: (builder){
-                      return Text(
-                        '${builder.count}', // عرض الكمية
-                        style: TextStyle(fontSize: 20),
-                      );
-                    }),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: controller.inCounter, // زيادة الكمية
-                    ),
-                  ],
-                ),
+          width: Get.width * 0.3,
+          height: Get.width * 0.1,
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.aqsfullGreen,
+              border: Border.all(color: AppColors.aqsfullGreen), // لون الإطار
+              borderRadius: BorderRadius.circular(10.0), // تقريب زوايا الإطار
+            ),
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min, // لجعل الصف يأخذ أقل مساحة ممكنة
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.remove , size: Get.width * 0.05,color: Colors.white,),
+                    onPressed: controller.outCounter,
+                  ),
+                  GetBuilder<Product_controller>(builder: (builder){
+                    return Text(
+                      '${builder.count}', // عرض الكمية
+                      style: TextStyle(
+                          fontSize: Get.width * 0.04,
+                          color: Colors.white
+                      ),
+                    );
+                  }),
+                  IconButton(
+                    icon: Icon(Icons.add , size: Get.width * 0.05 , color: Colors.white),
+                    onPressed: controller.inCounter, // زيادة الكمية
+                  ),
+                ],
               ),
-            ],
+            )
           ),
 
         );
@@ -157,50 +275,76 @@ class ProductPage extends StatelessWidget {
     );
   }
    _description(String des){
-     return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.height * 0.05),
-       child: Text(des,
-         textAlign: TextAlign.start,
-         maxLines: 5,
-         style: TextStyle(
-             fontSize: Get.height * 0.014,
-             fontWeight: FontWeight.w300,
-             height: 1.5,
-
-             color : const Color(0xff757D75),
-         ),
+     return Container(
+       height: Get.width * 0.5,
+       margin: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.height * 0.05),
+       child: Column(
+         mainAxisAlignment: MainAxisAlignment.start,
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+           Text('${'158'.tr} : ',
+             textAlign: TextAlign.start,
+             style: TextStyle(
+               fontSize: Get.height * 0.014,
+               fontWeight: FontWeight.bold,
+               color : Colors.black,
+             ),
+           ),
+           Expanded(
+               child: ListView(
+                 children: [
+                   Text(des,
+                     textAlign: TextAlign.start,
+                     style: TextStyle(
+                       fontSize: Get.height * 0.012,
+                       fontWeight: FontWeight.w700,
+                       color : Colors.black,
+                     ),
+                   ),
+                 ],
+               ))
+         ],
        ),
      );
    }
-   price(price , lastprice){
+   price(){
      return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02),
      child: Row(
        children: [
-         Text(formatter.format(int.parse(lastprice)) + ' '  + '18'.tr,
+         Image.asset('assets/images/icons/cash.png' , width: Get.width * 0.07, fit: BoxFit.contain,),
+         spaceW(Get.height * 0.009),
+         Text('159'.tr,
            style: TextStyle(
-               decoration: TextDecoration.lineThrough,
-               fontSize: Get.height * 0.015,
-               color: Colors.grey,
+               fontSize: Get.height * 0.012,
+               color: AppColors.aqsfullGreen,
                fontWeight: FontWeight.bold
            ),
          ),
          spaceW(Get.height * 0.009),
-         Text(formatter.format(int.parse(price)) + ' '+ '18'.tr,
-           style: TextStyle(
-               fontSize: Get.height * 0.02,
-               fontWeight: FontWeight.bold
-           ),
-         ),
+        Container(
+          width: Get.width * 0.4,
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            color: AppColors.aqsfullGreen,
+              borderRadius: BorderRadius.all(Radius.circular(5))
+          ),
+          child: Center(
+            child:  Text(formatter.format(controller.productList[0].price) + ' '+ '18'.tr,
+              style: TextStyle(
+                  fontSize: Get.height * 0.013,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+              ),
+            ),
+          )
+        ),
          spaceW(Get.height * 0.005),
-         Container(
-           width: Get.height * 0.06,
-           height: Get.height * 0.025,
-           color: Colors.redAccent,
-           child: Center(child: Text("28".tr , style: TextStyle(
-             color: Colors.white,
+         Center(
+           child: Text("160".tr , style: TextStyle(
+             color: AppColors.aqsfullGreen,
              fontWeight: FontWeight.bold,
              fontSize: Get.height * 0.013
-           ),),),
-         )
+         ),),),
        ],
      ),
      );
@@ -236,9 +380,10 @@ class ProductPage extends StatelessWidget {
     );
    }
    _text(String title , double size , Color color , FontWeight fontWeight){
-     return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02),
+     return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.width * 0.02),
      child: Text(title,
        textAlign: TextAlign.start,
+       maxLines: 2,
        style: TextStyle(
            fontSize: size,
            fontWeight: fontWeight,
@@ -250,8 +395,11 @@ class ProductPage extends StatelessWidget {
   //builder.putDate(controller.productList[0].title, controller.productList[0].price, controller.productList[0].id, controller.productList[0].image, controller.productList[0].category, controller.productList[0].lastprice, controller.productList[0].rate);
    //
   line() {
-    return const Divider(
-      color: Colors.black12,
+    return Container(
+      margin: EdgeInsets.only(right: Get.width * 0.05 , left: Get.width * 0.05),
+      width: 200,
+      height: Get.width * 0.003,
+      color: AppColors.aqsyallow,
     );
   }
   SizedBox spaceH(double size) {
@@ -267,29 +415,58 @@ class ProductPage extends StatelessWidget {
 
   }
   sliders() {
-    return Padding(padding: EdgeInsetsDirectional.only(top: Get.height * 0.007),
-      child: SizedBox(
-        height: Get.height * 0.303,
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white60)
-          ),
-          child: ClipRRect(
-            child: CachedNetworkImage(
-              imageUrl: controller.productList[0].image,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+    return SizedBox(
+      height:  Get.height * 0.3,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true
+              ,viewportFraction: 1.16,
+              height: Get.height * 0.27,
+              onPageChanged: (index, reason) {
+                controller.changeindex(index);
+              },
             ),
+            items: controller.productList[0].images
+                .map((item) => Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white60)
+                ),
+                margin: EdgeInsets.all(Get.height * 0.002),
+                padding: EdgeInsetsDirectional.only(start: Get.height * 0.02,end: Get.height * 0.02,bottom: Get.height * 0.004),
+                child: ClipRRect(
+                  child: CachedNetworkImage(
+                    imageUrl: item,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) => const Center(child: CircularProgressIndicator(),),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
+                )
+            ))
+                .toList(),
           ),
-        )
+          GetBuilder<Product_controller>(builder: (c){
+            return DotsIndicator(
+              dotsCount: controller.productList[0].images.length,
+              position: c.index,
+              decorator: DotsDecorator(
+                color: Colors.grey,
+                size: const Size.square(9.0),
+                activeSize:  Size(Get.height * 0.008, Get.height * 0.009,),
+                activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/AQS/models/Product.dart';
+import 'package:ui_ecommerce/AQS/models/ProductPage.dart';
 import '../Services/RemoteServices.dart';
 
 class Product_controller extends GetxController {
   var isLoadingItem= false.obs;
-  var productList = <Product>[].obs;
+  var productList = <ProductPage>[].obs;
   int index = 0;
   var rate  = 3.0;
   int count = 1;
@@ -17,7 +18,7 @@ class Product_controller extends GetxController {
     try {
       var products = await RemoteServices.fetchProductone(id);
       if(products != null){
-        productList.value = products;
+        productList.value = [products];
         isLoadingItem(false);
       }else{
         isLoadingItem(false);

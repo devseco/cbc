@@ -3,11 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:ui_ecommerce/AQS/models/Bill.dart';
 import 'package:ui_ecommerce/AQS/models/Category.dart';
 import 'package:ui_ecommerce/AQS/models/Product.dart';
+import 'package:ui_ecommerce/AQS/models/ProductPage.dart';
 import 'package:ui_ecommerce/AQS/models/Sale.dart';
 import '../models/Slider.dart';
 class RemoteServices {
   static var client = http.Client();
-  static var baseUrl = 'http://10.22.129.133:3000/aqs/api/v1/';
+  static var baseUrl = 'http://192.168.3.28:3000/aqs/api/v1/';
 //Login
   static Future login(phone) async {
     var endpoint = 'login';
@@ -158,13 +159,13 @@ class RemoteServices {
     }
   }
   //Fetch Item By Id From Endpoint (getProduct)
-  static Future<List<Product>?> fetchProductone(id) async {
+  static Future<ProductPage?> fetchProductone(id) async {
     var endpoint = 'getProduct/${id}';
     try {
       var response = await client.get(Uri.parse(baseUrl + endpoint));
       if (response.statusCode == 200) {
         var jsonData = response.body;
-        List<Product> products = productFromJson(jsonData);
+        ProductPage products = productPageFromJson(jsonData);
         return products;
       } else {
         return null;
