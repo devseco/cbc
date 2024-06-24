@@ -21,6 +21,5 @@ class Landing_cbc extends StatelessWidget {
       return _pages.elementAt(c.selectedIndex);
     },);
   }
-
 }
 

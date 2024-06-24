@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:ui_ecommerce/AQS/models/Product.dart';
 import 'package:ui_ecommerce/AQS/models/ProductPage.dart';
 import '../Services/RemoteServices.dart';
 
@@ -9,10 +8,9 @@ class Product_controller extends GetxController {
   int index = 0;
   var rate  = 3.0;
   int count = 1;
+  int total = 0;
   int id = 0;
   dynamic argumentData = Get.arguments;
-
-
   void fetchProduct() async{
     isLoadingItem(true);
     try {
@@ -28,7 +26,6 @@ class Product_controller extends GetxController {
     }
     update();
   }
-
 
   void changeindex(int i){
     index = i;

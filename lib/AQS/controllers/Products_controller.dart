@@ -4,8 +4,11 @@ import '../models/Product.dart';
 class Products_Controller extends GetxController {
   dynamic argumentData = Get.arguments;
   var isLoadingItem= false.obs;
+  var category = '';
+  var subCategory = '';
+  int id = 0;
   var productList = <Product>[].obs;
-  void fetchProduct(id) async{
+  void fetchProduct(int id) async{
     isLoadingItem(true);
     try {
       var products = await RemoteServices.fetchProductByCate(id);
@@ -23,7 +26,10 @@ class Products_Controller extends GetxController {
   }
   @override
   void onInit() {
-    fetchProduct(argumentData[0]['id']);
+    category = argumentData[0]['category'];
+    subCategory = argumentData[0]['subCategory'];
+    id = argumentData[0]['id'];
+    fetchProduct(id);
     // TODO: implement onInit
     super.onInit();
   }

@@ -6,17 +6,10 @@ import 'package:ui_ecommerce/AQS/controllers/Billing_controller.dart';
 import 'package:ui_ecommerce/main.dart';
 class Billing extends StatelessWidget {
    Billing({super.key});
-   final Billing_controller controller = Get.find();
+   final Billing_controller controller = Get.put(Billing_controller());
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        scrolledUnderElevation:0.0,
-        surfaceTintColor: Colors.transparent,
-        leadingWidth: Get.height * 0.3,
-        leading: logo(),
-      ),
       body: Column(
         children: [
           spaceH(Get.height * 0.015),
@@ -273,14 +266,14 @@ class Billing extends StatelessWidget {
            width: Get.width * 0.83,
            child: TextField(
              decoration:  InputDecoration(
-               fillColor: Color(0xfff1ebf1),
+               fillColor: Colors.white,
                filled: true,
                prefixIcon: const Icon(Icons.search),
                hintText: '70'.tr,
                enabledBorder: const OutlineInputBorder(
                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
                  borderSide:  BorderSide(
-                   color: Color(0xfff1ebf1),
+                   color: Colors.white,
                  ),
                ),
                focusedBorder: const OutlineInputBorder(
@@ -289,39 +282,6 @@ class Billing extends StatelessWidget {
                ),
              ),
            )),
-     );
-   }
-   Padding logo() {
-     return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02, top: Get.height * 0.01),
-       child: Row(
-         children: [
-           GestureDetector(
-             onTap: (){
-               Get.back();
-             },
-             child: Icon(Icons.arrow_back_ios),
-           ),
-           Image.asset('assets/images/logo.png' , fit: BoxFit.fill,width: Get.height * 0.06,height: Get.height * 0.03,),
-           Text('0'.tr , style: TextStyle(
-               fontWeight: FontWeight.bold,
-               fontSize: Get.height * 0.018
-           ),)
-         ],
-       ),
-     );
-   }
-   Padding actions() {
-     return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02, top: Get.height * 0.01 , end: Get.height * 0.02),
-       child: Row(
-         children: [
-           spaceW(Get.height * 0.01),
-           const Icon(Icons.favorite_border_outlined),
-           spaceW(Get.height * 0.01),
-           const Icon(Icons.shopping_cart_outlined),
-           spaceW(Get.height * 0.01),
-
-         ],
-       ),
      );
    }
    SizedBox spaceH(double size) {

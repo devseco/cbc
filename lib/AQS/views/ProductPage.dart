@@ -11,7 +11,7 @@ import 'package:ui_ecommerce/res/colors.dart';
 import '../../main.dart';
 class ProductPage extends StatelessWidget {
    ProductPage({super.key});
-   final Product_controller controller = Get.find();
+   final Product_controller controller = Get.put(Product_controller());
    final Cart_controller cart_controller = Get.put(Cart_controller());
   @override
   Widget build(BuildContext context) {
@@ -87,13 +87,14 @@ class ProductPage extends StatelessWidget {
       )
     );
   }
-  msgAdded(title , msg){
-    return Get.snackbar(title, msg);
+
+   msgAdded(title , msg){
+    return Get.snackbar(title, msg , colorText: AppColors.aqsfullGreen, backgroundColor: Colors.white);
   }
    loading_(){
      return Center(
        child: LoadingAnimationWidget.staggeredDotsWave(
-         color: Colors.black,
+         color: AppColors.aqsfullGreen,
          size: 80,
        ),);
    }
@@ -223,10 +224,10 @@ class ProductPage extends StatelessWidget {
             Text('${'157'.tr} : ${controller.productList[0].model}'),
           ],
         )
-        
-        
-        
-        
+
+
+
+
       ],
     ),
 
@@ -313,7 +314,7 @@ class ProductPage extends StatelessWidget {
        children: [
          Image.asset('assets/images/icons/cash.png' , width: Get.width * 0.07, fit: BoxFit.contain,),
          spaceW(Get.height * 0.009),
-         Text('159'.tr,
+         Text('165'.tr,
            style: TextStyle(
                fontSize: Get.height * 0.012,
                color: AppColors.aqsfullGreen,
@@ -329,13 +330,15 @@ class ProductPage extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(5))
           ),
           child: Center(
-            child:  Text(formatter.format(controller.productList[0].price) + ' '+ '18'.tr,
-              style: TextStyle(
-                  fontSize: Get.height * 0.013,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white
-              ),
-            ),
+            child:  GetBuilder<Product_controller>(builder: (builder){
+              return Text(formatter.format(controller.productList[0].price) + ' '+ '18'.tr,
+                style: TextStyle(
+                    fontSize: Get.height * 0.013,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                ),
+              );
+            },),
           )
         ),
          spaceW(Get.height * 0.005),

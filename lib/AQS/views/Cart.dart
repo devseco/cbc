@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/AQS/controllers/Cart_controller.dart';
+import 'package:ui_ecommerce/res/colors.dart';
 import '../../main.dart';
+import '../controllers/FirstController.dart';
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});
@@ -15,56 +15,83 @@ class CartPage extends StatelessWidget {
       bottomNavigationBar: GetBuilder<Cart_controller>(builder: (builder){
         if(BoxCart.isNotEmpty){
           return Container(
-            height:  Get.height * 0.09,
+            height:  Get.height * 0.175,
+            width: Get.width,
             color: Colors.white,
-            padding: EdgeInsets.all(Get.height * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            padding: EdgeInsets.all(Get.height * 0.023),
+            child: Column(
               children: [
-               GetBuilder<Cart_controller>(builder: (builder){
-                 return  GestureDetector(
-                   onTap: (){
-                     if(BoxCart.isNotEmpty){
-                       Get.toNamed('checkout' , arguments: [{'total' : builder.total}]);
-                     }
-                   },
-                   child: Container(
-                     height: Get.height * 0.06,
-                     width: Get.height * 0.15,
-                     margin: const EdgeInsets.all(2),
-                     decoration: BoxDecoration(
-                         borderRadius: const BorderRadius.all(Radius.circular(15)),
-                         color: Colors.deepPurple,
-                         border: Border.all(color: Colors.deepPurple , width: 0.1)
-                     ),
-                     child: Center(
-                       child: Text('31'.tr, style: TextStyle(
-                           color: Colors.white,
-                           fontSize: Get.height * 0.015,
-                           fontWeight: FontWeight.bold
-                       ),),
-                     ),
-                   ),
-                 );
-               }),
+                line(),
+               spaceH(Get.width * 0.03),
                 GetBuilder<Cart_controller>(builder: (builder){
                   return Container(
-                    height: Get.height * 0.06,
-                    width: Get.height * 0.15,
+                    height: Get.height * 0.03,
                     margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Colors.white , width: 0.1)
                     ),
-                    child: Center(
-                      child: Text(formatter.format(builder.total) + ' '+'18'.tr, style: TextStyle(
-                          color: Colors.deepPurple,
-                          fontSize: Get.height * 0.017,
-                          fontWeight: FontWeight.bold
-                      ),),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child:   Text('47'.tr,
+                            style: TextStyle(
+                                fontSize: Get.height * 0.014,
+                                color: AppColors.aqsfullGreen,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: Get.width * 0.4,
+                          height: Get.width * 0.06,
+                          decoration: BoxDecoration(
+                              color: AppColors.aqsfullGreen,
+                              borderRadius: BorderRadius.all(Radius.circular(5))
+                          ),
+                          child: Center(
+                            child: Text('${formatter.format(builder.total)} ${'160'.tr}', style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Get.height * 0.013,
+                                fontWeight: FontWeight.bold
+                            ),),
+                          ),
+                        )
+                      ],
                     ),
                   );
-                })
+                }),
+                GetBuilder<Cart_controller>(builder: (builder){
+                  return  GestureDetector(
+                    onTap: (){
+                      if(BoxCart.isNotEmpty){
+                        FirstController firstController = Get.put(FirstController());
+                        (sharedPreferences.getBool('remember') == true) ?
+                        Get.toNamed('checkout' , arguments: [{'total' : builder.total}])
+                        : firstController.onItemTapped(1);
+                      }
+                    },
+                    child: Container(
+                      height: Get.height * 0.04,
+                      width: Get.height * 0.38,
+                      margin: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(15)),
+                          color: AppColors.aqsyallow,
+                          border: Border.all(color: Colors.deepPurple , width: 0.1)
+                      ),
+                      child: Center(
+                        child: Text('31'.tr, style: TextStyle(
+                            color: AppColors.aqsfullGreen,
+                            fontSize: Get.height * 0.015,
+                            fontWeight: FontWeight.bold
+                        ),),
+                      ),
+                    ),
+                  );
+                }),
               ],
             ),
           );
@@ -85,6 +112,14 @@ class CartPage extends StatelessWidget {
       ),
     );
   }
+  line() {
+    return Container(
+      margin: EdgeInsets.only(right: Get.width * 0.03 , left: Get.width * 0.03),
+      width: Get.width,
+      height: Get.width * 0.003,
+      color: AppColors.aqsyallow,
+    );
+  }
   SizedBox spaceH(double size) {
     return SizedBox(
       height: size,
@@ -97,23 +132,23 @@ class CartPage extends StatelessWidget {
   }
   BestProductItem(String title , int price , String url , int id , int count , int category  , int index){
     return Container(
-      height: Get.height * 0.17,
+      height: Get.height * 0.2,
       padding: EdgeInsets.all(Get.height * 0.017),
       margin: EdgeInsets.only(top: Get.height * 0.01),
       width: Get.height * 0.2,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:  AppColors.aqsfullGreen,
           border: Border.all(color: Colors.black12),
           borderRadius: const BorderRadius.all(Radius.circular(15))
       ),
       child: Stack(
         children: <Widget>[
           PositionedDirectional(
-           top: Get.height * 0.01,
-           end:  Get.height * 0.01,
+           bottom: Get.height * 0.007,
+           start:  Get.height * 0.15,
            child:  GetBuilder<Cart_controller>(builder: (builder){
              return GestureDetector(
-               child:const Icon(Icons.delete_outline_rounded),
+               child:const Icon(Icons.delete_outline_rounded , color: AppColors.aqsyallow,),
                onTap: (){
                  builder.deleteData(index);
                },
@@ -156,22 +191,52 @@ class CartPage extends StatelessWidget {
               child: Text(title , textAlign: TextAlign.start,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Colors.white
                 ),
               ),
             ),),
           PositionedDirectional(
-            bottom: Get.height * 0.02,
+            bottom: Get.height * 0.045,
             start:   Get.height * 0.15,
-            child:  Text(formatter.format(price) + ' '+'18'.tr , textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-             fontWeight: FontWeight.w800,
-              color: Colors.deepPurple,
-              fontSize: Get.height * 0.014
-           ),
-         ),),
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/icons/total.png' , width: Get.width * 0.08, height: Get.width * 0.13, fit: BoxFit.cover,),
+                spaceW(Get.height * 0.002),
+                Padding(
+                  padding: EdgeInsets.only(top: 3),
+                  child:   Text('165'.tr,
+                    style: TextStyle(
+                        fontSize: Get.height * 0.012,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+                spaceW(Get.height * 0.005),
+                Padding(padding: EdgeInsets.only(top: 4),
+                  child:  Text(formatter.format(price) , textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.aqsyallow,
+                        fontSize: Get.height * 0.012
+                    ),
+                  ),),
+                spaceW(Get.height * 0.005),
+                Padding(padding: EdgeInsets.only(top: 3),
+                  child: Center(
+                    child: Text("160".tr , style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Get.height * 0.01
+                    ),),),
+                ),
+              ],
+            ),),
           PositionedDirectional(
-            bottom: Get.height * 0.01,
+            bottom: Get.height * 0.005,
             end:  Get.height * 0.015,
               child: Container(
                 child: Row(
@@ -186,14 +251,14 @@ class CartPage extends StatelessWidget {
                                 width: Get.height * 0.04,
                                 height: Get.height * 0.035,
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: AppColors.aqsyallow,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: Colors.deepPurple,
+                                      color: AppColors.aqsyallow,
                                       width: 1,
                                     )),
                                 child: const Center(
-                                  child: Icon(Icons.remove , color: Colors.black,),),
+                                  child: Icon(Icons.remove , color: AppColors.aqsfullGreen,),),
                               ),
                               onTap: () async{
                                 builder.updateCounterMin(title, price, count, index, url, category);
@@ -202,7 +267,7 @@ class CartPage extends StatelessWidget {
                             spaceW(Get.height * 0.01),
                             Text(
                               '${count}',
-                              style: TextStyle(fontSize: Get.height * 0.02 , color: Colors.deepPurple),
+                              style: TextStyle(fontSize: Get.height * 0.02 , color: Colors.white),
                             ),
                             spaceW(Get.height * 0.01),
                             GestureDetector(
@@ -210,14 +275,14 @@ class CartPage extends StatelessWidget {
                                 width: Get.height * 0.04,
                                 height: Get.height * 0.035,
                                 decoration: BoxDecoration(
-                                    color: Colors.deepPurple,
+                                    color: AppColors.aqsyallow,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: Colors.deepPurpleAccent,
+                                      color: AppColors.aqsyallow,
                                       width: 1,
                                     )),
                                 child: const Center(
-                                  child: Icon(Icons.add , color: Colors.white,),),
+                                  child: Icon(Icons.add , color: AppColors.aqsfullGreen,),),
                               ),
                               onTap: () async{
                                  builder.updateCounterPlus(title, price, count, index, url, category);

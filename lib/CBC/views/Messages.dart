@@ -66,7 +66,7 @@ class MessagesView extends StatelessWidget {
       itemCount: controller.messagesList.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: EdgeInsets.only(top: Get.width * 0.01),
+          padding: EdgeInsets.only(top: Get.width * 0.01 , left: Get.width * 0.02 , right: Get.width * 0.02),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -84,8 +84,7 @@ class MessagesView extends StatelessWidget {
                     ),
                   ],
                 ),
-                width: Get.width * 0.9,
-                height: Get.width * 0.15,
+                height: Get.width * 0.2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,15 +111,20 @@ class MessagesView extends StatelessWidget {
                              color: Colors.black,
                            ),
                          ),
-                         Text(
-                           controller.messagesList[index].body ?? 'No title',
-                           softWrap: true,
-                           style: TextStyle(
-                             fontSize: Get.height * 0.0125,
-                             fontWeight: FontWeight.bold,
-                             color: Colors.grey,
-                           ),
+                     SizedBox(
+                       width: Get.width * 0.8,
+                       child: Text(
+                         controller.messagesList[index].body ?? 'No title',
+                         softWrap: true,
+                         maxLines: 2,
+                         overflow: TextOverflow.ellipsis,
+                         style: TextStyle(
+                           fontSize: Get.height * 0.0125,
+                           fontWeight: FontWeight.bold,
+                           color: Colors.grey,
                          ),
+                       ),
+                     ),
                        ],
                      ),
 

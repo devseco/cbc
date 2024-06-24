@@ -5,11 +5,18 @@ import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:textfield_search/textfield_search.dart';
+import 'package:ui_ecommerce/AQS/controllers/Cart_controller.dart';
 import 'package:ui_ecommerce/AQS/controllers/Home_controller.dart';
 import 'package:ui_ecommerce/AQS/controllers/Landing_controller.dart';
 import 'package:ui_ecommerce/AQS/views/Categories_home.dart';
+import 'package:ui_ecommerce/AQS/views/ProductPage.dart';
+import 'package:ui_ecommerce/AQS/views/subCategory.dart';
+import 'package:ui_ecommerce/CBC/controllers/CardController.dart';
 import 'package:ui_ecommerce/main.dart';
 
+import '../../CBC/models/TestItem.dart';
 import '../../res/colors.dart';
 class Home_AQS extends StatelessWidget {
   Home_AQS({super.key});
@@ -49,7 +56,7 @@ class Home_AQS extends StatelessWidget {
                     if(!controller.isLoadingCategories.value){
                       return (controller.categoriesList.length > 0 ) ? categories() : Center(child: Text("20".tr),);
                     }else{
-                      return Center(child: CircularProgressIndicator(),);
+                      return Center(child: loading_(),);
                     }
                   }),
                 ),
@@ -67,7 +74,7 @@ class Home_AQS extends StatelessWidget {
                       return Center(child: Text('20'.tr),);
                     }
                   }else{
-                    return Center(child: CircularProgressIndicator(),);
+                    return Center(child: loading_(),);
                   }
                 }),
                 spaceH(Get.height * 0.02),
@@ -79,6 +86,13 @@ class Home_AQS extends StatelessWidget {
       )
     );
   }
+  loading_(){
+    return Center(
+      child: LoadingAnimationWidget.staggeredDotsWave(
+        color: AppColors.aqsfullGreen,
+        size: 80,
+      ),);
+  }
    recentlyproductslist() {
      return ListView.builder(
        scrollDirection: Axis.horizontal,
@@ -89,12 +103,13 @@ class Home_AQS extends StatelessWidget {
            product.image,
            product.title,
            product.price,
-           product.id
+           product.id,
+           product.category
          );
        },
      );
    }
-   BestProductItem(String url , String title , int price , int id ){
+   BestProductItem(String url , String title , int price , int id , int category ){
      return GestureDetector(
        onTap: (){
          Get.toNamed('product' , arguments:[{"id": id}],);
@@ -170,6 +185,19 @@ class Home_AQS extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
+                    onTap: (){
+                      Cart_controller con = Get.find();
+                      con.putDate(title, price, 1, id, url, category);
+                      if(!con.isLoadingAdded.value){
+                        if(con.isAddedCart.value){
+                          msgAdded('29'.tr, '30'.tr);
+                        }else{
+                          msgAdded('32'.tr, '33'.tr);
+                        }
+                      }else{
+                        print(con.msgAdded);
+                      }
+                    },
                     child: Container(
                       width: Get.width,
                       padding: EdgeInsets.all(5),
@@ -198,6 +226,9 @@ class Home_AQS extends StatelessWidget {
        ),
      );
    }
+  msgAdded(title , msg){
+    return Get.snackbar(title, msg , colorText: AppColors.aqsfullGreen, backgroundColor: Colors.white);
+  }
    bestproductslabels() {
      return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.height * 0.02),
        child: Row(
@@ -226,7 +257,7 @@ class Home_AQS extends StatelessWidget {
     if(id > 0){
       return GestureDetector(
         onTap: (){
-          Get.toNamed('/products' , arguments: [{'id':id}]);
+          Get.to(()=> SubCategoryView(), arguments: [{'id':id , 'title' : label}]);
         },
         child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.01,end: Get.height * 0.01),
           child: Column(
@@ -303,7 +334,7 @@ class Home_AQS extends StatelessWidget {
         crossAxisCount: 4,
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 1,
+        childAspectRatio: 0.97,
       ),
       itemCount: (controller.categoriesList.length > 8 )?  8 : controller.categoriesList.length, // or slidersList.length, depends on your requirement
       itemBuilder: (context, index) {
@@ -387,7 +418,7 @@ class Home_AQS extends StatelessWidget {
       child: Center(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: CircularProgressIndicator(),
+            child: loading_(),
           )
       ),
     );
@@ -433,7 +464,19 @@ class Home_AQS extends StatelessWidget {
       child: SizedBox(
         width: Get.width * 0.9,
         height: Get.height * 0.05,
-        child: TextField(
+        child: TextFieldSearch(
+          label: 'My Label',
+          controller: controller.myController,
+          future: () {
+            return controller.fetchData();
+          },
+          getSelectedValue: (value) {
+            if(value != null){
+              TestItem selectedItem = value as TestItem; // تأكد من أن القيمة هي من نوع TestItem
+              Get.to(()=>ProductPage() , arguments: [{"id" : selectedItem.value}]);
+              controller.myController.clear();
+            }
+          },
           decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,

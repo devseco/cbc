@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ui_ecommerce/AQS/views/FirstPage.dart';
 import 'package:ui_ecommerce/AQS/views/Home.dart';
 import 'package:ui_ecommerce/AQS/views/Landing.dart';
+import 'package:ui_ecommerce/AQS/views/Login.dart';
 import 'package:ui_ecommerce/CBC/views/Landing.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 class Landing_togather extends StatelessWidget {
@@ -78,7 +80,7 @@ class Landing_togather extends StatelessWidget {
                                   '80'.tr,
                                   style: TextStyle(
                                     fontSize: Get.width * 0.035,
-                                    color: AppColors.cbcGreen,
+                                    color: AppColors.aqsfullGreen,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -99,7 +101,7 @@ class Landing_togather extends StatelessWidget {
           body: TabBarView(
             children: [
               Landing_cbc(),
-              Landing(),
+              Landing_aqs(),
             ],
           ),
         ),

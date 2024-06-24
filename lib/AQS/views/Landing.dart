@@ -8,8 +8,10 @@ import 'package:ui_ecommerce/AQS/views/Cart.dart';
 import 'package:ui_ecommerce/AQS/views/Categories.dart';
 import 'package:ui_ecommerce/AQS/views/Home.dart';
 import 'package:ui_ecommerce/AQS/views/Profile.dart';
-
+import '../../main.dart';
 import '../../res/colors.dart';
+import '../controllers/FirstController.dart';
+import 'Billing.dart';
 class Landing extends StatelessWidget {
    Landing({super.key});
    final Landing_controller controller =  Get.find();
@@ -18,7 +20,8 @@ class Landing extends StatelessWidget {
      Home_AQS(),
      Categories(),
      CartPage(),
-     const Profile()
+     Billing(),
+     Profile()
    ];
   @override
   Widget build(BuildContext context) {
@@ -64,8 +67,8 @@ class Landing extends StatelessWidget {
              )
          ),
          CurvedNavigationBarItem(
-             child: Icon(Icons.settings , color: Colors.white,size: Get.width * 0.05,),
-             label: '154'.tr,
+             child: Icon(Icons.reorder , color: Colors.white,size: Get.width * 0.05,),
+             label: '69'.tr,
              labelStyle: TextStyle(
                  color: Colors.white,
                  fontSize: Get.height * 0.012,
@@ -84,6 +87,7 @@ class Landing extends StatelessWidget {
        ],
        index: 2,
        onTap: (index) {
+         FirstController firstController = Get.put(FirstController());
          switch (index) {
            case 0:
              controller.onItemTapped(1);
@@ -95,10 +99,11 @@ class Landing extends StatelessWidget {
              controller.onItemTapped(0);
              break;
            case 3:
-             controller.onItemTapped(4);
+             (sharedPreferences.getBool('remember') == true) ? controller.onItemTapped(3) : firstController.onItemTapped(1);
              break;
            case 4:
-             controller.onItemTapped(3);
+             (sharedPreferences.getBool('remember') == true) ?  controller.onItemTapped(4) :  firstController.onItemTapped(1);
+
              break;
 
          }

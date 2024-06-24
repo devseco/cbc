@@ -17,6 +17,7 @@ class Category_controller extends GetxController{
     }finally{
       isLoadingCategories(false);
     }
+    update();
   }
   @override
   void onInit() {

@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:ui_ecommerce/AQS/controllers/Category_controller.dart';
-import 'package:ui_ecommerce/AQS/views/subCategory.dart';
+import 'package:ui_ecommerce/AQS/controllers/SubCategoryController.dart';
+import 'package:ui_ecommerce/AQS/views/Products.dart';
 import 'package:ui_ecommerce/res/colors.dart';
-class Categories_home extends StatelessWidget {
-  Categories_home({super.key});
-  final Category_controller controller = Get.put(Category_controller());
+class SubCategoryView extends StatelessWidget {
+  SubCategoryView({super.key});
+  final SubCategory_controller controller = Get.put(SubCategory_controller());
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -15,16 +15,15 @@ class Categories_home extends StatelessWidget {
         backgroundColor: AppColors.aqsfullGreen,
         centerTitle: true,
         iconTheme: IconThemeData(
-          color: Colors.white
+            color: Colors.white
         ),
-        title: Text('10'.tr , style: TextStyle(
-          color:Colors.white
+        title: Text(controller.title , style: TextStyle(
+            color:Colors.white
         ),),
       ),
-      body:  RefreshIndicator(
+      body: RefreshIndicator(
         onRefresh: ()async{
-          controller.fetchCategories();
-
+          controller.fetchCategories(controller.id);
         },
         child: Obx(() {
           if(!controller.isLoadingCategories.value){
@@ -69,7 +68,7 @@ class Categories_home extends StatelessWidget {
   CategoryItem(String url , String title  , int index){
     return GestureDetector(
       onTap: (){
-        Get.to(()=> SubCategoryView(), arguments: [{'id':index , 'title' : title}]);
+        Get.to(()=> Products(), arguments: [{'id':index , 'category' : controller.title , 'subCategory': title}]);
       },
       child: Container(
         margin: EdgeInsets.only(bottom: Get.width * 0.01 , left: Get.width * 0.03 ),
@@ -133,28 +132,5 @@ class Categories_home extends StatelessWidget {
       child: const Icon(Icons.tune),
     );
   }
-  Padding searchTextInput() {
-    return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.height * 0.002),
-      child: SizedBox(
-          width: Get.width * 0.83,
-          child: TextField(
-            decoration:  InputDecoration(
-              fillColor: const Color(0xfff1ebf1),
-              filled: true,
-              prefixIcon: const Icon(Icons.search),
-              hintText: '27'.tr,
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                borderSide:  BorderSide(
-                  color: Color(0xfff1ebf1),
-                ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                borderSide: BorderSide(color:Color(0xfff1ebf1),),
-              ),
-            ),
-          )),
-    );
-  }
+
 }

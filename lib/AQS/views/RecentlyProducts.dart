@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../res/colors.dart';
+import '../controllers/Cart_controller.dart';
 import '../controllers/RecentlyProducts_controller.dart';
 import '../../main.dart';
 class RecentlyProducts extends StatelessWidget {
@@ -12,36 +14,44 @@ class RecentlyProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        forceMaterialTransparency: true,
-        scrolledUnderElevation:0.0,
-        surfaceTintColor: Colors.transparent,
-        leadingWidth: Get.height * 0.3,
-        leading: logo(),
+          scrolledUnderElevation:0.0,
+          elevation: 0.0,
+          backgroundColor: AppColors.aqsfullGreen,
+          centerTitle: true,
+          iconTheme: IconThemeData(
+              color: Colors.white
+          ),
+          title: Text('12'.tr,
+            style: TextStyle(
+                fontSize: Get.height * 0.02,
+                fontWeight: FontWeight.bold,
+                color: Colors.white
+            ),
+          )
       ),
       body: SafeArea(
-          child: Column(
-            children: [
-              spaceH(Get.height * 0.015),
-              Row(
-                children: [
-                  searchTextInput(),
-                  filtersIcon(),
-                ],
-              ),
-              spaceH(Get.height * 0.015),
-              GetBuilder<RecentlyProducts_controller>(builder: (builder){
-                if(!builder.isLoadingItem.value){
-                  if(builder.productList.isNotEmpty){
-                    return Expanded(child: ItemsList());
+          child: RefreshIndicator(
+            onRefresh: () async{
+              controller.fetchProducts();
+            },
+            child: ListView(
+              children: [
+                spaceH(Get.height * 0.015),
+                GetBuilder<RecentlyProducts_controller>(builder: (builder){
+                  if(!builder.isLoadingItem.value){
+                    if(builder.productList.isNotEmpty){
+                      return ItemsList();
+                    }else{
+                      return Center(child: Text('12'.tr),);
+                    }
                   }else{
-                    return Center(child: Text('12'.tr),);
+                    return loading_();
                   }
-                }else{
-                  return loading_();
-                }
-              })
-            ],
-          )),
+                })
+              ],
+            ),
+          )
+      ),
     );
   }
   loading_(){
@@ -61,55 +71,6 @@ class RecentlyProducts extends StatelessWidget {
       width: size,
     );
   }
-  Padding logo() {
-    return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02, top: Get.height * 0.01),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: (){
-              Get.back();
-            },
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          Image.asset('assets/images/logo.png' , fit: BoxFit.fill,width: Get.height * 0.06,height: Get.height * 0.03,),
-          Text('12'.tr , style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: Get.height * 0.018
-          ),)
-        ],
-      ),
-    );
-  }
-  Padding filtersIcon (){
-    return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.009 , end: Get.height * 0.009),
-      child: const Icon(Icons.tune),
-    );
-  }
-  Padding searchTextInput() {
-    return Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.02 , end: Get.height * 0.002),
-      child: SizedBox(
-          width: Get.width * 0.83,
-          child: TextField(
-
-            decoration:  InputDecoration(
-              fillColor: Color(0xfff1ebf1),
-              filled: true,
-              prefixIcon: const Icon(Icons.search),
-              hintText: '9'.tr,
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                borderSide:  BorderSide(
-                  color: Color(0xfff1ebf1),
-                ),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                borderSide: BorderSide(color:Color(0xfff1ebf1),),
-              ),
-            ),
-          )),
-    );
-  }
   ItemsList() {
     return GridView.builder(
       padding: EdgeInsets.only(right: Get.height * 0.009,left: Get.height * 0.009),
@@ -119,70 +80,139 @@ class RecentlyProducts extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 15.0,
         mainAxisSpacing: 15.0,
-        childAspectRatio: 0.8,
+        childAspectRatio: 0.95,
       ),
       itemCount: controller.productList.length,
       itemBuilder: (BuildContext context, int index) {
         final product = controller.productList[index];
-        return Item(
+        return BestProductItem(
             product.image,
             product.title,
             product.price,
-            product.id
+            product.id,
+            product.category
         );
       },
     );
   }
-  Item(String url , String title , int price , int id ){
+  BestProductItem(String url , String title , int price , int id , int category ){
     return GestureDetector(
       onTap: (){
-        Get.toNamed('/product' , arguments: [{'id':id}]);
+        Get.toNamed('product' , arguments:[{"id": id}],);
       },
       child: Container(
-        padding: EdgeInsets.all(Get.height * 0.017),
-        width: Get.height * 0.2,
+
+        margin: EdgeInsets.all(Get.width * 0.02),
+        width: Get.height * 0.15,
         decoration: BoxDecoration(
+            color: AppColors.aqssubgreen,
             border: Border.all(color: Colors.black12),
             borderRadius: BorderRadius.all(Radius.circular(15))
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Center(
-              child:  CachedNetworkImage(
-                height: Get.height * 0.12,
-                width: Get.height * 0.18,
-                imageUrl: url,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.contain,
+            Container(
+              color: Colors.white,
+              margin: EdgeInsets.all(3),
+              child: Center(
+                child:  CachedNetworkImage(
+                  height: Get.height * 0.1,
+                  width: Get.height * 0.5,
+                  imageUrl: url,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black12),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             spaceH(Get.height * 0.01),
-            Text(title , textAlign: TextAlign.start,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+            Container(
+              color: AppColors.aqssubgreen,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Center(
+                    child:Text(title , textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: AppColors.aqsfullGreen,
+                        fontSize: Get.width * 0.025,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  spaceH(Get.height * 0.004),
+                  Container(
+                    color: AppColors.aqsyallow,
+                    height: Get.width * 0.004,
+                    width: Get.width,
+                  ),
+                  spaceH(Get.height * 0.004),
+                  Center(
+                    child: Text(formatter.format(price).toString() + ' ' + '18'.tr , textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: Get.height * 0.0135,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.aqsfullGreen
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Cart_controller con = Get.find();
+                      con.putDate(title, price, 1, id, url, category);
+                      if(!con.isLoadingAdded.value){
+                        if(con.isAddedCart.value){
+                          msgAdded('29'.tr, '30'.tr);
+                        }else{
+                          msgAdded('32'.tr, '33'.tr);
+                        }
+                      }else{
+                        print(con.msgAdded);
+                      }
+                    },
+                    child: Container(
+                        width: Get.width,
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            color: AppColors.aqsyallow,
+                            border: Border.all(color: Colors.black12),
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
 
+                        child: Center(
+                          child: Text(
+                            '19'.tr,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Get.width * 0.025
+                            ),
+                          ),
+                        )
+                    ),
+                  ),
+                ],
               ),
-            ),
-            spaceH(Get.height * 0.004),
-            Text(formatter.format(price) + " د.ع " , textAlign: TextAlign.start,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
+            )
           ],
         ),
       ),
     );
+  }
+  msgAdded(title , msg){
+    return Get.snackbar(title, msg , colorText: AppColors.aqsfullGreen, backgroundColor: Colors.white);
   }
 }

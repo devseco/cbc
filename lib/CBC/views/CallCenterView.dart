@@ -55,13 +55,13 @@ class CallCenterView extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: Get.width * 0.5,
+              height: Get.width * 0.8,
               child: GetBuilder<HelpController>(builder: (builder){
                 if(!builder.isLoadingCallCenter.value){
                   if(builder.callCenterList.isNotEmpty){
                     return ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: PageScrollPhysics(),
                       padding: EdgeInsetsDirectional.only(start: Get.width * 0.02,end: Get.width * 0.02),
                       itemCount: builder.callCenterList.length, // عدد العناصر في القائمة
                       itemBuilder: (BuildContext context, int index) {

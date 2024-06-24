@@ -5,19 +5,50 @@ import 'package:ui_ecommerce/AQS/models/Category.dart';
 import 'package:ui_ecommerce/AQS/models/Product.dart';
 import 'package:ui_ecommerce/AQS/models/ProductPage.dart';
 import 'package:ui_ecommerce/AQS/models/Sale.dart';
+import 'package:ui_ecommerce/AQS/models/SubCategory.dart';
 import '../models/Slider.dart';
 class RemoteServices {
   static var client = http.Client();
-  static var baseUrl = 'http://192.168.3.28:3000/aqs/api/v1/';
+  static var baseUrl = 'https://89.116.110.51:3000/aqs/api/v1/';
 //Login
-  static Future login(phone) async {
+  static Future login(phone , password) async {
     var endpoint = 'login';
-    var body = jsonEncode({'phone': phone});
+    var body = jsonEncode({'phone': phone , 'password': password});
     try {
       var response = await client.post(Uri.parse(baseUrl + endpoint),
         body:body,
         headers: {'Content-Type': 'application/json'},
       );
+      print(response.body);
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        return jsonData;
+      } else {
+        String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+        return rawJson;
+      }
+    } catch (e) {
+      String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+      return rawJson;
+    }
+  }
+
+  //Register User
+  static Future register(name , phone , city , address , password) async {
+    var endpoint = 'register';
+    var body = jsonEncode({
+      'name': name ,
+      'phone': phone ,
+      'city': city,
+      'address': address,
+      'password': password
+    });
+    try {
+      var response = await client.post(Uri.parse(baseUrl + endpoint),
+        body:body,
+        headers: {'Content-Type': 'application/json'},
+      );
+      print(response.body);
       if (response.statusCode == 200) {
         var jsonData = response.body;
         return jsonData;
@@ -47,19 +78,16 @@ class RemoteServices {
     }
   }
 
-  static Future<List<Product>?> filterProducts(title) async {
+  static Future filterProducts(String title) async {
     var endpoint = 'filterProducts/${title}';
-    try {
-      var response = await client.get(Uri.parse(baseUrl + endpoint));
-      if (response.statusCode == 200) {
-        var jsonData = response.body;
-        List<Product> bills = productFromJson(jsonData);
-        return bills;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
+    var response = await client.get(Uri.parse(baseUrl + endpoint));
+    print(response.body);
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      var items = jsonData;
+      return items;
+    } else {
+      return [];
     }
   }
 
@@ -210,7 +238,7 @@ class RemoteServices {
       return null;
     }
   }
-  //Fetch Sliders From Endpoint (getCategories)
+  //Fetch Categories From Endpoint (getCategories)
   static Future<List<CategoryModel>?> fetchCategories() async {
     var endpoint = 'getCategories';
     try {
@@ -218,6 +246,22 @@ class RemoteServices {
       if (response.statusCode == 200) {
         var jsonData = response.body;
         List<CategoryModel> categories = categoryModelFromJson(jsonData);
+        return categories;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  //fetchSubCategories
+  static Future<List<SubCategory>?> fetchSubCategories(id) async {
+    var endpoint = 'getSubCategoryByCategory/${id}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<SubCategory> categories = subCategoryFromJson(jsonData);
         return categories;
       } else {
         return null;

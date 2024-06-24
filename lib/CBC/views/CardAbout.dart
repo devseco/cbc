@@ -46,7 +46,7 @@ class cardAbout extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: Get.width * 0.10,
+                height: Get.width * 0.04,
               ),
               Text(
                 '109'.tr,
@@ -195,7 +195,7 @@ class cardAbout extends StatelessWidget {
   }
   futures(){
     return SizedBox(
-      height: Get.width * 0.35,
+      height: Get.width * 0.43,
       child: ListView.builder(
         shrinkWrap: true,
         physics: PageScrollPhysics(),
@@ -214,13 +214,13 @@ class cardAbout extends StatelessWidget {
                 SizedBox(
                   width: Get.height * 0.01,
                 ),
-                Text(
-                  controller.cardAbout!.features[index].title ?? 'No title',
-                  style: TextStyle(
-                    fontSize: Get.height * 0.0115,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+               Expanded(child:  Text(
+                 controller.cardAbout!.features[index].title ?? 'No title',
+                 style: TextStyle(
+                   fontSize: Get.height * 0.0115,
+                   fontWeight: FontWeight.bold,
+                 ),
+               ),)
               ],
             ),
           );

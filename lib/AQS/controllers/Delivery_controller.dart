@@ -50,16 +50,17 @@ class Delivery_controller extends GetxController{
   late TextEditingController name  = TextEditingController();
   late TextEditingController address  = TextEditingController();
   late TextEditingController phone  = TextEditingController();
+  late TextEditingController note  = TextEditingController();
  void changeSelect(value){
    selectedGovernorate = value;
    update();
  }
  @override
   void onInit() {
-   var sharePhone = sharedPreferences!.getInt('phone')!;
+   var sharePhone = sharedPreferences.getInt('phone')!;;
    print('${sharePhone} is phone');
-   gonvernorates = sharedPreferences!.getString('lang') == 'ar' ? governorates_ar : governorates_en;
-   name.text = sharedPreferences!.getString('name')!;
+   gonvernorates = governorates_ar;
+   name.text =  sharedPreferences.getString('name')!;;
    phone.text = sharePhone.toString();
    //phone.text = ;
     // TODO: implement onInit

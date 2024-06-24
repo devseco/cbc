@@ -26,7 +26,6 @@ class HomeView extends StatelessWidget {
          controller.fetchHighest();
          controller.fetchCities();
          controller.fetchSliders();
-
       },
     );
   }

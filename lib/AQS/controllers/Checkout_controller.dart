@@ -6,10 +6,16 @@ class Checkout_controller extends GetxController{
   int total = 0;
   var isPay = false.obs;
   int price  = 0;
-  int delivery = 5000;
+  int delivery = 25000;
   int currentStep = 0;
   var user_id ;
+  var selectedMonthly = 12.obs;
 
+  void updateMonthly(value){
+    selectedMonthly.value = value;
+    update();
+
+  }
   @override
   void onInit() {
     price = Get.arguments[0]['total'];

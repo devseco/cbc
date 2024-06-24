@@ -464,11 +464,18 @@ class StorePage extends StatelessWidget {
              SizedBox(
                height: Get.width * 0.02,
              ),
-             Text(controller.store!.storeinfo.description,style: TextStyle(
-                 color: Colors.black,
-                 fontWeight: FontWeight.w600,
-                 fontSize: Get.width * 0.025
-             ),),
+            SizedBox(
+              height: Get.width * 0.2,
+              child:  ListView(
+                children: [
+                  Text(controller.store!.storeinfo.description,style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: Get.width * 0.025
+                  ),)
+                ],
+              ),
+            ),
 
            ],
          ),
@@ -489,14 +496,16 @@ class StorePage extends StatelessWidget {
                    borderRadius: const BorderRadius.all(Radius.circular(20))
                ),
                width: Get.width * 0.35,
-               height: Get.width * 0.08,
+               height: Get.width * 0.12,
                child: Center(
                  child: Text(
                    '${controller.store!.storeinfo.categoryName}',
+                   maxLines: 2,
+                   overflow: TextOverflow.ellipsis,
                    style:  TextStyle(
                        color: Colors.white,
                        fontWeight: FontWeight.bold,
-                       fontSize: Get.width * 0.028
+                       fontSize: Get.width * 0.024
                    ),
                  ),
                ),

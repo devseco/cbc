@@ -1,14 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
-import 'package:ui_ecommerce/CBC/controllers/StoreController.dart';
 import 'package:ui_ecommerce/CBC/views/StorePage.dart';
-import '../../Togather/views/landing.dart';
 import '../../res/colors.dart';
 class RecentlyStories extends StatelessWidget {
   RecentlyStories({super.key});

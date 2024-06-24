@@ -7,14 +7,18 @@ class Cart_controller extends GetxController {
   var isLoadingAdded = false.obs;
   var msgAdded = '';
   var total = 0;
+  var priceMonthly = 0;
+  var totalCount = 0;
 
   void PlusAllData() {
     total = 0;
+    totalCount = 0;
     for(var i = 0 ; i< BoxCart.length; ++i) {
       var item = BoxCart.getAt(i);
       int price = item.price;
       int count = item.count;
       total += price * count;
+      totalCount += count;
     }
     update();
   }

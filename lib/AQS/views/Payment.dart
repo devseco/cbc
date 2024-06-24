@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/AQS/controllers/Checkout_controller.dart';
 import 'package:ui_ecommerce/main.dart';
+
+import '../../res/colors.dart';
 class Payment extends StatelessWidget {
   Payment({super.key});
   final Checkout_controller controller = Get.find();
@@ -13,6 +15,10 @@ class Payment extends StatelessWidget {
         children: [
           message(),
           paymentlist(),
+          line(),
+          spaceH(Get.width * 0.04),
+          messageMonthly(),
+          monthlylist(),
           GetBuilder<Checkout_controller>(builder: (builder){
             return order(builder.price, builder.delivery, builder.total);
 
@@ -31,7 +37,7 @@ class Payment extends StatelessWidget {
        padding: EdgeInsetsDirectional.only(start: Get.height * 0.01 , end: Get.height * 0.01 , top: Get.height * 0.02 , bottom: Get.height * 0.02),
        child: Container(
          width: Get.width,
-         height: Get.height * 0.2,
+         height: Get.height * 0.22,
          padding:  EdgeInsets.all(Get.height * 0.015),
          decoration: BoxDecoration(
              borderRadius: BorderRadius.all(
@@ -47,7 +53,22 @@ class Payment extends StatelessWidget {
                fontWeight: FontWeight.w700,
                fontSize: Get.height * 0.018
              ),),
-             spaceH(Get.height * 0.035),
+             spaceH(Get.height * 0.02),
+             Row(
+
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text('${'159'.tr} : ' , style: TextStyle(
+                   fontSize: Get.height * 0.015,
+                   fontWeight: FontWeight.w500,
+                 ),),
+                 Text('${formatter.format(((controller.price + (controller.price * 30 / 100)) / controller.selectedMonthly.value).round())} ${'160'.tr}', style: TextStyle(
+                   fontSize: Get.height * 0.015,
+                   fontWeight: FontWeight.w500,
+                 ),),
+               ],
+             ),
+             spaceH(Get.height * 0.015),
              Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
@@ -55,7 +76,7 @@ class Payment extends StatelessWidget {
                      fontSize: Get.height * 0.015,
                      fontWeight: FontWeight.w500,
                  ),),
-             Text('${formatter.format(price)} ${'18'.tr}', style: TextStyle(
+                 Text('${formatter.format(((controller.price + (controller.price * 30 / 100))).round())} ${'160'.tr}', style: TextStyle(
                    fontSize: Get.height * 0.015,
                    fontWeight: FontWeight.w500,
                  ),),
@@ -69,7 +90,8 @@ class Payment extends StatelessWidget {
                    fontSize: Get.height * 0.015,
                    fontWeight: FontWeight.w500,
                  ),),
-                 Text('${formatter.format(delivery)} ${'18'.tr}' , style: TextStyle(
+                 Text('${formatter.format(delivery)} ${'160'.tr}' ,
+                   style: TextStyle(
                      fontWeight: FontWeight.w500,
                    fontSize: Get.height * 0.015,
                  ),),
@@ -80,12 +102,15 @@ class Payment extends StatelessWidget {
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
                  Text('${'49'.tr} : ' , style: TextStyle(
-                     fontWeight: FontWeight.w800,
+                     fontWeight: FontWeight.bold,
                      fontSize: Get.height * 0.015,
+                     color: AppColors.aqsfullGreen
+
                  ),),
-                 Text('${formatter.format(total)} ${'18'.tr}' , style: TextStyle(
-                   fontWeight: FontWeight.w800,
+                 Text('${formatter.format(((controller.price + (controller.price * 30 / 100) + delivery)).round()) } ${'160'.tr}', style: TextStyle(
                    fontSize: Get.height * 0.015,
+                   fontWeight: FontWeight.bold,
+                     color: AppColors.aqsfullGreen
                  ),),
                ],
              ),
@@ -94,6 +119,96 @@ class Payment extends StatelessWidget {
        ),
      );
    }
+  monthlylist(){
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: Get.height * 0.00001),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Obx(() => ListTile(
+            title: GestureDetector(
+              onTap: (){
+                controller.updateMonthly(12);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('12 ${'164'.tr}'),
+                  spaceW(Get.height * 0.01),
+                  Container(
+                    height: Get.height * 0.025,
+                    width: Get.height * 0.2,
+                    margin: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
+                        color: AppColors.aqsyallow,
+                        border: Border.all(color: Colors.deepPurple , width: 0.1)
+                    ),
+                    child: Center(
+                      child: Text('${formatter.format(((controller.price + (controller.price * 30 / 100)) / 12).round())} ${'160'.tr} ${'169'.tr}', style: TextStyle(
+                          color: AppColors.aqsfullGreen,
+                          fontSize: Get.height * 0.012,
+                          fontWeight: FontWeight.bold
+                      ),),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            leading: Radio<int>(
+              value: 12,
+              activeColor: AppColors.aqsfullGreen,
+              groupValue: controller.selectedMonthly.value,
+              onChanged: (value) {
+                controller.updateMonthly(value!);
+              },
+            ),
+          )),
+          Obx(() => ListTile(
+            title: GestureDetector(
+              onTap: (){
+                controller.updateMonthly(6);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('6 ${'164'.tr}'),
+                  spaceW(Get.height * 0.01),
+                  Container(
+                    height: Get.height * 0.025,
+                    width: Get.height * 0.2,
+                    margin: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
+                        color: AppColors.aqsyallow,
+                        border: Border.all(color: Colors.deepPurple , width: 0.1)
+                    ),
+                    child: Center(
+                      child: Text('${formatter.format(((controller.price + (controller.price * 30 / 100)) / 6).round())} ${'160'.tr} ${'169'.tr}', style: TextStyle(
+                          color: AppColors.aqsfullGreen,
+                          fontSize: Get.height * 0.012,
+                          fontWeight: FontWeight.bold
+                      ),),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            leading: Radio<int>(
+              value: 6,
+              activeColor: AppColors.aqsfullGreen,
+              groupValue: controller.selectedMonthly.value,
+              onChanged: (value) {
+                controller.updateMonthly(value!);
+              },
+            ),
+          )),
+
+        ],
+      ),
+    );
+  }
   paymentlist(){
     return Padding(
       padding: EdgeInsetsDirectional.only(start: Get.height * 0.00001),
@@ -111,7 +226,7 @@ class Payment extends StatelessWidget {
           ),
           leading: Radio<int>(
             value: 1,
-            activeColor: Colors.blue,
+            activeColor: AppColors.aqsfullGreen,
             groupValue: 1,
             onChanged: (value) {
 
@@ -119,8 +234,6 @@ class Payment extends StatelessWidget {
           ),
         ),
         paymenytile('39'.tr , FontAwesomeIcons.creditCard),
-        paymenytile('40'.tr , FontAwesomeIcons.apple),
-        paymenytile('41'.tr , FontAwesomeIcons.google),
       ],
     ),
     );
@@ -140,7 +253,7 @@ class Payment extends StatelessWidget {
         ),
         leading: Radio<int>(
           value: 2,
-          activeColor: Colors.deepPurple,
+          activeColor: AppColors.aqsfullGreen,
           groupValue: 1,
           onChanged: (value) {
 
@@ -180,6 +293,36 @@ class Payment extends StatelessWidget {
        ),
      );
    }
+  messageMonthly(){
+    return Padding(
+      padding: EdgeInsetsDirectional.only(start: Get.height * 0.01 , end: Get.height * 0.01 , bottom: Get.height * 0.01,),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          Text('168'.tr,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                fontSize: Get.height * 0.02,
+                fontWeight: FontWeight.w700
+            ),
+          ),
+          spaceH(Get.height * 0.01),
+          Text('167'.tr,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                fontSize: Get.height * 0.016,
+                fontWeight: FontWeight.w500
+            ),
+
+          ),
+          spaceH(Get.height * 0.01),
+          line(),
+        ],
+      ),
+    );
+  }
    title(){
      return Text('31'.tr,
        style: TextStyle(
