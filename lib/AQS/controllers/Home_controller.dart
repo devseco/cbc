@@ -71,8 +71,8 @@ class Home_controller extends GetxController {
       var categories = await RemoteServices.fetchCategories();
       if(categories != null){
         categoriesList.value = categories;
-        if (categoriesList.length >= 8) {
-          categoriesList.insert(8, fixedItem);
+        if (categoriesList.length >= 7) {
+          categoriesList.insert(7, fixedItem);
         } else {
           categoriesList.add(fixedItem);
         }

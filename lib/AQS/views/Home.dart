@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:easy_autocomplete/easy_autocomplete.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import 'package:ui_ecommerce/CBC/controllers/CardController.dart';
 import 'package:ui_ecommerce/main.dart';
 
 import '../../CBC/models/TestItem.dart';
+import '../../Togather/controllers/togatherController.dart';
 import '../../res/colors.dart';
 class Home_AQS extends StatelessWidget {
   Home_AQS({super.key});
@@ -51,7 +53,7 @@ class Home_AQS extends StatelessWidget {
                 categorieslabels(),
                 spaceH(Get.height * 0.010),
                 Container(
-                  height: Get.height * 0.25,
+                  height: Get.height * 0.28,
                   child: Obx((){
                     if(!controller.isLoadingCategories.value){
                       return (controller.categoriesList.length > 0 ) ? categories() : Center(child: Text("20".tr),);
@@ -261,13 +263,14 @@ class Home_AQS extends StatelessWidget {
         },
         child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.01,end: Get.height * 0.01),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Container(
                 padding: EdgeInsets.all(Get.height * 0.005),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(45))
                 ),
-                height: Get.height * 0.07,
+                height: Get.height * 0.08,
                 width: Get.height * 0.08,
                 child: CachedNetworkImage(
                   imageUrl: url,
@@ -275,7 +278,7 @@ class Home_AQS extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -284,7 +287,21 @@ class Home_AQS extends StatelessWidget {
                 ),
               ),
               spaceH(Get.height * 0.01),
-              Text(label),
+             Container(
+               constraints: new BoxConstraints(
+                 maxHeight: Get.width * 0.4,
+               ),
+               width: Get.width * 0.4,
+               child:  Text(label ,
+                 maxLines: 3,
+                 textAlign: TextAlign.center,
+
+                 style: TextStyle(
+                     color: AppColors.aqsfullGreen,
+                     fontWeight: FontWeight.bold,
+                     fontSize: Get.width * 0.027
+                 ),),
+             )
             ],
           ),
         ),
@@ -301,7 +318,7 @@ class Home_AQS extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(45))
                 ),
-                height: Get.height * 0.07,
+                height: Get.height * 0.08,
                 width: Get.height * 0.08,
                 child: CachedNetworkImage(
                   imageUrl: url,
@@ -309,7 +326,7 @@ class Home_AQS extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -318,7 +335,17 @@ class Home_AQS extends StatelessWidget {
                 ),
               ),
               spaceH(Get.height * 0.01),
-              Text(label),
+              SizedBox(
+                width: Get.width * 0.4,
+                child:  Text(label ,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.aqsfullGreen,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Get.width * 0.028
+                  ),),
+              )
             ],
           ),
         ),
@@ -334,7 +361,7 @@ class Home_AQS extends StatelessWidget {
         crossAxisCount: 4,
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
-        childAspectRatio: 0.97,
+        childAspectRatio: 0.8,
       ),
       itemCount: (controller.categoriesList.length > 8 )?  8 : controller.categoriesList.length, // or slidersList.length, depends on your requirement
       itemBuilder: (context, index) {

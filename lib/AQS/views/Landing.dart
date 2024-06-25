@@ -14,6 +14,7 @@ import '../controllers/FirstController.dart';
 import 'Billing.dart';
 class Landing extends StatelessWidget {
    Landing({super.key});
+
    final Landing_controller controller =  Get.find();
    final locale_controller = Get.put(Locale_controller());
    static  final List<Widget> _pages = <Widget>[
@@ -85,7 +86,7 @@ class Landing extends StatelessWidget {
              )
          ),
        ],
-       index: 2,
+       index: controller.selectedIndexMenut,
        onTap: (index) {
          FirstController firstController = Get.put(FirstController());
          switch (index) {

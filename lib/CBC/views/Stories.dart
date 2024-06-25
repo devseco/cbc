@@ -23,7 +23,7 @@ class Stories extends StatelessWidget {
               return GestureDetector(
                 onTap: (){
                   builder.onItemTapped(0);
-                  Get.off(()=>const Landing_togather());
+                  Get.off(()=> Landing_togather());
                 },
                 child: const Icon(Icons.home),
               );

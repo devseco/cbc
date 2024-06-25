@@ -29,8 +29,9 @@ class Categories_home extends StatelessWidget {
         child: Obx(() {
           if(!controller.isLoadingCategories.value){
             if ((controller.categoriesList.isNotEmpty)) {
-              return SizedBox(
-                height: Get.width * 0.47,
+              return Padding(padding: EdgeInsets.only(
+                  top: Get.width * 0.02 ,
+                  bottom: Get.width * 0.02),
                 child: bestproductslist(),
               );
             } else {

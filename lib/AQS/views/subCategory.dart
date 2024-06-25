@@ -28,8 +28,10 @@ class SubCategoryView extends StatelessWidget {
         child: Obx(() {
           if(!controller.isLoadingCategories.value){
             if ((controller.categoriesList.isNotEmpty)) {
-              return SizedBox(
-                height: Get.width * 0.47,
+              return Padding(
+                 padding: EdgeInsets.only(
+                  top: Get.width * 0.02 ,
+                  bottom: Get.width * 0.05),
                 child: bestproductslist(),
               );
             } else {

@@ -6,7 +6,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:ui_ecommerce/AQS/controllers/Cart_controller.dart';
+import 'package:ui_ecommerce/AQS/controllers/FirstController.dart';
+import 'package:ui_ecommerce/AQS/controllers/Landing_controller.dart';
 import 'package:ui_ecommerce/AQS/controllers/Product_controller.dart';
+import 'package:ui_ecommerce/AQS/views/Home.dart';
+import 'package:ui_ecommerce/AQS/views/Landing.dart';
+import 'package:ui_ecommerce/Togather/controllers/togatherController.dart';
+import 'package:ui_ecommerce/Togather/views/landing.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 import '../../main.dart';
 class ProductPage extends StatelessWidget {
@@ -154,37 +160,44 @@ class ProductPage extends StatelessWidget {
     ),
     );
    }
+
    botton(){
     return GetBuilder<Cart_controller>(builder: (builder){
       return Center(
-        child: Container(
-          width: Get.width * 0.6,
-          height: Get.width * 0.1,
-          decoration: BoxDecoration(
-              color: AppColors.aqsyallow,
-              borderRadius: BorderRadius.all(Radius.circular(5))
-          ),
-          child: GestureDetector(
-            onTap: () {
-              builder.putDate(controller.productList[0].title, controller.productList[0].price, controller.count, controller.productList[0].id, controller.productList[0].image, controller.productList[0].category);
-              if(!builder.isLoadingAdded.value){
-                if(builder.isAddedCart.value){
-                  msgAdded('29'.tr, '30'.tr);
-                }else{
-                  msgAdded('32'.tr, '33'.tr);
-                }
-              }else{
-                print(builder.msgAdded);
-              }
-              },
+        child: GestureDetector(
+      onTap: (){
+        builder.putDate(controller.productList[0].title, controller.productList[0].price, controller.count, controller.productList[0].id, controller.productList[0].image, controller.productList[0].category);
+        if(!builder.isLoadingAdded.value){
+          if(builder.isAddedCart.value){
+            msgAdded('29'.tr, '30'.tr);
+            togatherController c = Get.find();
+            Landing_controller p = Get.find();
+            c.setIndex(1);
+            p.onItemTapped(2);
+            p.setIndexMenu(1);
+            Get.off(()=> Landing_togather());
+          }else{
+            msgAdded('32'.tr, '33'.tr);
+          }
+        }else{
+          print(builder.msgAdded);
+        }
+      },
+          child: Container(
+            width: Get.width * 0.6,
+            height: Get.width * 0.1,
+            decoration: BoxDecoration(
+                color: AppColors.aqsyallow,
+                borderRadius: BorderRadius.all(Radius.circular(5))
+            ),
             child: Center(
-              child: Text('19'.tr,
-                  style: TextStyle(
-                      color: AppColors.aqsfullGreen,
-                      fontSize: Get.height * 0.013,
-                      fontWeight: FontWeight.bold
-                  )),
-            )
+             child: Text('19'.tr,
+             style: TextStyle(
+             color: AppColors.aqsfullGreen,
+             fontSize: Get.height * 0.013,
+             fontWeight: FontWeight.bold
+             )),
+             ),
           ),
         ),
       );

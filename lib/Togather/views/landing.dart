@@ -5,12 +5,15 @@ import 'package:ui_ecommerce/AQS/views/Home.dart';
 import 'package:ui_ecommerce/AQS/views/Landing.dart';
 import 'package:ui_ecommerce/AQS/views/Login.dart';
 import 'package:ui_ecommerce/CBC/views/Landing.dart';
+import 'package:ui_ecommerce/Togather/controllers/togatherController.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 class Landing_togather extends StatelessWidget {
-  const Landing_togather({Key? key}) : super(key: key);
+   Landing_togather({Key? key}) : super(key: key);
+  final togatherController controller = Get.put(togatherController());
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(
+      initialIndex: controller.index,
         length: 2, // Define the number of tabs
         child: Scaffold(
           appBar: PreferredSize(

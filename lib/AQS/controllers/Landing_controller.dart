@@ -5,11 +5,16 @@ import 'package:ui_ecommerce/AQS/views/Login.dart';
 import '../../main.dart';
 class Landing_controller extends GetxController{
   int selectedIndex = 0;
+  int selectedIndexMenut = 2;
   var username  = sharedPreferences!.getString('name').toString();
   var phone  = sharedPreferences!.getInt('phone').toString();
   void onItemTapped(int index) {
     selectedIndex = index;
     print('tap: ${index}');
+    update();
+  }
+  void setIndexMenu(value){
+    selectedIndexMenut = value;
     update();
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
