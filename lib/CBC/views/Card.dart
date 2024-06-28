@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:ui_ecommerce/CBC/controllers/CardController.dart';
 import 'package:ui_ecommerce/CBC/views/CardAbout.dart';
 import 'package:ui_ecommerce/CBC/views/CardSales.dart';
-import 'package:ui_ecommerce/CBC/views/CardType.dart';
 import '../../res/colors.dart';
 class CardView extends StatelessWidget {
    CardView({super.key});
@@ -52,7 +51,6 @@ class CardView extends StatelessWidget {
          controller: controller.tabController,
          tabs: [
            Tab(text: '106'.tr),
-           Tab(text: '107'.tr),
            Tab(text: '108'.tr),
          ],
        ),
@@ -65,7 +63,6 @@ class CardView extends StatelessWidget {
            controller: controller.tabController,
            children: [
              cardAbout(),
-             CardType(),
              cardSales(),
 
            ],

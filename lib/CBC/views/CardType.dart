@@ -91,91 +91,11 @@ class CardType extends StatelessWidget {
                 ),
               ),
               //offers
-              Obx(() {
-                if (!controller.isLoadingType.value) {
-                  if (controller.cardType != null) {
-                    return offers();
-                  } else {
-                    return Center(
-                      child: Text(
-                        '${'20'.tr}',
-                      ),
-                    );
-                  }
-                } else {
-                  return Center(
-                    child: SpinKitWave(
-                      color: AppColors.cbcColor,
-                      size: Get.width * 0.1,
-                    ),
-                  );
-                }
-              }),
 
             ],
           ),
         ),
       ),
-    );
-  }
-  offers(){
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: PageScrollPhysics(),
-      padding: EdgeInsetsDirectional.only(
-        start: Get.width * 0.02,
-        end: Get.width * 0.02,
-      ),
-      itemCount: controller.cardType!.offer.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: EdgeInsets.only(top: Get.width * 0.008),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(Get.width * 0.02),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.cbcRed,
-                ),
-                width: Get.width * 0.9,
-                height: Get.width * 0.15,
-                child: Text(
-                  controller.cardType!.offer[index].title ?? 'No title',
-                  style: TextStyle(
-                    fontSize: Get.height * 0.0125,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              SizedBox(height: Get.width * 0.01),
-              Container(
-                padding: EdgeInsetsDirectional.only(
-                  end: Get.width * 0.05,
-                  top: Get.width * 0.02,
-                  bottom: Get.width * 0.02,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.cbcColor,
-                ),
-                width: Get.width * 0.9,
-                child: Text(
-                  '${formatter.format(controller.cardType!.offer[index].price ?? 0)} دينار عراقي',
-                  style: TextStyle(
-                    fontSize: Get.height * 0.0125,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
   types(){

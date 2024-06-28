@@ -8,11 +8,13 @@ import 'package:ui_ecommerce/CBC/models/CardSales.dart';
 import 'package:ui_ecommerce/CBC/models/CardType.dart';
 import 'package:ui_ecommerce/CBC/models/Category.dart';
 import 'package:ui_ecommerce/CBC/models/City.dart';
+import 'package:ui_ecommerce/CBC/models/Comp.dart';
 import 'package:ui_ecommerce/CBC/models/Discount.dart';
 import 'package:ui_ecommerce/CBC/models/Message.dart';
 import 'package:ui_ecommerce/CBC/models/Qr.dart';
 import 'package:ui_ecommerce/CBC/models/Store.dart';
 import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
+import 'package:ui_ecommerce/CBC/models/subCity.dart';
 import '../models/Slider.dart';
 
 class RemoteServices {
@@ -20,6 +22,36 @@ class RemoteServices {
   static var baseUrl = 'https://89.116.110.51:3000/cbc/api/v1/';
 //Login
 // fetch recently discounts
+  //addOrderBuy
+  static Future<String> addOrderBuy(name,phone,city,address, nearPoint ,comp,type) async {
+    var endpoint = 'addOrderBuy';
+    var body = jsonEncode({
+      'name': name,
+      'phone': phone,
+      'city': city,
+      'address': address,
+      'nearPoint': nearPoint,
+      'comp' : comp,
+      'type': type
+    });
+    try {
+      var response = await http.post(
+        Uri.parse(baseUrl + endpoint),
+        body: body,
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        return jsonData;
+      } else {
+        String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+        return rawJson;
+      }
+    } catch (e) {
+      String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+      return rawJson;
+    }
+  }
   static Future<List<Discount>?> fetchDiscountRecently() async {
     var endpoint = 'getDiscountrecently';
     try {
@@ -28,6 +60,22 @@ class RemoteServices {
         var jsonData = response.body;
         List<Discount> stories = discountFromJson(jsonData);
         return stories;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  //fetch Comps
+  static Future<List<Comp>?> fetchComps() async {
+    var endpoint = 'getAllComps';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<Comp> items = compFromJson(jsonData);
+        return items;
       } else {
         return null;
       }
@@ -44,6 +92,22 @@ class RemoteServices {
         var jsonData = response.body;
         List<Message> items = messageFromJson(jsonData);
         return items;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  //fetch Sub City
+  static Future<List<SubCity>?> fetchSubCity(id) async {
+    var endpoint = 'getSubCity/${id}';
+    try {
+      var response = await client.get(Uri.parse(baseUrl + endpoint));
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        List<SubCity> list = subCityFromJson(jsonData);
+        return list;
       } else {
         return null;
       }
