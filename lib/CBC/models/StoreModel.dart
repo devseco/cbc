@@ -129,7 +129,7 @@ class Branch {
 
 class DiscountModel {
   String title;
-  int discount;
+  String discount;
 
   DiscountModel({
     required this.title,

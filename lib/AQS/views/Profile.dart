@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/res/colors.dart';
-
 import '../controllers/ProfileController.dart';
 class Profile extends StatelessWidget {
   Profile({super.key});
@@ -42,10 +41,54 @@ class Profile extends StatelessWidget {
           _space(Get.height * 0.02),
           _textme('127' , false ,  controller.numberCard),
           _space(Get.height * 0.02),
-          _buttonLogout()
+          _buttonLogout(),
+          _space(Get.height * 0.02),
+          GestureDetector(
+            onTap: (){
+              showConfirmationPrompt();
+              //profileController.logout();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.delete , size: Get.width * 0.04,color: Colors.redAccent,),
+                SizedBox(width: Get.width * 0.015,),
+                Text(
+                  'حذف الحساب',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: Get.width * 0.04,
+                      fontWeight: FontWeight.w500
+                  ),
+                ),
+              ],
+            ),
+          ),
+
         ],
       ),
 
+    );
+  }
+  void showConfirmationPrompt() {
+    Get.defaultDialog(
+      title: "حذف الحساب",
+      middleText: "هل انت متآكد من ارسال طلب حذف الحساب",
+      actions: [
+        TextButton(
+          onPressed: () {
+            controller.deleteAccount();
+          },
+          child: Text("ارسال"),
+        ),
+        TextButton(
+          onPressed: () {
+            Get.back(); // Close the dialog
+          },
+          child: Text("الغاء"),
+        ),
+      ],
     );
   }
 

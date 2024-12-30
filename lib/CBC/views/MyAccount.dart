@@ -47,6 +47,33 @@ class MyAccount extends StatelessWidget {
            padding: EdgeInsets.only(left: Get.width * 0.15, right: Get.width * 0.15),
            child: Column(
              children: [
+               SizedBox(
+                   child:  Text('مجموع الخصومات',
+                     style: TextStyle(
+                         color: AppColors.cbcColor,
+                         fontSize: Get.width * 0.04,
+                         fontWeight: FontWeight.bold
+                     ),
+                   )
+               ),
+               SizedBox(height: Get.width * 0.01,),
+               Container(
+                 width: Get.width * 0.45,
+                 decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(5),
+                   color: AppColors.cbcColor,
+                 ),
+                 child: Center(
+                   child: Text(controller.discountCard.toString() + ' IQD',
+                     style: TextStyle(
+                         color: Colors.white,
+                         fontWeight: FontWeight.bold,
+                         fontSize: Get.width * 0.04
+                     ),
+                   ),
+                 ),
+               ),
+               SizedBox(height: Get.width * 0.05,),
                Row(
                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  crossAxisAlignment: CrossAxisAlignment.end,
@@ -55,7 +82,7 @@ class MyAccount extends StatelessWidget {
                      color: AppColors.cbcColor,
                      size: Get.width * 0.07,
                    ),
-                   Text('ALI MOHAMMED KARAM',
+                   Text(controller.userName.value,
                      style: TextStyle(
                        color: AppColors.cbcColor,
                        fontWeight: FontWeight.bold,
@@ -82,7 +109,7 @@ class MyAccount extends StatelessWidget {
                     color: AppColors.cbcColor,
                     ),
                      child: Center(
-                       child: Text('1234567890123',
+                       child: Text(controller.walletNumber.value,
                          style: TextStyle(
                              color: Colors.white,
                              fontWeight: FontWeight.bold,
@@ -111,12 +138,11 @@ class MyAccount extends StatelessWidget {
                        color: AppColors.cbcColor,
                      ),
                      child: Center(
-                       child: Text('2024/12/01',
+                       child: Text(controller.dateCard.toString(),
                          style: TextStyle(
                              color: Colors.white,
                              fontWeight: FontWeight.bold,
                              fontSize: Get.width * 0.04
-
                          ),
                        ),
                      ),

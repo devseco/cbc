@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:ui_ecommerce/main.dart';
+import '../Services/RemoteServices.dart';
+import '../views/Login.dart';
+import 'Cart_controller.dart';
 import 'FirstController.dart';
 
 class ProfileController extends GetxController {
@@ -9,6 +12,7 @@ class ProfileController extends GetxController {
   var address = '';
   var typeCard = '';
   var numberCard = '';
+
   @override
   void onInit() {
     if(sharedPreferences.getBool('remember') == true){
@@ -24,6 +28,16 @@ class ProfileController extends GetxController {
   void logout(){
     sharedPreferences.clear();
     //BoxCart.clear();
+    FirstController controller = Get.put(FirstController());
+    controller.onItemTapped(1);
+  }
+  void deleteAccount() async {
+    Get.back();
+    var name = sharedPreferences.getString('name');
+    var user_id = sharedPreferences.getInt('user_id');
+    await RemoteServices.deleteAccount(name, user_id);
+    BoxCart.clear();
+    sharedPreferences.clear();
     FirstController controller = Get.put(FirstController());
     controller.onItemTapped(1);
   }

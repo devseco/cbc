@@ -2,15 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:ui_ecommerce/CBC/controllers/Home_controller.dart';
-import 'package:ui_ecommerce/CBC/controllers/StoreController.dart';
 import 'package:ui_ecommerce/CBC/views/StorePage.dart';
-import '../../Togather/views/landing.dart';
 import '../../res/colors.dart';
-class HighestStories extends StatelessWidget {
-  HighestStories({super.key});
-  final Chome_controller controller = Get.put(Chome_controller());
-
+import '../controllers/SearchController.dart';
+class Searchview extends StatelessWidget {
+  Searchview({super.key});
+  final SubCitySearchController controller = Get.put(SubCitySearchController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,20 +17,19 @@ class HighestStories extends StatelessWidget {
         ),
         backgroundColor: AppColors.cbcColor,
         centerTitle: true,
-        title: Text('91'.tr ,style: TextStyle(
+        title: Text('${controller.id} -  ${controller.city}' ,style: TextStyle(
             color: Colors.white,
             fontSize: Get.width * 0.04,
             fontWeight: FontWeight.bold
         ),),
       ),
       body: RefreshIndicator(
-        onRefresh: ()async{
-          controller.fetchHighest();
-
+        onRefresh: () async{
+          controller.fetchSearch();
         },
-        child: GetBuilder<Chome_controller>(builder: (builder){
-          if(!builder.isLoadingRecently.value){
-            if(builder.recentlyList.isNotEmpty){
+        child: GetBuilder<SubCitySearchController>(builder: (builder){
+          if(!builder.isLoadingSearch.value){
+            if(builder.itemsSearch.length > 0){
               return Container(
                 height: Get.height,
                 width: Get.width,
@@ -60,8 +56,6 @@ class HighestStories extends StatelessWidget {
       ),
     );
   }
-
-
   stories(){
     return GridView.builder(
       padding: EdgeInsets.only(left: Get.height * 0.01, right: Get.height * 0.01, top: Get.height * 0.01 ),
@@ -72,10 +66,10 @@ class HighestStories extends StatelessWidget {
         mainAxisSpacing: 5.0,
         childAspectRatio: 1.1,
       ),
-      itemCount: controller.highestList.length,
+      itemCount: controller.itemsSearch.length,
       itemBuilder: (BuildContext context, int index) {
-        final Item = controller.highestList[index];
-        return DiscountItem(Item.image, Item.store, Item.storeId , Item.discount);
+        final Item = controller.itemsSearch[index];
+        return DiscountItem(Item.logo, Item.name, Item.id , Item.discountCount);
       },
     );
   }
@@ -123,18 +117,20 @@ class HighestStories extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: Get.height * 0.008,),
-                SizedBox(
-                  child: Text(label,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: Get.height * 0.013
-                      )),),
+                Center(
+                  child:  SizedBox(
+                    child: Text(label,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: Get.height * 0.013
+                        )),),
+                ),
                 SizedBox(height: Get.height * 0.003,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text('95'.tr ,  overflow: TextOverflow.ellipsis,),
+                    Text('95'.tr ,  overflow: TextOverflow.ellipsis,),
                     Text(' ${discount} ',  overflow: TextOverflow.ellipsis,style: TextStyle(
                         color: AppColors.cbcRed,
                         fontWeight: FontWeight.bold,

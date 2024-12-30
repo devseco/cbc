@@ -7,7 +7,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:textfield_search/textfield_search.dart';
+import 'package:ui_ecommerce/CBC/views/EvaluationView.dart';
+import 'package:ui_ecommerce/CBC/views/FatoraView.dart';
 import 'package:ui_ecommerce/CBC/views/Messages.dart';
+import 'package:ui_ecommerce/CBC/views/SearchView.dart';
 import 'package:ui_ecommerce/res/colors.dart';
 import '../controllers/Home_controller.dart';
 import '../models/TestItem.dart';
@@ -19,7 +22,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      child: content(),
+      child: content(context),
       onRefresh: () async {
         controller.fetchCountMessages();
          controller.fetchRecently();
@@ -29,128 +32,193 @@ class HomeView extends StatelessWidget {
       },
     );
   }
-  Container content(){
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              searchTextInput(),
-   Obx(() => GestureDetector(
-     onTap: (){
-       Get.to(()=> MessagesView());
-     },
-     child: Padding(padding: EdgeInsetsDirectional.only(start: Get.height * 0.009 , end: Get.height * 0.009,top: Get.height * 0.015, ),
-       child: badges.Badge(
-         position: badges.BadgePosition.bottomEnd(bottom: 4, end: 15),
-         badgeAnimation: badges.BadgeAnimation.slide(),
-         showBadge: controller.showCartBadge.value, // Assuming your controller is named 'controller'
-         badgeStyle: badges.BadgeStyle(
-           badgeColor: Colors.redAccent,
-         ),
-         badgeContent: Text(
-           controller.backgroundMessagesLength.value.toString(), // Assuming your controller is named 'controller'
-           style: TextStyle(color: Colors.white),
-         ),
-         child: Icon(Icons.notifications_outlined, color: AppColors.cbcColor, size: Get.height * 0.035,),
-       )
-     ),
-   )),
-            ],
-          ),
-          SizedBox(
-            height: Get.height * 0.02,
-          ),
-
-          Obx(() {
-            if(!controller.isLoadingSliders.value){
-              return (controller.slidersList.length > 0)? sliders() : placholder404();
-            }else{
-              return placholderSlider();
-            }
-          }),
-          Expanded(child: ListView(
-            children: [
-
-             GetBuilder<Chome_controller>(builder: (builder){
-               if(!builder.isLoadingCities.value){
-                 if(builder.citiesList.isNotEmpty){
-                   return citys();
-                 }else{
-                   return Center(
-                     child: Text(
-                         '${'20'.tr}'
+   Container content(context) {
+     return Container(
+       color: Colors.white,
+       child: Column(
+         children: [
+           Row(
+             children: [
+               InkWell(
+                 onTap: () {
+                   _showGovernorateDialog(context); // عرض الحوار لاختيار المحافظة
+                 },
+                 child: Padding(
+                   padding: EdgeInsetsDirectional.only(
+                     start: Get.width * 0.03,
+                     top: Get.width * 0.02,
+                   ),
+                   child: Icon(
+                     Icons.filter_alt_rounded,
+                     size: Get.width * 0.07,
+                   ),
+                 ),
+               ),
+               searchTextInput(), // إدخال النص للبحث
+               Obx(() => GestureDetector(
+                 onTap: () {
+                   Get.to(() => MessagesView());
+                 },
+                 child: Padding(
+                   padding: EdgeInsetsDirectional.only(
+                     start: Get.height * 0.009,
+                     end: Get.height * 0.009,
+                     top: Get.height * 0.015,
+                   ),
+                   child: badges.Badge(
+                     position: badges.BadgePosition.bottomEnd(bottom: 4, end: 15),
+                     badgeAnimation: badges.BadgeAnimation.slide(),
+                     showBadge: controller.showCartBadge.value,
+                     badgeStyle: badges.BadgeStyle(
+                       badgeColor: Colors.redAccent,
                      ),
-                   );
-                 }
-               }else{
-                 return Center(child: SpinKitWave(
-                   color: AppColors.cbcColor,
-                   size: Get.width * 0.1,
-                 ),);
-               }
-            }),
-
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              DiscountLabel('89'.tr , 'recentlyStories'),
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              GetBuilder<Chome_controller>(builder: (builder){
-                if(!builder.isLoadingRecently.value){
-                  if(builder.highestList.isNotEmpty){
-                    return discountItems(builder.recentlyList);
-                  }else{
-                    return Center(
-                      child: Text(
-                          '${'20'.tr}'
-                      ),
-                    );
-                  }
-                }else{
-                  return Center(child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),);
-                }
-
-              }),
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              DiscountLabel('91'.tr , 'HighestStories'),
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              GetBuilder<Chome_controller>(builder: (builder){
-                if(!builder.isLoadingHighest.value){
-                  if(builder.highestList.isNotEmpty){
-                    return discountItems(builder.highestList);
-                  }else{
-                    return Center(
-                      child: Text(
-                          '${'20'.tr}'
-                      ),
-                    );
-                  }
-                }else{
-                  return Center(child: SpinKitWave(
-                    color: AppColors.cbcColor,
-                    size: Get.width * 0.1,
-                  ),);
-                }
-              }),
-            ],
-          )),
-
-
-        ],
-      ),
-    );
-  }
+                     badgeContent: Text(
+                       controller.backgroundMessagesLength.value.toString(),
+                       style: TextStyle(color: Colors.white),
+                     ),
+                     child: Icon(
+                       Icons.notifications_outlined,
+                       color: AppColors.cbcColor,
+                       size: Get.height * 0.035,
+                     ),
+                   ),
+                 ),
+               )),
+             ],
+           ),
+           SizedBox(
+             height: Get.height * 0.02,
+           ),
+           // التعامل مع الـ Sliders
+           Obx(() {
+             if (!controller.isLoadingSliders.value) {
+               return (controller.slidersList.isNotEmpty) ? sliders() : placholder404();
+             } else {
+               return placholderSlider();
+             }
+           }),
+           Expanded(
+             child: ListView(
+               children: [
+                 GetBuilder<Chome_controller>(builder: (builder) {
+                   if (!builder.isLoadingCities.value) {
+                     if (builder.citiesList.isNotEmpty) {
+                       return citys();
+                     } else {
+                       return Center(
+                         child: Text('${'20'.tr}'), // لا توجد محافظات
+                       );
+                     }
+                   } else {
+                     return Center(
+                       child: SpinKitWave(
+                         color: AppColors.cbcColor,
+                         size: Get.width * 0.1,
+                       ),
+                     );
+                   }
+                 }),
+                 SizedBox(
+                   height: Get.width * 0.2,
+                   child: Center(
+                     child: ListView(
+                       shrinkWrap: true,
+                       scrollDirection: Axis.horizontal,
+                       children: [
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center, // Center items horizontally
+                           children: [
+                             InkWell(
+                               onTap: () {
+                                 Get.to(() => FatoraView());
+                               },
+                               child: SizedBox(
+                                 height: Get.width * 0.1,
+                                 width: Get.width * 0.5,
+                                 child: Image.asset(
+                                   'assets/images/icons/upload.png',
+                                   fit: BoxFit.cover,
+                                 ),
+                               ),
+                             ),
+                             InkWell(
+                               onTap: () {
+                                 Get.to(() => EvaluationView());
+                               },
+                               child: SizedBox(
+                                 width: Get.width * 0.5,
+                                 height: Get.width * 0.1,
+                                 child: Image.asset(
+                                   'assets/images/icons/share.png',
+                                   fit: BoxFit.cover,
+                                 ),
+                               ),
+                             ),
+                           ],
+                         ),
+                       ],
+                     ),
+                   ),
+                 ),
+                 SizedBox(
+                   height: Get.height * 0.02,
+                 ),
+                 DiscountLabel('89'.tr, 'recentlyStories'),
+                 SizedBox(
+                   height: Get.height * 0.02,
+                 ),
+                 GetBuilder<Chome_controller>(builder: (builder) {
+                   if (!builder.isLoadingRecently.value) {
+                     if (builder.highestList.isNotEmpty) {
+                       return discountItems(builder.recentlyList);
+                     } else {
+                       return Center(
+                         child: Text('${'20'.tr}'),
+                       );
+                     }
+                   } else {
+                     return Center(
+                       child: SpinKitWave(
+                         color: AppColors.cbcColor,
+                         size: Get.width * 0.1,
+                       ),
+                     );
+                   }
+                 }),
+                 SizedBox(
+                   height: Get.height * 0.02,
+                 ),
+                 DiscountLabel('91'.tr, 'HighestStories'),
+                 SizedBox(
+                   height: Get.height * 0.02,
+                 ),
+                 GetBuilder<Chome_controller>(
+                   builder: (builder) {
+                     if (!builder.isLoadingHighest.value) {
+                       if (builder.highestList.isNotEmpty) {
+                         return discountItems(builder.highestList);
+                       } else {
+                         return Center(
+                           child: Text('${'20'.tr}'),
+                         );
+                       }
+                     } else {
+                       return Center(
+                         child: SpinKitWave(
+                           color: AppColors.cbcColor,
+                           size: Get.width * 0.1,
+                         ),
+                       );
+                     }
+                   },
+                 ),
+               ],
+             ),
+           ),
+         ],
+       ),
+     );
+   }
   placholder404(){
     return Container(
       height: Get.height * 0.3,
@@ -199,7 +267,7 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-  DiscountItem(String url , String label  , int id , int discount) {
+  DiscountItem(String url , String label  , int id , discount) {
     return GestureDetector(
       onTap: (){
         Get.to(()=>StorePage() , arguments: [{"id" : id}]);
@@ -245,7 +313,7 @@ class HomeView extends StatelessWidget {
             Row(
               children: [
                 const Text('الخصم ' ,  overflow: TextOverflow.ellipsis,),
-                Text('${discount}%',  overflow: TextOverflow.ellipsis,style: TextStyle(
+                Text('${discount.toString()}',  overflow: TextOverflow.ellipsis,style: TextStyle(
                     color: AppColors.cbcRed,
                     fontWeight: FontWeight.bold,
                     fontSize: Get.height * 0.018
@@ -309,7 +377,7 @@ class HomeView extends StatelessWidget {
         top: Get.height * 0.015,
       ),
       child: SizedBox(
-        width: Get.width * 0.8,
+        width: Get.width * 0.72,
         height: Get.height * 0.05,
         child: GetBuilder<Chome_controller>(builder: (c) {
           return TextFieldSearch(
@@ -543,5 +611,181 @@ class HomeView extends StatelessWidget {
       );
     }
   }
+   void _showGovernorateDialog(BuildContext context) {
+     showDialog(
+       context: context,
+       builder: (BuildContext context) {
+         return Obx(() {
+           return AlertDialog(
+             title: Text('اختيار المحافظة'),
+             content: Column(
+               mainAxisSize: MainAxisSize.min,
+               children: [
+                 // عرض المحافظات في مربعات (3 محافظات في السطر)
+                 Wrap(
+                   spacing: 4.0, // المسافة بين المربعات
+                   runSpacing: 8.0, // المسافة بين الأسطر
+                   children: [
+                     for (var city in controller.citiesList)
+                       if (city.id != -1) // استثناء fixedItem
+                         GestureDetector(
+                           onTap: () {
+                             // عند اختيار المحافظة، تحديث قيمة selectedGovernorate وعرض المناطق
+                             controller.selectedGovernorate.value = city.title;
+                             controller.fetchSubCity(city.title); // جلب المناطق
+                           },
+                           child: Container(
+                             padding: EdgeInsets.all(6),
+                             decoration: BoxDecoration(
+                               color: controller.selectedGovernorate.value == city.title
+                                   ? Colors.blueAccent // تغيير اللون عند الاختيار
+                                   : Colors.grey[200],
+                               borderRadius: BorderRadius.circular(8),
+                               boxShadow: [
+                                 BoxShadow(
+                                   color: Colors.black26,
+                                   blurRadius: 4,
+                                   offset: Offset(2, 2),
+                                 ),
+                               ],
+                             ),
+                             width: (Get.width - 32) / 4, // عرض المربع (4 في السطر)
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Text(
+                                   city.title,
+                                   textAlign: TextAlign.center,
+                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                 ),
+                               ],
+                             ),
+                           ),
+                         ),
+                   ],
+                 ),
+
+                 // عرض المناطق بناءً على اختيار المحافظة
+                 if (controller.selectedGovernorate.isNotEmpty)
+                   Padding(
+                     padding: const EdgeInsets.only(top: 10),
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         Text('المناطق في ${controller.selectedGovernorate.value}:'),
+                         // منطقة ثابتة للمناطق قابلة للتمرير
+                         Container(
+                           height: 200, // تحديد الارتفاع الثابت
+                           child: SingleChildScrollView(
+                             child: Wrap(
+                               spacing: 4.0,
+                               runSpacing: 8.0,
+                               children: [
+                                 for (var area in controller.selectedAreas)
+                                   GestureDetector(
+                                     onTap: () {
+                                       // عند اختيار المنطقة، تحديث selectedArea
+                                       controller.selectedArea.value = area; // تحديد المنطقة
+                                     },
+                                     child: Container(
+                                       width: (Get.width - 32) / 4, // نفس عرض المربعات
+                                       padding: EdgeInsets.all(6),
+                                       decoration: BoxDecoration(
+                                         color: controller.selectedArea.value == area
+                                             ? Colors.green // تغيير اللون عند الاختيار
+                                             : Colors.grey[200],
+                                         borderRadius: BorderRadius.circular(8),
+                                         boxShadow: [
+                                           BoxShadow(
+                                             color: Colors.black26,
+                                             blurRadius: 4,
+                                             offset: Offset(2, 2),
+                                           ),
+                                         ],
+                                       ),
+                                       child: Center(
+                                         child: Text(
+                                           area,
+                                           textAlign: TextAlign.center,
+                                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                         ),
+                                       ),
+                                     ),
+                                   ),
+                               ],
+                             ),
+                           ),
+                         ),
+                         // إظهار نص "تمرير لعرض المزيد" إذا كان هناك العديد من المناطق
+                         if (controller.selectedAreas.length > 12) // يمكن تخصيص العدد الذي يظهر فيه النص
+                           Padding(
+                             padding: const EdgeInsets.only(top: 8),
+                             child: Text(
+                               'مرر للاسفل للمزيد...',
+                               textAlign: TextAlign.center,
+                               style: TextStyle(fontSize: 12, color: Colors.blue),
+                             ),
+                           ),
+                       ],
+                     ),
+                   ),
+               ],
+             ),
+             actions: [
+               TextButton(
+                 onPressed: () {
+                   Navigator.of(context).pop();
+                 },
+                 child: Text('إغلاق'),
+               ),
+               TextButton(
+                 onPressed: () {
+                   if (controller.selectedArea.value.isNotEmpty) {
+                     print('تم تحديد المنطقة: ${controller.selectedArea.value}');
+                     Get.to(() => Searchview(),
+                       arguments: [
+                         {
+                           'subCity': controller.selectedArea.value,
+                           'city': controller.selectedGovernorate.value,
+                         } // إرسال id المنطقة
+                       ],
+                     );
+                   } else {
+                     print('لم يتم تحديد المنطقة');
+                     // يمكنك أيضًا عرض رسالة للمستخدم أو تأكيد تحديد المنطقة
+                     Get.snackbar(
+                       "تنبيه",
+                       "يرجى اختيار منطقة أولاً",
+                       snackPosition: SnackPosition.BOTTOM,
+                     );
+                   }
+                 },
+                 child: Text(
+                   'بحث',
+                   style: TextStyle(
+                     color: Colors.white, // تغيير لون النص إلى أبيض
+                     fontWeight: FontWeight.bold, // جعل النص عريضًا
+                     fontSize: 16, // تكبير حجم الخط
+                   ),
+                 ),
+                 style: TextButton.styleFrom(
+                   backgroundColor: AppColors.cbcColor, // تعيين لون الخلفية
+                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24), // إضافة بعض الحشو داخل الزر
+                   shape: RoundedRectangleBorder(
+                     borderRadius: BorderRadius.circular(8), // تحديد حواف دائرية
+                   ),
+                   elevation: 4, // إضافة تأثير الظل
+                 ),
+               ),
+             ],
+           );
+         });
+       },
+     );
+   }
+
+
+
+
 
 }

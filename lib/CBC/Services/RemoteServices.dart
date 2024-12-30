@@ -15,6 +15,7 @@ import 'package:ui_ecommerce/CBC/models/Qr.dart';
 import 'package:ui_ecommerce/CBC/models/Store.dart';
 import 'package:ui_ecommerce/CBC/models/StoreModel.dart';
 import 'package:ui_ecommerce/CBC/models/subCity.dart';
+import 'package:http_parser/http_parser.dart';
 import '../models/Slider.dart';
 
 class RemoteServices {
@@ -185,6 +186,20 @@ class RemoteServices {
   }
 
 
+  static Future<Store?> fetchStoriesBySubCity(subCity) async {
+    var endpoint = 'getStoresBySubCity/${subCity}';
+    var response = await client.get(Uri.parse(baseUrl + endpoint));
+    print(response.body);
+    if (response.statusCode == 200) {
+      print(111);
+      var jsonData = response.body;
+      return storeFromJson(jsonData);
+    } else {
+      print(222);
+      return null;
+    }
+  }
+
   //Fetch Stories From Endpoint (getStories)
   static Future<Store?> fetchStories(cate , city , orderby) async {
     var endpoint = 'getStoriesBy/${cate}/${city}/${orderby}';
@@ -352,6 +367,75 @@ class RemoteServices {
     }
   }
 
+  static Future<String> uploadImage(String imagePath, String userName, String amount, String storeId) async {
+    var endpoint = 'uploadFatora'; // Replace with your actual API endpoint
+
+    try {
+      var uri = Uri.parse(baseUrl + endpoint);
+
+      // Prepare the file for upload
+      var file = await http.MultipartFile.fromPath(
+        'image', // Field name on the server
+        imagePath,
+        contentType: MediaType('image', 'jpeg'), // Adjust if you're uploading other types of images
+      );
+
+      // Create the multipart request
+      var request = http.MultipartRequest('POST', uri);
+
+      // Add form fields (title, amount) to the request body
+      request.fields['userName'] = userName; // Adding title to the request
+      request.fields['amount'] = amount.toString(); // Adding amount to the request
+      request.fields['storeId'] = storeId; // Adding storeId to the request
+
+      // Add the image file to the request
+      request.files.add(file);
+
+      // Send the request
+      var response = await request.send();
+
+      // Check the response status code and read the response body
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        print('Response body: $responseBody');
+        return 'Upload successful! Response: $responseBody';
+      } else {
+        print(request.fields);
+        var errorResponse = await response.stream.bytesToString();
+        print('Error response: $errorResponse');
+        return 'Failed to upload image: $errorResponse';
+      }
+    } catch (e) {
+      print('Error occurred while uploading: $e');
+      return 'Error occurred while uploading: $e';
+    }
+  }
+
+  static Future<String> rateStore(String storeId, String userId, String rate) async {
+    var endpoint = 'RateStore';
+    var body = jsonEncode({
+      'storeId': storeId,
+      'userName': userId,
+      'rate': rate,
+    });
+    try {
+      var response = await http.post(
+        Uri.parse(baseUrl + endpoint),
+        body: body,
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        return jsonData;
+      } else {
+        String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+        return rawJson;
+      }
+    } catch (e) {
+      String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+      return rawJson;
+    }
+  }
 
 
 }

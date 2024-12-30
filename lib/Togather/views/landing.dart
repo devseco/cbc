@@ -14,7 +14,7 @@ class Landing_togather extends StatelessWidget {
   Widget build(BuildContext context) {
     return  DefaultTabController(
       initialIndex: controller.index,
-        length: 2, // Define the number of tabs
+        length: 1, // Define the number of tabs
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(Get.width * 0.19), // Set preferred size for the app bar
@@ -59,6 +59,8 @@ class Landing_togather extends StatelessWidget {
                       ), // Add text to your tab
                     ),
                   ),
+              /*
+
                   Tab(
                     height: Get.height * 0.9,
                     child: Container(
@@ -93,6 +95,9 @@ class Landing_togather extends StatelessWidget {
                         )
                     ),
                   ),
+                  */
+
+
                 ],
                 padding: EdgeInsets.zero,
                 indicatorPadding: EdgeInsets.zero,
@@ -104,7 +109,7 @@ class Landing_togather extends StatelessWidget {
           body: TabBarView(
             children: [
               Landing_cbc(),
-              Landing_aqs(),
+             // Landing_aqs(),
             ],
           ),
         ),

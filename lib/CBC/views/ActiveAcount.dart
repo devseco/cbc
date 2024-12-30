@@ -173,6 +173,42 @@ class ActiveAcount extends StatelessWidget {
           ),
         ),
         ),
+
+        SizedBox(height: Get.width * 0.05,),
+        Padding(
+          padding: EdgeInsetsDirectional.only(start: Get.width * 0.05 , end: Get.width * 0.05 ),
+          child:  Text('3'.tr,
+            style: TextStyle(
+                color: Colors.blue,
+                fontSize: Get.width * 0.035,
+                fontWeight: FontWeight.bold
+            ),
+          ),
+        ),
+        Padding(padding: EdgeInsetsDirectional.only(
+            start: Get.width * 0.05 , end: Get.width * 0.05
+        ),
+          child: TextField(
+            controller: controller.phone,
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              hintStyle: TextStyle(
+                fontSize: Get.height * 0.015,
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderSide: BorderSide(
+                  color: AppColors.cbcColor,
+                ),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10) , bottomLeft: Radius.circular(10)),
+                borderSide: BorderSide(color: AppColors.cbcColor,),
+              ),
+            ),
+          ),
+        ),
         SizedBox(height: Get.width * 0.05,),
         Center(
           child:  GetBuilder<AccountController>(builder: (builder){

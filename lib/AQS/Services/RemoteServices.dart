@@ -10,7 +10,33 @@ import '../models/Slider.dart';
 class RemoteServices {
   static var client = http.Client();
   static var baseUrl = 'https://89.116.110.51:3000/aqs/api/v1/';
+  static Future deleteAccount(name , user_id) async {
+    var endpoint = 'deleteAccount';
+    var body = jsonEncode({'name': name , 'user_id': user_id.toString()});
+    try {
+      print('err 1');
+      var response = await client.post(Uri.parse(baseUrl + endpoint),
+
+        body:body,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = response.body;
+        return jsonData;
+      } else {
+        print('err');
+        String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+        return rawJson;
+      }
+    } catch (e) {
+      print('errror 3');
+      String rawJson = '{"message":"An unexpected error occurred","Status_code":500}';
+      return rawJson;
+    }
+  }
 //Login
+
   static Future login(phone , password) async {
     var endpoint = 'login';
     var body = jsonEncode({'phone': phone , 'password': password});

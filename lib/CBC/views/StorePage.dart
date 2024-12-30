@@ -32,16 +32,16 @@ class StorePage extends StatelessWidget {
           print('refresh page ');
           controller.fetchStore();
         },
-        child: Obx(() {
-          if(!controller.isLoadingItem.value){
-            if(controller.store != null){
+        child: GetBuilder<StorePageController>(builder: (builder){
+          if(!builder.isLoadingItem.value){
+            if(builder.store != null){
               return  Container(
                 color: Colors.white,
                 child: Column(
                   children: [
                     Obx(() {
-                      if(!controller.isLoadingItem.value){
-                        return (controller.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
+                      if(!builder.isLoadingItem.value){
+                        return (builder.store!.storeinfo.sliders.length > 0)? StoreSliders() : placholder404();
                       }else{
                         return placholderSlider();
                       }
@@ -77,7 +77,7 @@ class StorePage extends StatelessWidget {
               size: Get.width * 0.1,
             ),);
           }
-        }),
+        },),
       ),
     );
   }
@@ -346,7 +346,7 @@ class StorePage extends StatelessWidget {
               width: Get.width * 0.20,
               height: Get.width * 0.06,
               child: Center(
-                child: Text('${controller.store!.storeinfo.discounts[index].discount}%' , style: TextStyle(
+                child: Text('${controller.store!.storeinfo.discounts[index].discount}' , style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: Get.width * 0.03

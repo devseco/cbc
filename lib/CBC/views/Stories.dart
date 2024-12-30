@@ -456,7 +456,7 @@ class Stories extends StatelessWidget {
        },
      );
    }
-   StoreItem(String url , String title , int id , int active , int count) {
+   StoreItem(String url , String title , int id , int active , String count) {
      if (id != -1) { // تحقق من أن الـ ID ليس يساوي -1 قبل عرض المحافظة
        return GestureDetector(
          onTap: () {
@@ -510,7 +510,7 @@ class Stories extends StatelessWidget {
                ),
                SizedBox(height: Get.height * 0.007,),
               Center(
-                child:  Text('${'95'.tr} ${count}٪' , textAlign: TextAlign.start,
+                child:  Text('${'95'.tr} ${count}' , textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: Get.width * 0.04,

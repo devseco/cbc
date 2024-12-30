@@ -74,7 +74,7 @@ class RecentlyStories extends StatelessWidget {
       },
     );
   }
-  DiscountItem(String url , String label  , int id , int discount) {
+  DiscountItem(String url , String label  , int id , String discount) {
     return GestureDetector(
       onTap: (){
         Get.to(()=>StorePage() , arguments: [{"id" : id}]);
@@ -132,7 +132,7 @@ class RecentlyStories extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                    Text('95'.tr ,  overflow: TextOverflow.ellipsis,),
-                  Text(' ${discount}% ',  overflow: TextOverflow.ellipsis,style: TextStyle(
+                  Text(' ${discount} ',  overflow: TextOverflow.ellipsis,style: TextStyle(
                       color: AppColors.cbcRed,
                       fontWeight: FontWeight.bold,
                       fontSize: Get.height * 0.018

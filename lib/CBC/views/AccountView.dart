@@ -58,6 +58,7 @@ class Account extends StatelessWidget {
       ),
     );
   }
+
    PagesTabs(){
      return Expanded(
        child: GetBuilder<AccountController>(builder: (builder){

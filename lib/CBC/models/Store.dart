@@ -41,7 +41,7 @@ class Story {
   String instagram;
   String telegram;
   String whatsapp;
-  int discountCount;
+  String discountCount;
 
   Story({
     required this.id,

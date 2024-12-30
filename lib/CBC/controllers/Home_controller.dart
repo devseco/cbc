@@ -6,6 +6,7 @@ import 'package:ui_ecommerce/CBC/models/Discount.dart';
 import 'package:ui_ecommerce/main.dart';
 import '../Services/RemoteServices.dart';
 import '../models/Slider.dart';
+import '../models/Store.dart';
 import '../models/TestItem.dart';
 
 class Chome_controller extends GetxController {
@@ -21,14 +22,37 @@ class Chome_controller extends GetxController {
   var showCartBadge = false.obs;
   RxInt backgroundMessagesLength = 0.obs;
   var isLoadingRecently= true.obs;
+  var isLoadingSearch= true.obs;
   var isLoadingHighest= true.obs;
   var isLoadingSliders= true.obs;
   List<String> productNames = [];
   var isLoadingCities= true.obs;
   var recentlyList = <Discount>[].obs;
+  var itemsSearch = <Store>[].obs;
   var highestList = <Discount>[].obs;
   var slidersList = <SliderBar>[].obs;
   var citiesList = <City>[].obs;
+  var selectedGovernorate = ''.obs;  // المحافظة المختارة
+  var selectedArea = ''.obs;
+  var selectedAreas = <String>[].obs; // المناطق المختارة
+
+
+  void fetchSubCity(String governorateName) async {
+    selectedArea.value = '';
+    try {
+      var areas = await RemoteServices.fetchSubCity(governorateName);
+      if (areas != null) {
+        selectedAreas.value = areas.map((e) => e.title).toList(); // تحويل المناطق إلى قائمة نصوص
+      } else {
+        selectedAreas.clear();
+      }
+    } catch (e) {
+      selectedAreas.clear();
+      print("Error fetching sub cities: $e");
+    }
+  }
+
+
   Future<List<TestItem>> fetchData() async {
     await Future.delayed(Duration(milliseconds: 2000));
     List<TestItem> _list = [];
@@ -74,6 +98,20 @@ class Chome_controller extends GetxController {
       }
     }finally{
       isLoadingRecently(false);
+    }
+    update();
+  }
+
+  void fetchSearch(subCity) async{
+    isLoadingSearch(true);
+    try {
+      var recentlylist = await RemoteServices.fetchStoriesBySubCity(subCity);
+      if(recentlylist != null){
+        itemsSearch.value = [recentlylist];
+      }else{
+      }
+    }finally{
+      isLoadingSearch(false);
     }
     update();
   }

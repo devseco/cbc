@@ -4,7 +4,7 @@ String discountToJson(List<Discount> data) => json.encode(List<dynamic>.from(dat
 class Discount {
   int id;
   String store;
-  int discount;
+  String discount;
   String image;
   int storeId;
   Discount({
