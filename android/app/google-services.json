@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486508979506",
+    "project_id": "cbcapp-fd2b5",
+    "storage_bucket": "cbcapp-fd2b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486508979506:android:a779c03f4a2df13762232b",
+        "android_client_info": {
+          "package_name": "com.seco.cbc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqJ4XeORj8oc5ZWR3Z2C8-ug2uUThb_ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
